@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam Clock</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --accent: #4f8ef7;
+      --danger: #e05c5c;
+      --warning: #f0a500;
+      --text: #f0f2f8;
+      --muted: #6b7280;
+      --radius: 12px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+      transition: background 0.3s;
+    }
+
+    body.fullscreen-active {
+      padding: 3rem;
+      gap: 3rem;
+    }
+
+    h1 {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Live clock */
+    #live-clock {
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 200;
+      letter-spacing: 0.05em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Countdown section */
+    .countdown-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    #countdown-display {
+      font-size: clamp(3.5rem, 12vw, 8rem);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.03em;
+      color: var(--accent);
+      transition: color 0.5s;
+    }
+
+    #countdown-display.warning { color: var(--warning); }
+    #countdown-display.danger  { color: var(--danger); }
+
+    #countdown-display.pulse {
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Progress bar */
+    .progress-wrap {
+      width: 100%;
+      height: 6px;
+      background: #2a2d3a;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    #progress-bar {
+      height: 100%;
+      width: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 1s linear, background 0.5s;
+    }
+
+    #progress-bar.warning { background: var(--warning); }
+    #progress-bar.danger  { background: var(--danger); }
+
+    /* Input row */
+    .input-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .input-group label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .input-group input {
+      width: 5rem;
+      padding: 0.5rem;
+      text-align: center;
+      font-size: 1.4rem;
+      font-variant-numeric: tabular-nums;
+      background: #2a2d3a;
+      border: 1px solid #3a3d4a;
+      border-radius: 8px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .input-group input:focus {
+      border-color: var(--accent);
+    }
+
+    /* Buttons */
+    .btn-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      padding: 0.6rem 1.4rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+      letter-spacing: 0.03em;
+    }
+
+    button:active { transform: scale(0.96); }
+    button:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    #btn-start  { background: var(--accent); color: #fff; }
+    #btn-pause  { background: var(--warning); color: #111; }
+    #btn-reset  { background: #2a2d3a; color: var(--text); border: 1px solid #3a3d4a; }
+
+    /* Fullscreen button */
+    #btn-fullscreen {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: #1a1d27;
+      color: var(--muted);
+      border: 1px solid #2a2d3a;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      font-size: 1.1rem;
+      z-index: 100;
+    }
+
+    #btn-fullscreen:hover { color: var(--text); border-color: var(--accent); }
+
+    /* Finished banner */
+    #finished-banner {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(224, 92, 92, 0.92);
+      color: #fff;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 200;
+      cursor: pointer;
+    }
+
+    #finished-banner.show { display: flex; }
+    #finished-banner p { font-size: clamp(1rem, 2vw, 1.4rem); font-weight: 300; opacity: 0.8; }
+  </style>
+</head>
+<body>
+
+  <button id="btn-fullscreen" title="Toggle fullscreen">⛶</button>
+
+  <h1>Exam Clock</h1>
+
+  <div id="live-clock">00:00:00</div>
+
+  <div class="countdown-card">
+    <div id="countdown-display">00:00:00</div>
+    <div class="progress-wrap"><div id="progress-bar"></div></div>
+
+    <div class="input-row">
+      <div class="input-group">
+        <label>Hours</label>
+        <input type="number" id="inp-h" min="0" max="9" value="0">
+      </div>
+      <div class="input-group">
+        <label>Minutes</label>
+        <input type="number" id="inp-m" min="0" max="59" value="30">
+      </div>
+      <div class="input-group">
+        <label>Seconds</label>
+        <input type="number" id="inp-s" min="0" max="59" value="0">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button id="btn-start">Start</button>
+      <button id="btn-pause" disabled>Pause</button>
+      <button id="btn-reset">Reset</button>
+    </div>
+  </div>
+
+  <div id="finished-banner">
+    <span>Time's Up!</span>
+    <p>Click anywhere to dismiss</p>
+  </div>
+
+  <script>
+    // Live clock
+    function updateClock() {
+      const now = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      document.getElementById('live-clock').textContent =
+        `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Countdown
+    let totalSeconds = 0;
+    let remaining = 0;
+    let timer = null;
+    let running = false;
+
+    const display   = document.getElementById('countdown-display');
+    const bar       = document.getElementById('progress-bar');
+    const btnStart  = document.getElementById('btn-start');
+    const btnPause  = document.getElementById('btn-pause');
+    const btnReset  = document.getElementById('btn-reset');
+    const banner    = document.getElementById('finished-banner');
+    const inpH      = document.getElementById('inp-h');
+    const inpM      = document.getElementById('inp-m');
+    const inpS      = document.getElementById('inp-s');
+
+    function formatTime(s) {
+      const h = Math.floor(s / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      const sec = s % 60;
+      return [h, m, sec].map(n => String(n).padStart(2, '0')).join(':');
+    }
+
+    function updateDisplay() {
+      display.textContent = formatTime(remaining);
+      const pct = totalSeconds > 0 ? (remaining / totalSeconds) * 100 : 100;
+      bar.style.width = pct + '%';
+
+      const urgent = remaining <= 60 && remaining > 0;
+      const warn   = remaining <= 300 && remaining > 60;
+
+      display.classList.toggle('danger',  urgent);
+      display.classList.toggle('warning', warn && !urgent);
+      display.classList.remove('warning', urgent);
+      bar.classList.toggle('danger',  urgent);
+      bar.classList.toggle('warning', warn && !urgent);
+      bar.classList.remove('warning', urgent);
+
+      display.classList.toggle('pulse', urgent);
+    }
+
+    function tick() {
+      if (remaining <= 0) {
+        clearInterval(timer);
+        running = false;
+        btnStart.disabled = false;
+        btnPause.disabled = true;
+        banner.classList.add('show');
+        if (navigator.vibrate) navigator.vibrate([500, 200, 500]);
+        return;
+      }
+      remaining--;
+      updateDisplay();
+    }
+
+    btnStart.addEventListener('click', () => {
+      if (!running) {
+        if (remaining === 0) {
+          const h = parseInt(inpH.value) || 0;
+          const m = parseInt(inpM.value) || 0;
+          const s = parseInt(inpS.value) || 0;
+          totalSeconds = h * 3600 + m * 60 + s;
+          remaining = totalSeconds;
+          if (remaining <= 0) return;
+        }
+        running = true;
+        timer = setInterval(tick, 1000);
+        btnStart.disabled = true;
+        btnPause.disabled = false;
+        setInputsDisabled(true);
+        updateDisplay();
+      }
+    });
+
+    btnPause.addEventListener('click', () => {
+      clearInterval(timer);
+      running = false;
+      btnStart.disabled = false;
+      btnStart.textContent = 'Resume';
+      btnPause.disabled = true;
+    });
+
+    btnReset.addEventListener('click', () => {
+      clearInterval(timer);
+      running = false;
+      remaining = 0;
+      totalSeconds = 0;
+      display.textContent = '00:00:00';
+      display.className = '';
+      bar.style.width = '100%';
+      bar.className = '';
+      btnStart.disabled = false;
+      btnStart.textContent = 'Start';
+      btnPause.disabled = true;
+      setInputsDisabled(false);
+      banner.classList.remove('show');
+    });
+
+    banner.addEventListener('click', () => banner.classList.remove('show'));
+
+    function setInputsDisabled(val) {
+      [inpH, inpM, inpS].forEach(i => i.disabled = val);
+    }
+
+    // Fullscreen
+    const btnFS = document.getElementById('btn-fullscreen');
+    btnFS.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      const fs = !!document.fullscreenElement;
+      btnFS.textContent = fs ? '✕' : '⛶';
+      btnFS.title = fs ? 'Exit fullscreen' : 'Enter fullscreen';
+      document.body.classList.toggle('fullscreen-active', fs);
+    });
+  </script>
+</body>
+</html>
