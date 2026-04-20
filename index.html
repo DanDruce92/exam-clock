@@ -16,26 +16,24 @@
       flex-direction: column;
       height: 100vh;
       overflow: hidden;
-      transition: background 0.3s, color 0.3s;
+      transition: background .3s, color .3s;
     }
-
-    body.dark {
-      background: #2c2c2c;
-      color: #e8e8e8;
-    }
+    body.dark { background: #2a2a2a; color: #e8e8e8; }
 
     /* ── Nav ── */
     nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.45rem 1rem;
+      padding: .4rem 1rem;
       background: #fff;
       border-bottom: 1px solid #ddd;
       flex-shrink: 0;
-      transition: background 0.3s, border-color 0.3s;
+      z-index: 10;
+      transition: background .3s, border-color .3s;
     }
-    body.dark nav { background: #383838; border-color: #4a4a4a; }
+    body.dark nav { background: #333; border-color: #444; }
+    body.dark.fs-mode nav { display: none; }
 
     .pill-group {
       display: flex;
@@ -44,215 +42,468 @@
       padding: 3px;
       gap: 2px;
     }
-    body.dark .pill-group { background: #2c2c2c; }
+    body.dark .pill-group { background: #222; }
 
     .pill-btn {
-      padding: 0.28rem 0.85rem;
+      padding: .26rem .85rem;
       border: none;
       background: transparent;
       border-radius: 5px;
-      font-size: 0.82rem;
+      font-size: .82rem;
       cursor: pointer;
       color: #666;
-      transition: background 0.15s, color 0.15s;
+      transition: background .15s, color .15s;
     }
-    .pill-btn.active { background: #fff; color: #1a1a1a; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
-    body.dark .pill-btn { color: #999; }
-    body.dark .pill-btn.active { background: #505050; color: #e8e8e8; box-shadow: none; }
+    .pill-btn.active { background: #fff; color: #111; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+    body.dark .pill-btn { color: #888; }
+    body.dark .pill-btn.active { background: #555; color: #eee; }
 
-    #btn-fs {
-      padding: 0.28rem 0.85rem;
+    .nav-right { display: flex; gap: .5rem; align-items: center; }
+
+    #btn-setup {
+      padding: .26rem .85rem;
       border: 1px solid #ccc;
       background: transparent;
       border-radius: 6px;
-      font-size: 0.82rem;
+      font-size: .82rem;
+      cursor: pointer;
+      color: inherit;
+    }
+    body.dark #btn-setup { border-color: #555; }
+
+    #btn-fs {
+      padding: .26rem .85rem;
+      border: 1px solid #ccc;
+      background: transparent;
+      border-radius: 6px;
+      font-size: .82rem;
       cursor: pointer;
       color: inherit;
     }
     body.dark #btn-fs { border-color: #555; }
 
-    /* ── Clock area ── */
-    #clock-area {
+    /* ── Main layout ── */
+    #main {
       flex: 1;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.75rem;
       min-height: 0;
     }
 
-    .clock-page { display: none; width: 100%; height: 100%; align-items: center; justify-content: center; }
+    /* ── Clock column ── */
+    #clock-col {
+      flex: 3;
+      min-width: 0;
+      display: flex;
+      align-items: stretch;
+      position: relative;
+    }
+
+    .clock-page {
+      display: none;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      padding: .75rem;
+    }
     .clock-page.active { display: flex; }
 
-    #analog-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    #analog-wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     #analog-canvas { display: block; }
 
     #digital-wrap { text-align: center; }
     #digital-time {
-      font-size: clamp(4rem, 16vw, 13rem);
+      font-size: clamp(3.5rem, 14vw, 12rem);
       font-weight: 200;
-      letter-spacing: 0.04em;
+      letter-spacing: .04em;
       font-variant-numeric: tabular-nums;
       line-height: 1;
     }
     #digital-date {
-      margin-top: 0.4rem;
-      font-size: clamp(0.9rem, 2.2vw, 1.7rem);
+      margin-top: .4rem;
+      font-size: clamp(.9rem, 2vw, 1.6rem);
       font-weight: 300;
       color: #999;
-      letter-spacing: 0.06em;
+      letter-spacing: .06em;
     }
 
-    /* ── Calculator panel ── */
-    #calc-panel {
+    /* ── Results column ── */
+    #results-col {
+      flex: 2;
+      border-left: 1px solid #ddd;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: .75rem .85rem;
+      gap: .65rem;
+      transition: background .3s, border-color .3s;
+    }
+    body.dark #results-col { background: #323232; border-color: #444; }
+    body.dark.fs-mode #results-col { border-color: #3a3a3a; }
+
+    /* Category toggles */
+    #cat-toggles {
+      display: flex;
+      gap: .4rem;
+      flex-wrap: wrap;
+      padding-bottom: .2rem;
+      border-bottom: 1px solid #eee;
+    }
+    body.dark #cat-toggles { border-color: #444; }
+
+    .cat-tog {
+      padding: .22rem .75rem;
+      border: 1.5px solid #1a1a1a;
+      background: #1a1a1a;
+      color: #fff;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: .04em;
+      transition: background .15s, color .15s;
+    }
+    .cat-tog.off {
+      background: transparent;
+      color: #aaa;
+      border-color: #ccc;
+      text-decoration: line-through;
+    }
+    body.dark .cat-tog { border-color: #e0e0e0; background: #e0e0e0; color: #1a1a1a; }
+    body.dark .cat-tog.off { background: transparent; color: #666; border-color: #555; }
+
+    /* Category cards */
+    .cat-card {
+      padding: .55rem .7rem;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      background: #fafafa;
+      transition: background .3s, border-color .3s;
+    }
+    body.dark .cat-card { background: #2a2a2a; border-color: #444; }
+    .cat-card.hidden { display: none; }
+
+    .cat-card-label {
+      font-size: .65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #888;
+      margin-bottom: .3rem;
+    }
+    body.dark .cat-card-label { color: #888; }
+
+    .cat-times {
+      display: flex;
+      align-items: baseline;
+      gap: .5rem;
+    }
+
+    .ct-start {
+      font-size: clamp(1.1rem, 2vw, 1.8rem);
+      font-variant-numeric: tabular-nums;
+      color: #888;
+    }
+    body.dark .ct-start { color: #777; }
+
+    .ct-arrow {
+      color: #bbb;
+      font-size: clamp(.9rem, 1.4vw, 1.3rem);
+    }
+
+    .ct-end {
+      font-size: clamp(1.8rem, 3.2vw, 3.2rem);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: .02em;
+    }
+
+    /* Students */
+    #students-list {
+      display: flex;
+      flex-direction: column;
+      gap: .55rem;
+    }
+
+    .student-card {
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      background: #fafafa;
+      padding: .55rem .7rem;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+    body.dark .student-card { background: #2a2a2a; border-color: #444; }
+
+    .sc-header {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+
+    .sc-name-input {
+      flex: 1;
+      min-width: 0;
+      padding: .28rem .5rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: clamp(.9rem, 1.6vw, 1.4rem);
+      font-weight: 600;
+      background: transparent;
+      color: inherit;
+      outline: none;
+    }
+    body.dark .sc-name-input { border-color: #555; }
+    .sc-name-input:focus { border-color: #888; }
+
+    .sc-cat-sel {
+      padding: .28rem .4rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: .78rem;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+    }
+    body.dark .sc-cat-sel { border-color: #555; background: #2a2a2a; }
+
+    .sc-remove {
+      width: 1.6rem;
+      height: 1.6rem;
+      border: none;
+      background: transparent;
+      color: #aaa;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 4px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sc-remove:hover { background: #fee; color: #c00; }
+    body.dark .sc-remove:hover { background: #400; color: #f88; }
+
+    .sc-breaks { display: flex; flex-direction: column; gap: .28rem; }
+
+    .break-row {
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+      font-size: .78rem;
+    }
+
+    .break-lbl { color: #888; min-width: 3rem; font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; }
+
+    .break-time-inp {
+      padding: .22rem .35rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: .82rem;
+      font-variant-numeric: tabular-nums;
+      background: transparent;
+      color: inherit;
+      width: 6.5rem;
+    }
+    body.dark .break-time-inp { border-color: #555; color-scheme: dark; }
+
+    .break-to { color: #aaa; font-size: .75rem; }
+
+    .break-rem {
+      width: 1.4rem;
+      height: 1.4rem;
+      border: none;
+      background: transparent;
+      color: #bbb;
+      font-size: .95rem;
+      cursor: pointer;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .break-rem:hover { background: #fee; color: #c00; }
+
+    .sc-add-break {
+      align-self: flex-start;
+      padding: .18rem .55rem;
+      border: 1px dashed #ccc;
+      background: transparent;
+      border-radius: 4px;
+      font-size: .75rem;
+      color: #888;
+      cursor: pointer;
+    }
+    .sc-add-break:hover { border-color: #888; color: #555; }
+
+    .sc-result {
+      display: flex;
+      align-items: baseline;
+      gap: .4rem;
+      margin-top: .1rem;
+    }
+
+    .sc-start {
+      font-size: clamp(.95rem, 1.5vw, 1.4rem);
+      font-variant-numeric: tabular-nums;
+      color: #888;
+    }
+    .sc-arrow-d { color: #bbb; font-size: .9rem; }
+    .sc-end {
+      font-size: clamp(1.5rem, 2.8vw, 2.6rem);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .sc-breaks-summary {
+      font-size: .72rem;
+      color: #aaa;
+      margin-left: .2rem;
+    }
+
+    /* Results actions */
+    #results-actions {
+      display: flex;
+      gap: .5rem;
+      margin-top: auto;
+      padding-top: .4rem;
+      flex-wrap: wrap;
+    }
+
+    #btn-add-student {
+      flex: 1;
+      padding: .38rem .7rem;
+      border: 1.5px dashed #ccc;
+      background: transparent;
+      border-radius: 7px;
+      font-size: .82rem;
+      color: #888;
+      cursor: pointer;
+    }
+    #btn-add-student:hover { border-color: #888; color: #555; }
+
+    #btn-export {
+      padding: .38rem .85rem;
+      border: 1px solid #1a1a1a;
+      background: transparent;
+      border-radius: 7px;
+      font-size: .82rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      cursor: pointer;
+    }
+    #btn-export:hover { background: #1a1a1a; color: #fff; }
+    body.dark #btn-export { border-color: #e0e0e0; color: #e0e0e0; }
+    body.dark #btn-export:hover { background: #e0e0e0; color: #1a1a1a; }
+
+    /* ── Calculator bar ── */
+    #calc-bar {
       flex-shrink: 0;
       background: #fff;
       border-top: 1px solid #ddd;
-      padding: 0.65rem 1.1rem;
-      transition: background 0.3s, border-color 0.3s;
+      padding: .55rem 1rem;
+      transition: background .3s, border-color .3s;
     }
-    body.dark #calc-panel { background: #383838; border-color: #4a4a4a; }
+    body.dark #calc-bar { background: #333; border-color: #444; }
+    body.dark.fs-mode #calc-bar { display: none; }
+    #calc-bar.hidden { display: none; }
 
     .calc-row {
       display: flex;
       align-items: flex-end;
-      gap: 0.8rem;
+      gap: .7rem;
       flex-wrap: wrap;
     }
 
-    .calc-mode-toggle {
+    .mode-group {
       display: flex;
-      background: #f0f0f0;
+      background: #ebebeb;
       border-radius: 6px;
       padding: 2px;
       gap: 2px;
-      align-self: flex-end;
     }
-    body.dark .calc-mode-toggle { background: #2c2c2c; }
+    body.dark .mode-group { background: #222; }
 
     .mode-btn {
-      padding: 0.25rem 0.65rem;
+      padding: .24rem .65rem;
       border: none;
       background: transparent;
       border-radius: 4px;
-      font-size: 0.75rem;
+      font-size: .75rem;
       cursor: pointer;
       color: #777;
-      transition: background 0.15s, color 0.15s;
       white-space: nowrap;
     }
-    .mode-btn.active { background: #fff; color: #1a1a1a; box-shadow: 0 1px 2px rgba(0,0,0,.1); }
-    body.dark .mode-btn { color: #888; }
-    body.dark .mode-btn.active { background: #505050; color: #e8e8e8; }
+    .mode-btn.active { background: #fff; color: #111; box-shadow: 0 1px 2px rgba(0,0,0,.1); }
+    body.dark .mode-btn { color: #777; }
+    body.dark .mode-btn.active { background: #555; color: #eee; }
 
-    .field { display: flex; flex-direction: column; gap: 0.2rem; }
-    .field label { font-size: 0.68rem; color: #888; letter-spacing: 0.08em; text-transform: uppercase; }
-    body.dark .field label { color: #aaa; }
+    .c-field { display: flex; flex-direction: column; gap: .18rem; }
+    .c-field label { font-size: .67rem; color: #888; letter-spacing: .08em; text-transform: uppercase; }
 
-    .field input[type="time"],
-    .field input[type="number"] {
-      padding: 0.3rem 0.45rem;
+    .c-field input[type="time"],
+    .c-field input[type="number"] {
+      padding: .28rem .4rem;
       border: 1px solid #d0d0d0;
       border-radius: 5px;
-      font-size: 0.9rem;
+      font-size: .88rem;
       font-variant-numeric: tabular-nums;
       background: #fafafa;
       color: #1a1a1a;
       outline: none;
     }
-    body.dark .field input[type="time"],
-    body.dark .field input[type="number"] {
-      background: #2a2a2a;
+    body.dark .c-field input[type="time"],
+    body.dark .c-field input[type="number"] {
+      background: #222;
       border-color: #555;
       color: #e8e8e8;
       color-scheme: dark;
     }
-    .field input[type="number"] { width: 3.8rem; }
-    .field input[type="time"]   { width: 7.5rem; }
+    .c-field input[type="number"] { width: 3.6rem; }
+    .c-field input[type="time"]   { width: 7.2rem; }
 
-    .dur-row { display: flex; align-items: center; gap: 0.25rem; }
-    .dur-row span { font-size: 0.75rem; color: #888; }
+    .dur-row { display: flex; align-items: center; gap: .22rem; }
+    .dur-row span { font-size: .75rem; color: #888; }
 
     #btn-calc {
-      padding: 0.35rem 1rem;
+      padding: .33rem .95rem;
       border: none;
       background: #1a1a1a;
       color: #fff;
       border-radius: 5px;
-      font-size: 0.82rem;
+      font-size: .82rem;
       font-weight: 600;
       cursor: pointer;
       align-self: flex-end;
     }
     body.dark #btn-calc { background: #e0e0e0; color: #1a1a1a; }
 
-    /* Results grid */
-    #results-grid {
-      display: none;
-      margin-top: 0.6rem;
-      gap: 0.5rem;
-    }
-    #results-grid.show { display: grid; grid-template-columns: repeat(3, 1fr); }
-
-    .res-card {
-      border: 1px solid #e0e0e0;
-      border-radius: 7px;
-      padding: 0.4rem 0.7rem;
-      background: #fafafa;
-    }
-    body.dark .res-card { background: #2a2a2a; border-color: #4a4a4a; }
-
-    .res-type {
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #888;
-      margin-bottom: 0.3rem;
-    }
-    body.dark .res-type { color: #999; }
-
-    .res-row {
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-    }
-
-    .res-block { display: flex; flex-direction: column; }
-    .res-lbl { font-size: 0.6rem; color: #aaa; text-transform: uppercase; letter-spacing: 0.07em; }
-    body.dark .res-lbl { color: #777; }
-    .res-val {
-      font-size: 1.05rem;
-      font-weight: 600;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .res-arrow { color: #bbb; font-size: 0.9rem; padding: 0 0.1rem; }
-
-    /* Fullscreen: hide everything except clock */
-    body.dark.fs-mode nav,
-    body.dark.fs-mode #calc-panel { display: none; }
-
-    /* Fullscreen results overlay */
+    /* Fullscreen overlay bar */
     #fs-bar {
       display: none;
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(4px);
-      padding: 0.6rem 1.5rem;
-      gap: 1rem;
-      z-index: 20;
-      grid-template-columns: repeat(3, 1fr);
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(6px);
+      padding: .6rem 1.5rem;
+      gap: 1.5rem;
+      z-index: 30;
     }
-    #fs-bar.show { display: grid; }
+    #fs-bar.show { display: flex; justify-content: space-around; }
 
     .fs-card { text-align: center; }
-    .fs-card .fc-type { font-size: 0.62rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.2rem; }
-    .fs-card .fc-times { display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-    .fs-card .fc-time { color: #fff; font-size: 1.2rem; font-weight: 600; font-variant-numeric: tabular-nums; }
-    .fs-card .fc-arrow { color: rgba(255,255,255,0.4); font-size: 0.9rem; }
-    .fs-card .fc-sub { font-size: 0.65rem; color: rgba(255,255,255,0.35); }
+    .fs-type { font-size: .6rem; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .15rem; }
+    .fs-times { display: flex; align-items: center; gap: .5rem; justify-content: center; }
+    .fs-start { font-size: 1rem; color: rgba(255,255,255,.55); font-variant-numeric: tabular-nums; }
+    .fs-arr { color: rgba(255,255,255,.3); }
+    .fs-end { font-size: 1.6rem; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
   </style>
 </head>
 <body>
@@ -262,32 +513,82 @@
     <button class="pill-btn active" data-tab="analog">Analog</button>
     <button class="pill-btn"        data-tab="digital">Digital</button>
   </div>
-  <button id="btn-fs">Full Screen</button>
+  <div class="nav-right">
+    <button id="btn-setup">Setup ▾</button>
+    <button id="btn-fs">Full Screen</button>
+  </div>
 </nav>
 
-<div id="clock-area">
-  <div id="page-analog" class="clock-page active">
-    <div id="analog-wrap"><canvas id="analog-canvas"></canvas></div>
+<div id="main">
+  <!-- Clock -->
+  <div id="clock-col">
+    <div id="page-analog" class="clock-page active">
+      <div id="analog-wrap"><canvas id="analog-canvas"></canvas></div>
+    </div>
+    <div id="page-digital" class="clock-page">
+      <div id="digital-wrap">
+        <div id="digital-time">00:00:00</div>
+        <div id="digital-date"></div>
+      </div>
+    </div>
   </div>
-  <div id="page-digital" class="clock-page">
-    <div id="digital-wrap">
-      <div id="digital-time">00:00:00</div>
-      <div id="digital-date"></div>
+
+  <!-- Results -->
+  <div id="results-col">
+    <div id="cat-toggles">
+      <button class="cat-tog" data-cat="normal">Normal</button>
+      <button class="cat-tog" data-cat="et25">25% Extra Time</button>
+      <button class="cat-tog" data-cat="et50">50% Extra Time</button>
+    </div>
+
+    <div class="cat-card" id="card-normal">
+      <div class="cat-card-label">Normal Exam End Time</div>
+      <div class="cat-times">
+        <span class="ct-start" id="r-n-start">—</span>
+        <span class="ct-arrow">→</span>
+        <span class="ct-end"   id="r-n-end">—</span>
+      </div>
+    </div>
+
+    <div class="cat-card hidden" id="card-et25">
+      <div class="cat-card-label">25% Extra Time End</div>
+      <div class="cat-times">
+        <span class="ct-start" id="r-25-start">—</span>
+        <span class="ct-arrow">→</span>
+        <span class="ct-end"   id="r-25-end">—</span>
+      </div>
+    </div>
+
+    <div class="cat-card hidden" id="card-et50">
+      <div class="cat-card-label">50% Extra Time End</div>
+      <div class="cat-times">
+        <span class="ct-start" id="r-50-start">—</span>
+        <span class="ct-arrow">→</span>
+        <span class="ct-end"   id="r-50-end">—</span>
+      </div>
+    </div>
+
+    <div id="students-list"></div>
+
+    <div id="results-actions">
+      <button id="btn-add-student">+ Add Student with Rest Break</button>
+      <button id="btn-export">Export CSV</button>
     </div>
   </div>
 </div>
 
-<div id="calc-panel">
+<!-- Calculator bar -->
+<div id="calc-bar">
   <div class="calc-row">
-    <div class="calc-mode-toggle">
+    <div class="mode-group">
       <button class="mode-btn active" data-mode="forward">From Start Time</button>
       <button class="mode-btn"        data-mode="backward">From End Time</button>
     </div>
-    <div class="field" id="field-time">
-      <label id="time-label">Start Time</label>
+    <div class="c-field">
+      <label id="inp-time-label">Start Time</label>
       <input type="time" id="inp-time" value="09:00">
     </div>
-    <div class="field">
+    <div class="c-field">
       <label>Paper Length</label>
       <div class="dur-row">
         <input type="number" id="inp-h" min="0" max="9" value="0">
@@ -298,68 +599,52 @@
     </div>
     <button id="btn-calc">Calculate</button>
   </div>
-
-  <div id="results-grid">
-    <!-- Normal -->
-    <div class="res-card">
-      <div class="res-type">Normal</div>
-      <div class="res-row">
-        <div class="res-block"><div class="res-lbl">Start</div><div class="res-val" id="n-start">—</div></div>
-        <span class="res-arrow">→</span>
-        <div class="res-block"><div class="res-lbl">End</div><div class="res-val" id="n-end">—</div></div>
-      </div>
-    </div>
-    <!-- 25% ET -->
-    <div class="res-card">
-      <div class="res-type">25% Extra Time</div>
-      <div class="res-row">
-        <div class="res-block"><div class="res-lbl">Start</div><div class="res-val" id="e25-start">—</div></div>
-        <span class="res-arrow">→</span>
-        <div class="res-block"><div class="res-lbl">End</div><div class="res-val" id="e25-end">—</div></div>
-      </div>
-    </div>
-    <!-- 50% ET -->
-    <div class="res-card">
-      <div class="res-type">50% Extra Time</div>
-      <div class="res-row">
-        <div class="res-block"><div class="res-lbl">Start</div><div class="res-val" id="e50-start">—</div></div>
-        <span class="res-arrow">→</span>
-        <div class="res-block"><div class="res-lbl">End</div><div class="res-val" id="e50-end">—</div></div>
-      </div>
-    </div>
-  </div>
 </div>
 
-<!-- Fullscreen overlay bar -->
+<!-- Fullscreen overlay -->
 <div id="fs-bar">
-  <div class="fs-card">
-    <div class="fc-type">Normal</div>
-    <div class="fc-times">
-      <span class="fc-time" id="fs-n-start">—</span>
-      <span class="fc-arrow">→</span>
-      <span class="fc-time" id="fs-n-end">—</span>
+  <div class="fs-card" id="fs-normal">
+    <div class="fs-type">Normal Exam End Time</div>
+    <div class="fs-times">
+      <span class="fs-start" id="fs-n-s">—</span>
+      <span class="fs-arr">→</span>
+      <span class="fs-end"   id="fs-n-e">—</span>
     </div>
   </div>
-  <div class="fs-card">
-    <div class="fc-type">25% Extra Time</div>
-    <div class="fc-times">
-      <span class="fc-time" id="fs-e25-start">—</span>
-      <span class="fc-arrow">→</span>
-      <span class="fc-time" id="fs-e25-end">—</span>
+  <div class="fs-card" id="fs-et25">
+    <div class="fs-type">25% Extra Time End</div>
+    <div class="fs-times">
+      <span class="fs-start" id="fs-25-s">—</span>
+      <span class="fs-arr">→</span>
+      <span class="fs-end"   id="fs-25-e">—</span>
     </div>
   </div>
-  <div class="fs-card">
-    <div class="fc-type">50% Extra Time</div>
-    <div class="fc-times">
-      <span class="fc-time" id="fs-e50-start">—</span>
-      <span class="fc-arrow">→</span>
-      <span class="fc-time" id="fs-e50-end">—</span>
+  <div class="fs-card" id="fs-et50">
+    <div class="fs-type">50% Extra Time End</div>
+    <div class="fs-times">
+      <span class="fs-start" id="fs-50-s">—</span>
+      <span class="fs-arr">→</span>
+      <span class="fs-end"   id="fs-50-e">—</span>
     </div>
   </div>
 </div>
 
 <script>
-// ── Tabs ──────────────────────────────────────
+// ── State ──────────────────────────────────────────────────────────────────
+const S = {
+  startMins:    null,
+  normalEnd:    null,
+  et25End:      null,
+  et50End:      null,
+  calcMode:     'forward',
+  cats:         { normal: false, et25: false, et50: false },
+  students:     [],
+  nextId:       1,
+  hasResults:   false,
+  isFs:         false,
+};
+
+// ── Tabs ───────────────────────────────────────────────────────────────────
 document.querySelectorAll('.pill-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
@@ -370,36 +655,53 @@ document.querySelectorAll('.pill-btn').forEach(btn => {
   });
 });
 
-// ── Fullscreen ─────────────────────────────────
-let isFs = false;
-let hasResults = false;
+// ── Setup toggle ──────────────────────────────────────────────────────────
+document.getElementById('btn-setup').addEventListener('click', () => {
+  const bar = document.getElementById('calc-bar');
+  bar.classList.toggle('hidden');
+  document.getElementById('btn-setup').textContent =
+    bar.classList.contains('hidden') ? 'Setup ▸' : 'Setup ▾';
+});
 
-document.getElementById('btn-fs').addEventListener('click', () => {
+// ── Fullscreen ─────────────────────────────────────────────────────────────
+const btnFs = document.getElementById('btn-fs');
+btnFs.addEventListener('click', () => {
   if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
   else document.exitFullscreen();
 });
 
 document.addEventListener('fullscreenchange', () => {
-  isFs = !!document.fullscreenElement;
-  document.body.classList.toggle('dark', isFs);
-  document.body.classList.toggle('fs-mode', isFs);
-  document.getElementById('btn-fs').textContent = isFs ? 'Exit Full Screen' : 'Full Screen';
-  document.getElementById('fs-bar').classList.toggle('show', isFs && hasResults);
+  S.isFs = !!document.fullscreenElement;
+  document.body.classList.toggle('dark',    S.isFs);
+  document.body.classList.toggle('fs-mode', S.isFs);
+  btnFs.textContent = S.isFs ? 'Exit Full Screen' : 'Full Screen';
+  updateFsBar();
   resizeCanvas();
 });
 
-// ── Digital ────────────────────────────────────
+function updateFsBar() {
+  const bar = document.getElementById('fs-bar');
+  bar.classList.toggle('show', S.isFs && S.hasResults);
+  // Sync visibility of fs cards to cat toggles
+  document.getElementById('fs-normal').style.display = S.cats.normal ? '' : 'none';
+  document.getElementById('fs-et25').style.display   = S.cats.et25   ? '' : 'none';
+  document.getElementById('fs-et50').style.display   = S.cats.et50   ? '' : 'none';
+}
+
+// ── Digital clock ─────────────────────────────────────────────────────────
 const DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 function updateDigital() {
   const n = new Date(), p = v => String(v).padStart(2,'0');
-  document.getElementById('digital-time').textContent = `${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
-  document.getElementById('digital-date').textContent = `${DAYS[n.getDay()]}  ${n.getDate()} ${MONTHS[n.getMonth()]} ${n.getFullYear()}`;
+  document.getElementById('digital-time').textContent =
+    `${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
+  document.getElementById('digital-date').textContent =
+    `${DAYS[n.getDay()]}  ${n.getDate()} ${MONTHS[n.getMonth()]} ${n.getFullYear()}`;
 }
 setInterval(updateDigital, 1000);
 updateDigital();
 
-// ── Analog ─────────────────────────────────────
+// ── Analog clock — Pyramid style ──────────────────────────────────────────
 const canvas = document.getElementById('analog-canvas');
 const ctx    = canvas.getContext('2d');
 
@@ -414,23 +716,26 @@ function resizeCanvas() {
   canvas.style.height = size + 'px';
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
-
 new ResizeObserver(resizeCanvas).observe(document.getElementById('analog-wrap'));
 resizeCanvas();
 
-function drawHand(cx, cy, angle, len, hw, color) {
-  const co = Math.cos(angle), si = Math.sin(angle);
-  const pc = Math.cos(angle + Math.PI/2), ps = Math.sin(angle + Math.PI/2);
+function drawBlockHand(cx, cy, angle, len, halfW, tailLen, color) {
+  // angle: 0=right, -π/2=up (12 o'clock)
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(angle + Math.PI / 2);
+  // After rotation, tip of hand goes in -y direction
   ctx.beginPath();
-  ctx.moveTo(cx + co * len, cy + si * len);
-  ctx.lineTo(cx + pc * hw * 0.6 + co * hw * 0.3, cy + ps * hw * 0.6 + si * hw * 0.3);
-  ctx.lineTo(cx + pc * hw * 0.25 - co * hw * 0.4, cy + ps * hw * 0.25 - si * hw * 0.4);
-  ctx.lineTo(cx - co * hw * 0.55, cy - si * hw * 0.55);
-  ctx.lineTo(cx - pc * hw * 0.25 - co * hw * 0.4, cy - ps * hw * 0.25 - si * hw * 0.4);
-  ctx.lineTo(cx - pc * hw * 0.6 + co * hw * 0.3, cy - ps * hw * 0.6 + si * hw * 0.3);
+  ctx.moveTo(-halfW,       tailLen);      // base-left
+  ctx.lineTo(-halfW,      -len * 0.55);   // left body
+  ctx.lineTo(-halfW * 0.3,-len);          // tip-left
+  ctx.lineTo( halfW * 0.3,-len);          // tip-right
+  ctx.lineTo( halfW,      -len * 0.55);   // right body
+  ctx.lineTo( halfW,       tailLen);      // base-right
   ctx.closePath();
   ctx.fillStyle = color;
   ctx.fill();
+  ctx.restore();
 }
 
 function drawClock() {
@@ -439,142 +744,356 @@ function drawClock() {
 
   ctx.clearRect(0, 0, sz, sz);
 
-  // Face
-  ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2*Math.PI);
+  // White face
+  ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI);
   ctx.fillStyle = '#ffffff'; ctx.fill();
 
-  // Outer rim
-  ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2*Math.PI);
-  ctx.strokeStyle = '#c0c0c0'; ctx.lineWidth = R * 0.04; ctx.stroke();
+  // Thick black bezel (Pyramid style)
+  ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI);
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = R * 0.09;
+  ctx.stroke();
 
-  // Subtle inner shadow ring
-  ctx.beginPath(); ctx.arc(cx, cy, R - R * 0.04, 0, 2*Math.PI);
-  ctx.strokeStyle = '#e8e8e8'; ctx.lineWidth = 1; ctx.stroke();
+  // Subtle inner highlight on bezel edge
+  ctx.beginPath(); ctx.arc(cx, cy, R - R * 0.045, 0, 2 * Math.PI);
+  ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+  ctx.lineWidth = R * 0.006;
+  ctx.stroke();
 
-  // Tick marks
+  // Tick marks (inside face, near rim)
+  const faceR = R - R * 0.09; // inner edge of bezel
   for (let i = 0; i < 60; i++) {
     const a = (i / 60) * 2 * Math.PI - Math.PI / 2;
     const isHour = i % 5 === 0;
+    const outer = faceR - R * 0.01;
+    const inner = outer - (isHour ? R * 0.085 : R * 0.044);
     ctx.beginPath();
-    ctx.moveTo(cx + Math.cos(a) * R * 0.96, cy + Math.sin(a) * R * 0.96);
-    ctx.lineTo(cx + Math.cos(a) * (isHour ? R * 0.84 : R * 0.90), cy + Math.sin(a) * (isHour ? R * 0.84 : R * 0.90));
-    ctx.strokeStyle = '#1a1a1a';
-    ctx.lineWidth = isHour ? R * 0.022 : R * 0.007;
+    ctx.moveTo(cx + Math.cos(a) * outer, cy + Math.sin(a) * outer);
+    ctx.lineTo(cx + Math.cos(a) * inner, cy + Math.sin(a) * inner);
+    ctx.strokeStyle = '#111';
+    ctx.lineWidth = isHour ? R * 0.025 : R * 0.008;
     ctx.lineCap = 'butt';
     ctx.stroke();
   }
 
   // Numbers
-  ctx.fillStyle = '#1a1a1a';
+  ctx.fillStyle = '#111111';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = `bold ${R * 0.18}px 'Segoe UI', Arial, sans-serif`;
+  ctx.font = `bold ${R * 0.2}px 'Segoe UI', Arial, sans-serif`;
+  const numR = faceR * 0.72;
   for (let i = 1; i <= 12; i++) {
     const a = (i / 12) * 2 * Math.PI - Math.PI / 2;
-    ctx.fillText(i, cx + Math.cos(a) * R * 0.71, cy + Math.sin(a) * R * 0.71);
+    ctx.fillText(i, cx + Math.cos(a) * numR, cy + Math.sin(a) * numR);
   }
 
   const now = new Date();
-  const s  = now.getSeconds() + now.getMilliseconds() / 1000;
+  const ms = now.getMilliseconds();
+  const s  = now.getSeconds() + ms / 1000;
   const m  = now.getMinutes() + s / 60;
   const h  = (now.getHours() % 12) + m / 60;
 
-  drawHand(cx, cy, (h  / 12) * 2 * Math.PI - Math.PI / 2, R * 0.5,  R * 0.036, '#1a1a1a');
-  drawHand(cx, cy, (m  / 60) * 2 * Math.PI - Math.PI / 2, R * 0.72, R * 0.022, '#1a1a1a');
+  // Hour hand
+  drawBlockHand(cx, cy, (h  / 12) * 2 * Math.PI - Math.PI / 2, R * 0.5,  R * 0.042, R * 0.07, '#111111');
+  // Minute hand
+  drawBlockHand(cx, cy, (m  / 60) * 2 * Math.PI - Math.PI / 2, R * 0.73, R * 0.027, R * 0.07, '#111111');
 
-  // Second hand
+  // Second hand (thin red)
   const sa = (s / 60) * 2 * Math.PI - Math.PI / 2;
   ctx.save();
-  ctx.strokeStyle = '#d42020'; ctx.lineWidth = R * 0.011; ctx.lineCap = 'round';
+  ctx.strokeStyle = '#cc0000';
+  ctx.lineWidth = R * 0.01;
+  ctx.lineCap = 'round';
   ctx.beginPath();
-  ctx.moveTo(cx - Math.cos(sa) * R * 0.22, cy - Math.sin(sa) * R * 0.22);
-  ctx.lineTo(cx + Math.cos(sa) * R * 0.82, cy + Math.sin(sa) * R * 0.82);
+  ctx.moveTo(cx - Math.cos(sa) * R * 0.2, cy - Math.sin(sa) * R * 0.2);
+  ctx.lineTo(cx + Math.cos(sa) * R * 0.84, cy + Math.sin(sa) * R * 0.84);
   ctx.stroke();
   ctx.restore();
 
-  ctx.beginPath(); ctx.arc(cx, cy, R * 0.03, 0, 2*Math.PI); ctx.fillStyle = '#d42020'; ctx.fill();
-  ctx.beginPath(); ctx.arc(cx, cy, R * 0.012, 0, 2*Math.PI); ctx.fillStyle = '#1a1a1a'; ctx.fill();
+  // Center bushing (gray cap)
+  ctx.beginPath(); ctx.arc(cx, cy, R * 0.032, 0, 2 * Math.PI);
+  ctx.fillStyle = '#888'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx, cy, R * 0.013, 0, 2 * Math.PI);
+  ctx.fillStyle = '#555'; ctx.fill();
 }
 
 (function loop() { drawClock(); requestAnimationFrame(loop); })();
 
-// ── Calculator ─────────────────────────────────
-let calcMode = 'forward'; // 'forward' = from start, 'backward' = from end
-
-document.querySelectorAll('.mode-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    calcMode = btn.dataset.mode;
-    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('time-label').textContent =
-      calcMode === 'forward' ? 'Start Time' : 'End Time';
-    document.getElementById('inp-time').value =
-      calcMode === 'forward' ? '09:00' : '10:15';
-  });
-});
-
-function toMins(timeStr) {
-  const [h, m] = timeStr.split(':').map(Number);
+// ── Time helpers ───────────────────────────────────────────────────────────
+function toMins(str) {
+  const [h, m] = str.split(':').map(Number);
   return h * 60 + m;
 }
 
-function fromMins(totalMins) {
+function fmtMins(total) {
   const pad = n => String(n).padStart(2, '0');
-  const t = ((totalMins % 1440) + 1440) % 1440;
-  const frac = totalMins - Math.floor(totalMins);
-  const secs = Math.round(frac * 60);
-  if (secs > 0) {
-    return `${pad(Math.floor(t / 60))}:${pad(Math.floor(t % 60))}:${pad(secs)}`;
-  }
-  return `${pad(Math.floor(t / 60))}:${pad(Math.floor(t % 60))}`;
+  const t   = ((total % 1440) + 1440) % 1440;
+  const h   = Math.floor(t / 60);
+  const m   = Math.floor(t % 60);
+  const sec = Math.round((total - Math.floor(total)) * 60);
+  return sec > 0
+    ? `${pad(h)}:${pad(m)}:${pad(sec)}`
+    : `${pad(h)}:${pad(m)}`;
 }
 
+// ── Category toggles ───────────────────────────────────────────────────────
+document.querySelectorAll('.cat-tog').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const cat = btn.dataset.cat;
+    S.cats[cat] = !S.cats[cat];
+    btn.classList.toggle('off', !S.cats[cat]);
+    document.getElementById('card-' + cat).classList.toggle('hidden', !S.cats[cat]);
+    updateFsBar();
+  });
+});
+
+// ── Calculator ─────────────────────────────────────────────────────────────
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    S.calcMode = btn.dataset.mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('inp-time-label').textContent =
+      S.calcMode === 'forward' ? 'Start Time' : 'End Time';
+    document.getElementById('inp-time').value =
+      S.calcMode === 'forward' ? '09:00' : '10:15';
+  });
+});
+
 document.getElementById('btn-calc').addEventListener('click', () => {
-  const timeVal  = document.getElementById('inp-time').value;
-  const lenH     = parseInt(document.getElementById('inp-h').value) || 0;
-  const lenM     = parseInt(document.getElementById('inp-m').value) || 0;
-  const lenMins  = lenH * 60 + lenM;
+  const timeVal = document.getElementById('inp-time').value;
+  const lenH    = parseInt(document.getElementById('inp-h').value) || 0;
+  const lenM    = parseInt(document.getElementById('inp-m').value) || 0;
+  const lenMins = lenH * 60 + lenM;
   if (!timeVal || lenMins <= 0) return;
 
-  const refMins = toMins(timeVal);
+  const ref = toMins(timeVal);
+  const startMins = S.calcMode === 'forward' ? ref : ref - lenMins;
+  const endMins   = startMins + lenMins;
 
-  let startMins, endMins;
-  if (calcMode === 'forward') {
-    startMins = refMins;
-    endMins   = refMins + lenMins;
-  } else {
-    endMins   = refMins;
-    startMins = refMins - lenMins;
-  }
+  S.startMins  = startMins;
+  S.normalEnd  = endMins;
+  S.et25End    = startMins + lenMins * 1.25;
+  S.et50End    = startMins + lenMins * 1.50;
+  S.hasResults = true;
 
-  const e25End = startMins + lenMins * 1.25;
-  const e50End = startMins + lenMins * 1.50;
-
-  const fmt = fromMins;
-  const start = fmt(startMins);
-  const end   = fmt(endMins);
-  const end25 = fmt(e25End);
-  const end50 = fmt(e50End);
+  const ss = fmtMins(startMins);
 
   // Panel
-  document.getElementById('n-start').textContent   = start;
-  document.getElementById('n-end').textContent     = end;
-  document.getElementById('e25-start').textContent = start;
-  document.getElementById('e25-end').textContent   = end25;
-  document.getElementById('e50-start').textContent = start;
-  document.getElementById('e50-end').textContent   = end50;
-  document.getElementById('results-grid').classList.add('show');
+  document.getElementById('r-n-start').textContent  = ss;
+  document.getElementById('r-n-end').textContent    = fmtMins(S.normalEnd);
+  document.getElementById('r-25-start').textContent = ss;
+  document.getElementById('r-25-end').textContent   = fmtMins(S.et25End);
+  document.getElementById('r-50-start').textContent = ss;
+  document.getElementById('r-50-end').textContent   = fmtMins(S.et50End);
 
-  // Fullscreen bar
-  document.getElementById('fs-n-start').textContent   = start;
-  document.getElementById('fs-n-end').textContent     = end;
-  document.getElementById('fs-e25-start').textContent = start;
-  document.getElementById('fs-e25-end').textContent   = end25;
-  document.getElementById('fs-e50-start').textContent = start;
-  document.getElementById('fs-e50-end').textContent   = end50;
+  // FS bar
+  document.getElementById('fs-n-s').textContent  = ss;
+  document.getElementById('fs-n-e').textContent  = fmtMins(S.normalEnd);
+  document.getElementById('fs-25-s').textContent = ss;
+  document.getElementById('fs-25-e').textContent = fmtMins(S.et25End);
+  document.getElementById('fs-50-s').textContent = ss;
+  document.getElementById('fs-50-e').textContent = fmtMins(S.et50End);
 
-  hasResults = true;
-  if (isFs) document.getElementById('fs-bar').classList.add('show');
+  // Refresh all student times
+  renderAllStudentTimes();
+  updateFsBar();
+});
+
+// ── Students ───────────────────────────────────────────────────────────────
+function studentBaseEnd(cat) {
+  return { normal: S.normalEnd, et25: S.et25End, et50: S.et50End }[cat];
+}
+
+function studentAdjustedEnd(student) {
+  const base = studentBaseEnd(student.cat);
+  if (base === null) return null;
+  let breakTotal = 0;
+  student.breaks.forEach(b => {
+    if (b.start && b.end) {
+      const d = toMins(b.end) - toMins(b.start);
+      if (d > 0) breakTotal += d;
+    }
+  });
+  return base + breakTotal;
+}
+
+function buildStudentCard(student) {
+  const div = document.createElement('div');
+  div.className = 'student-card';
+  div.dataset.id = student.id;
+
+  const breaksHtml = student.breaks.map((b, i) => `
+    <div class="break-row">
+      <span class="break-lbl">Break ${i + 1}</span>
+      <input type="time" class="break-time-inp break-start" data-id="${student.id}" data-idx="${i}" value="${b.start}">
+      <span class="break-to">to</span>
+      <input type="time" class="break-time-inp break-end"   data-id="${student.id}" data-idx="${i}" value="${b.end}">
+      <button class="break-rem" data-id="${student.id}" data-idx="${i}" title="Remove break">×</button>
+    </div>
+  `).join('');
+
+  const adjEnd   = studentAdjustedEnd(student);
+  const startStr = S.startMins !== null ? fmtMins(S.startMins) : '—';
+  const endStr   = adjEnd !== null ? fmtMins(adjEnd) : '—';
+
+  let breakSummary = '';
+  let totalBreak = 0;
+  student.breaks.forEach(b => {
+    if (b.start && b.end) { const d = toMins(b.end) - toMins(b.start); if (d > 0) totalBreak += d; }
+  });
+  if (totalBreak > 0) breakSummary = `<span class="sc-breaks-summary">(+${totalBreak} min break)</span>`;
+
+  div.innerHTML = `
+    <div class="sc-header">
+      <input class="sc-name-input" type="text" placeholder="Student name…" value="${student.name}" data-id="${student.id}">
+      <select class="sc-cat-sel" data-id="${student.id}">
+        <option value="normal" ${student.cat === 'normal' ? 'selected' : ''}>Normal</option>
+        <option value="et25"   ${student.cat === 'et25'   ? 'selected' : ''}>25% ET</option>
+        <option value="et50"   ${student.cat === 'et50'   ? 'selected' : ''}>50% ET</option>
+      </select>
+      <button class="sc-remove" data-id="${student.id}" title="Remove student">×</button>
+    </div>
+    <div class="sc-breaks">
+      ${breaksHtml}
+      <button class="sc-add-break" data-id="${student.id}">+ Add Break</button>
+    </div>
+    <div class="sc-result">
+      <span class="sc-start">${startStr}</span>
+      <span class="sc-arrow-d">→</span>
+      <span class="sc-end">${endStr}</span>
+      ${breakSummary}
+    </div>
+  `;
+  return div;
+}
+
+function renderStudents() {
+  const list = document.getElementById('students-list');
+  list.innerHTML = '';
+  S.students.forEach(s => list.appendChild(buildStudentCard(s)));
+}
+
+function updateStudentCard(id) {
+  const card = document.querySelector(`.student-card[data-id="${id}"]`);
+  if (!card) return;
+  const student = S.students.find(s => s.id === id);
+  if (!student) return;
+
+  const adjEnd   = studentAdjustedEnd(student);
+  const startStr = S.startMins !== null ? fmtMins(S.startMins) : '—';
+  const endStr   = adjEnd !== null ? fmtMins(adjEnd) : '—';
+
+  let totalBreak = 0;
+  student.breaks.forEach(b => {
+    if (b.start && b.end) { const d = toMins(b.end) - toMins(b.start); if (d > 0) totalBreak += d; }
+  });
+
+  card.querySelector('.sc-start').textContent = startStr;
+  card.querySelector('.sc-end').textContent   = endStr;
+
+  let summary = card.querySelector('.sc-breaks-summary');
+  if (totalBreak > 0) {
+    if (!summary) {
+      summary = document.createElement('span');
+      summary.className = 'sc-breaks-summary';
+      card.querySelector('.sc-result').appendChild(summary);
+    }
+    summary.textContent = `(+${totalBreak} min break)`;
+  } else if (summary) {
+    summary.remove();
+  }
+}
+
+function renderAllStudentTimes() {
+  S.students.forEach(s => updateStudentCard(s.id));
+}
+
+// Student event delegation
+const studentList = document.getElementById('students-list');
+
+studentList.addEventListener('input', e => {
+  const id  = parseInt(e.target.dataset.id);
+  const idx = parseInt(e.target.dataset.idx);
+  const student = S.students.find(s => s.id === id);
+  if (!student) return;
+
+  if (e.target.classList.contains('sc-name-input')) {
+    student.name = e.target.value;
+  } else if (e.target.classList.contains('sc-cat-sel')) {
+    student.cat = e.target.value;
+    updateStudentCard(id);
+  } else if (e.target.classList.contains('break-start')) {
+    student.breaks[idx].start = e.target.value;
+    updateStudentCard(id);
+  } else if (e.target.classList.contains('break-end')) {
+    student.breaks[idx].end = e.target.value;
+    updateStudentCard(id);
+  }
+});
+
+studentList.addEventListener('click', e => {
+  const id  = parseInt(e.target.dataset.id);
+  const idx = parseInt(e.target.dataset.idx);
+
+  if (e.target.classList.contains('sc-remove')) {
+    S.students = S.students.filter(s => s.id !== id);
+    renderStudents();
+  } else if (e.target.classList.contains('sc-add-break')) {
+    const student = S.students.find(s => s.id === id);
+    if (student) { student.breaks.push({ start: '', end: '' }); renderStudents(); }
+  } else if (e.target.classList.contains('break-rem')) {
+    const student = S.students.find(s => s.id === id);
+    if (student) { student.breaks.splice(idx, 1); renderStudents(); }
+  }
+});
+
+document.getElementById('btn-add-student').addEventListener('click', () => {
+  S.students.push({ id: S.nextId++, name: '', cat: 'normal', breaks: [{ start: '', end: '' }] });
+  renderStudents();
+  // Scroll results col to bottom
+  const col = document.getElementById('results-col');
+  col.scrollTop = col.scrollHeight;
+});
+
+// ── CSV Export ─────────────────────────────────────────────────────────────
+document.getElementById('btn-export').addEventListener('click', () => {
+  const pad = n => String(n).padStart(2, '0');
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+
+  let csv = 'Type,Name,Category,Start Time,Base End Time,Total Break (mins),Adjusted End Time\n';
+
+  const ss = S.startMins !== null ? fmtMins(S.startMins) : '';
+
+  const cats = [
+    { key: 'normal', label: 'Normal Exam End Time', end: S.normalEnd },
+    { key: 'et25',   label: '25% Extra Time End',   end: S.et25End },
+    { key: 'et50',   label: '50% Extra Time End',   end: S.et50End },
+  ];
+  cats.forEach(c => {
+    const e = c.end !== null ? fmtMins(c.end) : '';
+    csv += `Category,"${c.label}","${c.key}",${ss},${e},0,${e}\n`;
+  });
+
+  S.students.forEach(student => {
+    const catLabels = { normal: 'Normal', et25: '25% ET', et50: '50% ET' };
+    const base = studentBaseEnd(student.cat);
+    const baseStr = base !== null ? fmtMins(base) : '';
+    let totalBreak = 0;
+    student.breaks.forEach(b => {
+      if (b.start && b.end) { const d = toMins(b.end) - toMins(b.start); if (d > 0) totalBreak += d; }
+    });
+    const adj = studentAdjustedEnd(student);
+    const adjStr = adj !== null ? fmtMins(adj) : '';
+    csv += `Student,"${(student.name || 'Unnamed').replace(/"/g,'""')}","${catLabels[student.cat]}",${ss},${baseStr},${totalBreak},${adjStr}\n`;
+  });
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = `exam-times-${dateStr}.csv`; a.click();
+  URL.revokeObjectURL(url);
 });
 </script>
 </body>
