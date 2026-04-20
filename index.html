@@ -618,8 +618,9 @@ function cpState(cpTimeMins) {
 
 // Apply a cpState to a .cp-notice element
 function applyCpState(el, state) {
-  if (!S.changePen || !state) { el.className = 'cp-notice hidden'; return; }
-  el.className = 'cp-notice' + (state.cls ? ' ' + state.cls : '');
+  el.classList.remove('hidden', 'cp-soon', 'cp-now');
+  if (!S.changePen || !state) { el.classList.add('hidden'); return; }
+  if (state.cls) el.classList.add(state.cls);
   el.textContent = state.text;
 }
 
@@ -638,7 +639,7 @@ function updateAllCpNotices() {
     if (!card) return;
     const el = card.querySelector('.sc-cp-notice');
     if (!el) return;
-    if (st.cat === 'normal') { el.className = 'cp-notice hidden'; return; }
+    if (st.cat === 'normal') { applyCpState(el, null); return; }
     applyCpState(el, cpState(studentCpTime(st)));
   });
 }
@@ -824,7 +825,7 @@ function refreshCard(id) {
     if (st.cat !== 'normal' && S.changePen && cpT !== null) {
       applyCpState(cpEl, cpSt);
     } else {
-      cpEl.className = 'cp-notice sc-cp-notice hidden';
+      applyCpState(cpEl, null);
     }
   }
 }
