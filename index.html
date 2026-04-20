@@ -55,7 +55,7 @@
       font-size: clamp(3rem, 13vw, 11rem); font-weight: 200;
       letter-spacing: .04em; font-variant-numeric: tabular-nums; line-height: 1;
     }
-    #digital-date { margin-top: .4rem; font-size: clamp(.85rem, 1.8vw, 1.5rem); font-weight: 300; color: #999; letter-spacing: .06em; }
+    #digital-date { margin-top: .4rem; font-size: clamp(.85rem, 1.8vw, 1.5rem); font-weight: 300; color: #999; }
 
     /* ── Results column ── */
     #results-col {
@@ -78,7 +78,7 @@
     body.dark #setup-head { background: #2a2a2a; color: #888; }
     #setup-arrow { transition: transform .2s; font-size: .7rem; }
     #setup-section.closed #setup-arrow { transform: rotate(-90deg); }
-    #setup-body { padding: .5rem .7rem; border-top: 1px solid #e0e0e0; }
+    #setup-body { padding: .5rem .7rem; border-top: 1px solid #e0e0e0; display: flex; flex-direction: column; gap: .4rem; }
     body.dark #setup-body { border-color: #484848; }
     #setup-section.closed #setup-body { display: none; }
 
@@ -111,69 +111,107 @@
     }
     body.dark #btn-calc { background: #e0e0e0; color: #1a1a1a; }
 
-    /* mode hint */
-    .mode-hint { font-size: .68rem; color: #aaa; margin-top: .35rem; font-style: italic; }
-    body.dark .mode-hint { color: #666; }
+    .mode-hint { font-size: .68rem; color: #aaa; font-style: italic; }
+
+    .setup-instructions {
+      padding: .4rem .5rem; background: #f5f7ff; border-radius: 6px; border: 1px solid #e0e5f5;
+      font-size: .73rem; color: #555; line-height: 1.55;
+    }
+    body.dark .setup-instructions { background: #222b3a; border-color: #334; color: #99a; }
+    .setup-instructions strong { color: #333; }
+    body.dark .setup-instructions strong { color: #bbc; }
+    .setup-instructions ol { margin-left: 1rem; }
+    .setup-instructions li { margin-bottom: .15rem; }
 
     /* ── Category toggles ── */
     #cat-toggles {
-      display: flex; gap: .35rem; flex-wrap: wrap;
+      display: flex; gap: .35rem; flex-wrap: wrap; align-items: center;
       padding-bottom: .35rem; border-bottom: 1px solid #eee; flex-shrink: 0;
     }
     body.dark #cat-toggles { border-color: #444; }
+
     .cat-tog {
       padding: .2rem .65rem; border: 1.5px solid #1a1a1a; background: #1a1a1a;
       color: #fff; border-radius: 20px; font-size: .72rem; font-weight: 600;
-      cursor: pointer; letter-spacing: .04em; transition: background .15s, color .15s, border-color .15s;
+      cursor: pointer; letter-spacing: .04em; transition: background .15s, color .15s;
     }
     .cat-tog.off { background: transparent; color: #aaa; border-color: #ccc; text-decoration: line-through; }
     body.dark .cat-tog { border-color: #ddd; background: #ddd; color: #1a1a1a; }
     body.dark .cat-tog.off { background: transparent; color: #555; border-color: #555; }
 
+    #cp-toggle {
+      padding: .2rem .65rem; border: 1.5px solid #2d7a4f; background: transparent;
+      color: #2d7a4f; border-radius: 20px; font-size: .72rem; font-weight: 600;
+      cursor: pointer; letter-spacing: .04em; transition: background .15s, color .15s;
+      margin-left: auto;
+    }
+    #cp-toggle.on { background: #2d7a4f; color: #fff; }
+    body.dark #cp-toggle { border-color: #4aba7f; color: #4aba7f; }
+    body.dark #cp-toggle.on { background: #2d7a4f; color: #fff; }
+
     /* ── Category cards ── */
     .cat-card {
       padding: .4rem .65rem; border: 1px solid #e5e5e5; border-radius: 8px;
-      background: #fafafa; flex-shrink: 0;
+      background: #fafafa; flex-shrink: 0; display: flex; flex-direction: column; gap: .25rem;
     }
     body.dark .cat-card { background: #2a2a2a; border-color: #444; }
     .cat-card.hidden { display: none; }
-    .cat-card-label { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #888; margin-bottom: .2rem; }
+    .cat-card-label { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #888; }
     .cat-times { display: flex; align-items: baseline; gap: .4rem; }
     .ct-start { font-size: clamp(.95rem, 1.7vw, 1.5rem); font-variant-numeric: tabular-nums; color: #999; }
     .ct-arrow { color: #ccc; font-size: clamp(.8rem, 1.2vw, 1.1rem); }
     .ct-end   { font-size: clamp(1.6rem, 2.8vw, 2.8rem); font-weight: 700; font-variant-numeric: tabular-nums; }
 
+    /* Change pen notice — used in both cat cards and student cards */
+    .cp-notice {
+      padding: .3rem .55rem; border-radius: 6px; border: 1px solid #ddd;
+      background: #fafafa; font-size: .78rem; color: #555;
+      transition: background .6s, border-color .6s, color .6s;
+    }
+    .cp-notice.hidden { display: none; }
+    .cp-notice.cp-soon { background: #fff8e1; border-color: #f0c050; color: #7a5c00; }
+    .cp-notice.cp-now  { background: #d4edda; border-color: #7ec89a; color: #155724; font-weight: 600; }
+    body.dark .cp-notice { background: #252525; border-color: #444; color: #aaa; }
+    body.dark .cp-notice.cp-soon { background: #332a00; border-color: #806000; color: #f0c050; }
+    body.dark .cp-notice.cp-now  { background: #1a3d2a; border-color: #3a8a5a; color: #7eda9f; }
+
     /* ── Actions bar ── */
-    #actions-bar { display: flex; gap: .4rem; flex-wrap: wrap; flex-shrink: 0; padding-top: .1rem; }
+    #actions-bar { display: flex; gap: .4rem; flex-wrap: wrap; flex-shrink: 0; margin-top: .1rem; }
+
     #btn-add-student {
       flex: 1; padding: .32rem .6rem; border: 1.5px dashed #bbb;
       background: transparent; border-radius: 6px; font-size: .78rem; color: #888; cursor: pointer;
     }
     #btn-add-student:hover { border-color: #888; color: #555; }
+
     #btn-collapse-all {
-      padding: .32rem .65rem; border: 1px solid #ccc; background: transparent;
-      border-radius: 6px; font-size: .78rem; cursor: pointer; color: #666; white-space: nowrap;
+      padding: .32rem .7rem; border: 1.5px solid #1a1a1a; background: transparent;
+      border-radius: 6px; font-size: .78rem; font-weight: 600; cursor: pointer; color: #1a1a1a;
+      white-space: nowrap;
     }
-    #btn-collapse-all:hover { border-color: #888; color: #333; }
-    body.dark #btn-collapse-all { border-color: #555; color: #999; }
+    #btn-collapse-all:hover { background: #1a1a1a; color: #fff; }
+    body.dark #btn-collapse-all { border-color: #ddd; color: #ddd; }
+    body.dark #btn-collapse-all:hover { background: #ddd; color: #111; }
+
     #btn-export {
-      padding: .32rem .65rem; border: 1px solid #1a1a1a; background: transparent;
-      border-radius: 6px; font-size: .78rem; font-weight: 600; color: #1a1a1a; cursor: pointer;
+      padding: .32rem .65rem; border: 1px solid #555; background: transparent;
+      border-radius: 6px; font-size: .78rem; color: #555; cursor: pointer;
     }
-    #btn-export:hover { background: #1a1a1a; color: #fff; }
-    body.dark #btn-export { border-color: #ddd; color: #ddd; }
-    body.dark #btn-export:hover { background: #ddd; color: #111; }
+    #btn-export:hover { background: #555; color: #fff; }
+    body.dark #btn-export { border-color: #888; color: #888; }
 
     /* ── Student cards ── */
     #students-list { display: flex; flex-direction: column; gap: .4rem; }
 
     .student-card {
       border: 1px solid #e5e5e5; border-radius: 8px; background: #fafafa;
-      padding: .4rem .6rem; display: flex; flex-direction: column; gap: .25rem;
+      overflow: hidden; transition: background .3s, border-color .3s;
     }
     body.dark .student-card { background: #2a2a2a; border-color: #444; }
 
-    /* Row 1: name | category | end-time | collapse | × */
+    /* Always-visible top section */
+    .sc-top { padding: .4rem .6rem; display: flex; flex-direction: column; gap: .22rem; }
+
     .sc-row1 { display: flex; align-items: center; gap: .3rem; }
 
     .sc-name-input {
@@ -195,15 +233,6 @@
       font-variant-numeric: tabular-nums; white-space: nowrap; flex-shrink: 0;
     }
 
-    .sc-collapse-btn {
-      width: 1.4rem; height: 1.4rem; border: none; background: transparent; color: #bbb;
-      font-size: .7rem; cursor: pointer; border-radius: 3px; display: flex;
-      align-items: center; justify-content: center; flex-shrink: 0; transition: transform .2s;
-    }
-    .sc-collapse-btn:hover { color: #666; }
-    .student-card.sc-expanded .sc-collapse-btn { transform: rotate(0deg); }
-    .student-card:not(.sc-expanded) .sc-collapse-btn { transform: rotate(-90deg); }
-
     .sc-remove {
       width: 1.4rem; height: 1.4rem; border: none; background: transparent; color: #ccc;
       font-size: .95rem; cursor: pointer; border-radius: 4px; display: flex;
@@ -211,35 +240,51 @@
     }
     .sc-remove:hover { background: #fee; color: #c00; }
 
-    /* Row 2: start → break summary (always visible) */
     .sc-row2 { display: flex; align-items: center; gap: .35rem; }
+    .sc-row2 .sc-cp-notice { margin-left: auto; flex-shrink: 0; }
     .sc-starttime { font-size: clamp(.78rem, 1.2vw, 1rem); color: #999; font-variant-numeric: tabular-nums; }
     .sc-break-summary { font-size: .7rem; color: #aaa; }
 
-    /* Expandable section — hidden when collapsed */
-    .sc-expand-body { display: flex; flex-direction: column; gap: .22rem; }
+    /* Expand/collapse toggle — full-width, clearly visible */
+    .sc-expand-btn {
+      width: 100%; padding: .3rem; border: none; border-top: 1px solid #eee;
+      background: #f5f5f5; color: #777; font-size: .75rem; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      gap: .3rem; letter-spacing: .04em; transition: background .15s, color .15s;
+    }
+    .sc-expand-btn:hover { background: #ebebeb; color: #333; }
+    body.dark .sc-expand-btn { background: #252525; border-color: #383838; color: #777; }
+    body.dark .sc-expand-btn:hover { background: #2e2e2e; color: #bbb; }
+    .student-card.sc-expanded .sc-expand-btn { background: #f0f0f0; }
+    body.dark .student-card.sc-expanded .sc-expand-btn { background: #222; }
+
+    /* Expandable breaks section */
+    .sc-expand-body {
+      border-top: 1px solid #eee; padding: .4rem .6rem;
+      display: flex; flex-direction: column; gap: .22rem;
+    }
+    body.dark .sc-expand-body { border-color: #383838; }
     .student-card:not(.sc-expanded) .sc-expand-body { display: none; }
 
-    /* Breaks grid: 2 per row */
+    /* Breaks grid */
     .sc-breaks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .22rem .35rem; }
 
     .break-item {
       display: flex; align-items: center; gap: .15rem;
-      background: #f4f4f4; border-radius: 5px; padding: .15rem .28rem;
+      background: #f0f0f0; border-radius: 5px; padding: .15rem .28rem;
     }
-    body.dark .break-item { background: #232323; }
-    .bi-lbl { font-size: .58rem; color: #bbb; text-transform: uppercase; letter-spacing: .05em; min-width: 1.3rem; }
+    body.dark .break-item { background: #1e1e1e; }
+    .bi-lbl { font-size: .58rem; color: #bbb; text-transform: uppercase; min-width: 1.3rem; }
     .bi-time {
       padding: .13rem .18rem; border: 1px solid #e0e0e0; border-radius: 3px;
       font-size: .73rem; font-variant-numeric: tabular-nums; background: #fff; color: inherit; outline: none; width: 5.4rem;
     }
-    body.dark .bi-time { background: #1e1e1e; border-color: #484848; color-scheme: dark; }
-    .bi-time:focus { border-color: #888; }
+    body.dark .bi-time { background: #1a1a1a; border-color: #484848; color-scheme: dark; }
     .bi-sep { font-size: .68rem; color: #ccc; flex-shrink: 0; }
     .break-rem {
       width: 1.1rem; height: 1.1rem; border: none; background: transparent; color: #ccc;
-      font-size: .8rem; cursor: pointer; border-radius: 3px; display: flex;
-      align-items: center; justify-content: center; flex-shrink: 0; margin-left: auto;
+      font-size: .8rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-left: auto; border-radius: 3px;
     }
     .break-rem:hover { background: #fee; color: #c00; }
     .sc-add-break {
@@ -247,47 +292,6 @@
       background: transparent; border-radius: 4px; font-size: .7rem; color: #999; cursor: pointer;
     }
     .sc-add-break:hover { border-color: #888; color: #555; }
-
-    /* ── Change pen toggle ── */
-    #cp-toggle {
-      padding: .2rem .65rem; border: 1.5px solid #2d7a4f; background: transparent;
-      color: #2d7a4f; border-radius: 20px; font-size: .72rem; font-weight: 600;
-      cursor: pointer; letter-spacing: .04em; transition: background .15s, color .15s;
-      margin-left: auto;
-    }
-    #cp-toggle.on { background: #2d7a4f; color: #fff; }
-    body.dark #cp-toggle { border-color: #4aba7f; color: #4aba7f; }
-    body.dark #cp-toggle.on { background: #2d7a4f; color: #fff; }
-
-    /* ── Change pen notice ── */
-    #cp-notice {
-      padding: .45rem .7rem; border-radius: 8px; border: 1px solid #ddd;
-      background: #fafafa; font-size: .82rem; color: #555;
-      transition: background .6s, border-color .6s, color .6s;
-      flex-shrink: 0;
-    }
-    #cp-notice.hidden { display: none; }
-    #cp-notice.cp-soon {
-      background: #fff8e1; border-color: #f0c050; color: #7a5c00;
-    }
-    #cp-notice.cp-now {
-      background: #d4edda; border-color: #7ec89a; color: #155724;
-      font-weight: 600; font-size: .88rem;
-    }
-    body.dark #cp-notice { background: #2a2a2a; border-color: #444; color: #aaa; }
-    body.dark #cp-notice.cp-now { background: #1a3d2a; border-color: #3a8a5a; color: #7eda9f; }
-
-    /* ── Setup instructions ── */
-    .setup-instructions {
-      margin-top: .45rem; padding: .4rem .5rem; background: #f5f7ff;
-      border-radius: 6px; border: 1px solid #e0e5f5;
-      font-size: .73rem; color: #555; line-height: 1.55;
-    }
-    body.dark .setup-instructions { background: #222b3a; border-color: #334; color: #99a; }
-    .setup-instructions strong { color: #333; }
-    body.dark .setup-instructions strong { color: #bbc; }
-    .setup-instructions ol { margin-left: 1rem; }
-    .setup-instructions li { margin-bottom: .18rem; }
 
     /* ── Fullscreen overlay ── */
     #fs-bar {
@@ -359,11 +363,11 @@
         <div class="setup-instructions">
           <strong>How to use:</strong>
           <ol>
-            <li><strong>From Start</strong> — enter when the exam begins. Each group's end time is calculated forward based on their allowance.</li>
-            <li><strong>From End</strong> — enter the fixed finish time for all groups. Start times are calculated backward so everyone finishes at the same time.</li>
+            <li><strong>From Start</strong> — enter when the exam begins. Each group's end time is calculated forward.</li>
+            <li><strong>From End</strong> — enter the fixed finish time. Start times are calculated backward so everyone finishes together.</li>
             <li>Toggle <strong>Normal / 25% / 50% Extra Time</strong> to show only the groups in your room.</li>
-            <li>Enable <strong>Change Pen</strong> to display a live reminder when extra time students move into their additional time.</li>
-            <li>Use <strong>Add student for rest breaks</strong> to add individuals with timed breaks — their end time adjusts automatically.</li>
+            <li>Enable <strong>Change Pen</strong> to show a live reminder on each group when their extra time begins. Students with rest breaks get their own adjusted reminder.</li>
+            <li>Use <strong>Add student for rest breaks</strong> to add individuals with timed breaks — end time and change pen time adjust automatically.</li>
           </ol>
         </div>
       </div>
@@ -374,7 +378,7 @@
       <button class="cat-tog"     data-cat="normal">Normal</button>
       <button class="cat-tog"     data-cat="et25">25% Extra Time</button>
       <button class="cat-tog off" data-cat="et50">50% Extra Time</button>
-      <button id="cp-toggle" title="Show a live reminder when ET students enter their extra time">Change Pen</button>
+      <button id="cp-toggle" title="Show per-group change pen reminders">Change Pen</button>
     </div>
 
     <!-- Category cards -->
@@ -394,6 +398,7 @@
         <span class="ct-arrow">→</span>
         <span class="ct-end"   id="r-25-e">—</span>
       </div>
+      <div class="cp-notice hidden" id="cp-card-et25"></div>
     </div>
 
     <div class="cat-card hidden" id="card-et50">
@@ -403,10 +408,8 @@
         <span class="ct-arrow">→</span>
         <span class="ct-end"   id="r-50-e">—</span>
       </div>
+      <div class="cp-notice hidden" id="cp-card-et50"></div>
     </div>
-
-    <!-- Change pen notice (live) -->
-    <div id="cp-notice" class="hidden"></div>
 
     <!-- Students -->
     <div id="students-list"></div>
@@ -414,7 +417,7 @@
     <!-- Actions -->
     <div id="actions-bar">
       <button id="btn-add-student">+ Add student for rest breaks</button>
-      <button id="btn-collapse-all">Collapse All</button>
+      <button id="btn-collapse-all">▸ Expand All</button>
       <button id="btn-export">Export CSV</button>
     </div>
 
@@ -446,16 +449,17 @@
 <script>
 // ── State ─────────────────────────────────────────────────────────────────
 const S = {
-  calcMode: 'forward',
-  // Per-category times (start and end may differ by mode)
+  calcMode:   'forward',
+  normalLen:  null,           // paper length in mins (stored for change pen calc)
   normal: { start: null, end: null, on: true  },
   et25:   { start: null, end: null, on: true  },
   et50:   { start: null, end: null, on: false },
+  changePen:  false,
   students:   [],
   nextId:     1,
   hasResults: false,
   isFs:       false,
-  allCollapsed: false,
+  allExpanded: false,
 };
 
 // ── Tabs ───────────────────────────────────────────────────────────────────
@@ -514,67 +518,55 @@ function resizeCanvas() {
   const size = Math.min(wrap.clientWidth, wrap.clientHeight);
   if (size < 1) return;
   const dpr = window.devicePixelRatio || 1;
-  canvas.width  = size * dpr;
-  canvas.height = size * dpr;
-  canvas.style.width  = size + 'px';
-  canvas.style.height = size + 'px';
+  canvas.width  = size * dpr; canvas.height = size * dpr;
+  canvas.style.width = size + 'px'; canvas.style.height = size + 'px';
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 new ResizeObserver(resizeCanvas).observe(document.getElementById('analog-wrap'));
 resizeCanvas();
 
 function drawBlockHand(cx, cy, angle, len, halfW, tailLen, color) {
-  ctx.save();
-  ctx.translate(cx, cy);
-  ctx.rotate(angle + Math.PI / 2);
+  ctx.save(); ctx.translate(cx, cy); ctx.rotate(angle + Math.PI/2);
   ctx.beginPath();
-  ctx.moveTo(-halfW, tailLen); ctx.lineTo(-halfW, -len*0.55);
-  ctx.lineTo(-halfW*0.3, -len); ctx.lineTo(halfW*0.3, -len);
-  ctx.lineTo(halfW, -len*0.55); ctx.lineTo(halfW, tailLen);
-  ctx.closePath();
-  ctx.fillStyle = color; ctx.fill();
-  ctx.restore();
+  ctx.moveTo(-halfW, tailLen); ctx.lineTo(-halfW, -len*.55);
+  ctx.lineTo(-halfW*.3, -len); ctx.lineTo(halfW*.3, -len);
+  ctx.lineTo(halfW, -len*.55); ctx.lineTo(halfW, tailLen);
+  ctx.closePath(); ctx.fillStyle = color; ctx.fill(); ctx.restore();
 }
 
 function drawClock() {
-  const sz = canvas.width / (window.devicePixelRatio || 1);
-  const cx = sz/2, cy = sz/2, R = sz*0.44;
-  ctx.clearRect(0, 0, sz, sz);
-
+  const sz = canvas.width/(window.devicePixelRatio||1);
+  const cx=sz/2, cy=sz/2, R=sz*.44;
+  ctx.clearRect(0,0,sz,sz);
   ctx.beginPath(); ctx.arc(cx,cy,R,0,2*Math.PI); ctx.fillStyle='#fff'; ctx.fill();
-  ctx.beginPath(); ctx.arc(cx,cy,R,0,2*Math.PI); ctx.strokeStyle='#111'; ctx.lineWidth=R*0.09; ctx.stroke();
-  ctx.beginPath(); ctx.arc(cx,cy,R-R*0.045,0,2*Math.PI); ctx.strokeStyle='rgba(255,255,255,0.18)'; ctx.lineWidth=R*0.006; ctx.stroke();
-
-  const faceR = R - R*0.09;
-  for (let i = 0; i < 60; i++) {
-    const a = (i/60)*2*Math.PI - Math.PI/2, isH = i%5===0;
+  ctx.beginPath(); ctx.arc(cx,cy,R,0,2*Math.PI); ctx.strokeStyle='#111'; ctx.lineWidth=R*.09; ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx,cy,R-R*.045,0,2*Math.PI); ctx.strokeStyle='rgba(255,255,255,.18)'; ctx.lineWidth=R*.006; ctx.stroke();
+  const fR=R-R*.09;
+  for(let i=0;i<60;i++){
+    const a=(i/60)*2*Math.PI-Math.PI/2, isH=i%5===0;
     ctx.beginPath();
-    ctx.moveTo(cx+Math.cos(a)*(faceR-R*0.01),cy+Math.sin(a)*(faceR-R*0.01));
-    ctx.lineTo(cx+Math.cos(a)*(faceR-R*0.01-(isH?R*0.085:R*0.044)),cy+Math.sin(a)*(faceR-R*0.01-(isH?R*0.085:R*0.044)));
-    ctx.strokeStyle='#111'; ctx.lineWidth=isH?R*0.025:R*0.008; ctx.lineCap='butt'; ctx.stroke();
+    ctx.moveTo(cx+Math.cos(a)*(fR-R*.01),cy+Math.sin(a)*(fR-R*.01));
+    ctx.lineTo(cx+Math.cos(a)*(fR-R*.01-(isH?R*.085:R*.044)),cy+Math.sin(a)*(fR-R*.01-(isH?R*.085:R*.044)));
+    ctx.strokeStyle='#111'; ctx.lineWidth=isH?R*.025:R*.008; ctx.lineCap='butt'; ctx.stroke();
   }
-
   ctx.fillStyle='#111'; ctx.textAlign='center'; ctx.textBaseline='middle';
-  ctx.font=`bold ${R*0.2}px 'Segoe UI',Arial,sans-serif`;
-  for (let i=1;i<=12;i++) {
+  ctx.font=`bold ${R*.2}px 'Segoe UI',Arial,sans-serif`;
+  for(let i=1;i<=12;i++){
     const a=(i/12)*2*Math.PI-Math.PI/2;
-    ctx.fillText(i,cx+Math.cos(a)*faceR*0.72,cy+Math.sin(a)*faceR*0.72);
+    ctx.fillText(i,cx+Math.cos(a)*fR*.72,cy+Math.sin(a)*fR*.72);
   }
-
   const now=new Date(), s=now.getSeconds()+now.getMilliseconds()/1000;
   const m=now.getMinutes()+s/60, h=(now.getHours()%12)+m/60;
-  drawBlockHand(cx,cy,(h/12)*2*Math.PI-Math.PI/2, R*0.5, R*0.042,R*0.07,'#111');
-  drawBlockHand(cx,cy,(m/60)*2*Math.PI-Math.PI/2, R*0.73,R*0.027,R*0.07,'#111');
-
+  drawBlockHand(cx,cy,(h/12)*2*Math.PI-Math.PI/2,R*.5,R*.042,R*.07,'#111');
+  drawBlockHand(cx,cy,(m/60)*2*Math.PI-Math.PI/2,R*.73,R*.027,R*.07,'#111');
   const sa=(s/60)*2*Math.PI-Math.PI/2;
-  ctx.save(); ctx.strokeStyle='#cc0000'; ctx.lineWidth=R*0.01; ctx.lineCap='round';
+  ctx.save(); ctx.strokeStyle='#cc0000'; ctx.lineWidth=R*.01; ctx.lineCap='round';
   ctx.beginPath();
-  ctx.moveTo(cx-Math.cos(sa)*R*0.2,cy-Math.sin(sa)*R*0.2);
-  ctx.lineTo(cx+Math.cos(sa)*R*0.84,cy+Math.sin(sa)*R*0.84);
+  ctx.moveTo(cx-Math.cos(sa)*R*.2,cy-Math.sin(sa)*R*.2);
+  ctx.lineTo(cx+Math.cos(sa)*R*.84,cy+Math.sin(sa)*R*.84);
   ctx.stroke(); ctx.restore();
-
-  ctx.beginPath(); ctx.arc(cx,cy,R*0.032,0,2*Math.PI); ctx.fillStyle='#888'; ctx.fill();
-  ctx.beginPath(); ctx.arc(cx,cy,R*0.013,0,2*Math.PI); ctx.fillStyle='#555'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx,cy,R*.032,0,2*Math.PI); ctx.fillStyle='#888'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx,cy,R*.013,0,2*Math.PI); ctx.fillStyle='#555'; ctx.fill();
 }
 (function loop(){ drawClock(); requestAnimationFrame(loop); })();
 
@@ -587,6 +579,60 @@ function fmtMins(t){
   return sec>0 ? `${pad(h)}:${pad(m)}:${pad(sec)}` : `${pad(h)}:${pad(m)}`;
 }
 
+// Change pen time for a category = catStart + normalLen
+function catCpTime(cat) {
+  if (!S.normalLen || S[cat].start === null) return null;
+  return S[cat].start + S.normalLen;
+}
+
+// Change pen for a student = catStart + normalLen + totalBreaks (breaks shift when extra time begins)
+function studentCpTime(student) {
+  if (student.cat === 'normal') return null;
+  const base = catCpTime(student.cat);
+  if (base === null) return null;
+  return base + totalBreak(student);
+}
+
+// Build notice state object from a change pen time
+function cpState(cpTimeMins) {
+  if (cpTimeMins === null) return null;
+  const now = new Date();
+  const nowMins = now.getHours()*60 + now.getMinutes() + now.getSeconds()/60;
+  const until = cpTimeMins - nowMins;
+  if (until <= 0)  return { cls: 'cp-now',  text: '🖊 Change pen now — extra time has begun.' };
+  if (until <= 5)  return { cls: 'cp-soon', text: `⏳ Change pen in ${Math.ceil(until)} min (at ${fmtMins(cpTimeMins)}).` };
+  return           { cls: '',        text: `Change pen at ${fmtMins(cpTimeMins)}.` };
+}
+
+// Apply a cpState to a .cp-notice element
+function applyCpState(el, state) {
+  if (!S.changePen || !state) { el.className = 'cp-notice hidden'; return; }
+  el.className = 'cp-notice' + (state.cls ? ' ' + state.cls : '');
+  el.textContent = state.text;
+}
+
+// Update all change pen notices (category cards + student cards)
+function updateAllCpNotices() {
+  // Category cards
+  ['et25','et50'].forEach(cat => {
+    const el = document.getElementById('cp-card-' + cat);
+    if (!el) return;
+    applyCpState(el, cpState(catCpTime(cat)));
+  });
+
+  // Student cards
+  S.students.forEach(st => {
+    const card = document.querySelector(`.student-card[data-id="${st.id}"]`);
+    if (!card) return;
+    const el = card.querySelector('.sc-cp-notice');
+    if (!el) return;
+    if (st.cat === 'normal') { el.className = 'cp-notice hidden'; return; }
+    applyCpState(el, cpState(studentCpTime(st)));
+  });
+}
+
+setInterval(updateAllCpNotices, 5000);
+
 // ── Category toggles ───────────────────────────────────────────────────────
 document.querySelectorAll('.cat-tog').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -596,6 +642,13 @@ document.querySelectorAll('.cat-tog').forEach(btn => {
     document.getElementById('card-' + cat).classList.toggle('hidden', !S[cat].on);
     syncFsBar();
   });
+});
+
+// ── Change pen toggle ──────────────────────────────────────────────────────
+document.getElementById('cp-toggle').addEventListener('click', () => {
+  S.changePen = !S.changePen;
+  document.getElementById('cp-toggle').classList.toggle('on', S.changePen);
+  updateAllCpNotices();
 });
 
 // ── Mode toggle ────────────────────────────────────────────────────────────
@@ -616,29 +669,27 @@ document.querySelectorAll('.mode-btn').forEach(btn => {
 
 // ── Calculator ─────────────────────────────────────────────────────────────
 document.getElementById('btn-calc').addEventListener('click', () => {
-  const tv   = document.getElementById('inp-time').value;
+  const tv  = document.getElementById('inp-time').value;
   const lenH = parseInt(document.getElementById('inp-h').value) || 0;
   const lenM = parseInt(document.getElementById('inp-m').value) || 0;
   const len  = lenH*60 + lenM;
   if (!tv || len <= 0) return;
 
-  const ref = toMins(tv);
+  S.normalLen = len;
+  const ref   = toMins(tv);
 
   if (S.calcMode === 'forward') {
-    // Fixed start — end times differ
-    S.normal = { ...S.normal, start: ref,             end: ref + len        };
-    S.et25   = { ...S.et25,   start: ref,             end: ref + len * 1.25 };
-    S.et50   = { ...S.et50,   start: ref,             end: ref + len * 1.5  };
+    S.normal = { ...S.normal, start: ref,              end: ref + len        };
+    S.et25   = { ...S.et25,   start: ref,              end: ref + len * 1.25 };
+    S.et50   = { ...S.et50,   start: ref,              end: ref + len * 1.5  };
   } else {
-    // Fixed end — start times differ (each group starts earlier to all finish at same time)
-    S.normal = { ...S.normal, start: ref - len,        end: ref };
-    S.et25   = { ...S.et25,   start: ref - len * 1.25, end: ref };
-    S.et50   = { ...S.et50,   start: ref - len * 1.5,  end: ref };
+    S.normal = { ...S.normal, start: ref - len,         end: ref };
+    S.et25   = { ...S.et25,   start: ref - len * 1.25,  end: ref };
+    S.et50   = { ...S.et50,   start: ref - len * 1.5,   end: ref };
   }
 
   S.hasResults = true;
 
-  // Update category cards
   [
     ['normal','r-n-s','r-n-e','fs-n-s','fs-n-e'],
     ['et25',  'r-25-s','r-25-e','fs-25-s','fs-25-e'],
@@ -653,15 +704,11 @@ document.getElementById('btn-calc').addEventListener('click', () => {
 
   renderAllStudentTimes();
   syncFsBar();
-  updateCpNotice();
+  updateAllCpNotices();
   document.getElementById('setup-section').classList.add('closed');
 });
 
 // ── Student helpers ────────────────────────────────────────────────────────
-function catData(cat)  { return S[cat]; }
-function catEnd(cat)   { return catData(cat).end; }
-function catStart(cat) { return catData(cat).start; }
-
 function totalBreak(student) {
   let t = 0;
   student.breaks.forEach(({start,end}) => {
@@ -671,9 +718,8 @@ function totalBreak(student) {
 }
 
 function adjEnd(student) {
-  const base = catEnd(student.cat);
-  if (base === null) return null;
-  return base + totalBreak(student);
+  const base = S[student.cat].end;
+  return base !== null ? base + totalBreak(student) : null;
 }
 
 // ── Build student card ─────────────────────────────────────────────────────
@@ -683,11 +729,16 @@ function buildCard(st) {
   div.dataset.id = st.id;
 
   const ae       = adjEnd(st);
-  const cs       = catStart(st.cat);
+  const cs       = S[st.cat].start;
   const startStr = cs !== null ? fmtMins(cs) : '—';
   const endStr   = ae !== null ? fmtMins(ae) : '—';
   const brk      = totalBreak(st);
   const brkText  = brk > 0 ? `+${brk} min break` : '';
+
+  // Change pen for this student
+  const cpT   = studentCpTime(st);
+  const cpStr = cpT !== null ? fmtMins(cpT) : null;
+  const cpSt  = cpState(cpT);
 
   const breaksHtml = st.breaks.map((b,i) => `
     <div class="break-item">
@@ -699,22 +750,31 @@ function buildCard(st) {
     </div>
   `).join('');
 
+  const cpDisplay = (st.cat !== 'normal' && S.changePen && cpStr)
+    ? `<div class="cp-notice sc-cp-notice${cpSt ? (cpSt.cls ? ' ' + cpSt.cls : '') : ''}">${cpSt ? cpSt.text : 'Change pen at ' + cpStr}</div>`
+    : `<div class="cp-notice sc-cp-notice hidden"></div>`;
+
   div.innerHTML = `
-    <div class="sc-row1">
-      <input class="sc-name-input" type="text" placeholder="Student name…" value="${st.name}" data-id="${st.id}">
-      <select class="sc-cat-sel" data-id="${st.id}">
-        <option value="normal" ${st.cat==='normal'?'selected':''}>Normal</option>
-        <option value="et25"   ${st.cat==='et25'  ?'selected':''}>25% ET</option>
-        <option value="et50"   ${st.cat==='et50'  ?'selected':''}>50% ET</option>
-      </select>
-      <span class="sc-endtime">${endStr}</span>
-      <button class="sc-collapse-btn" data-id="${st.id}" title="Expand / collapse">▾</button>
-      <button class="sc-remove"       data-id="${st.id}" title="Remove">×</button>
+    <div class="sc-top">
+      <div class="sc-row1">
+        <input class="sc-name-input" type="text" placeholder="Student name…" value="${st.name}" data-id="${st.id}">
+        <select class="sc-cat-sel" data-id="${st.id}">
+          <option value="normal" ${st.cat==='normal'?'selected':''}>Normal</option>
+          <option value="et25"   ${st.cat==='et25'  ?'selected':''}>25% ET</option>
+          <option value="et50"   ${st.cat==='et50'  ?'selected':''}>50% ET</option>
+        </select>
+        <span class="sc-endtime">${endStr}</span>
+        <button class="sc-remove" data-id="${st.id}">×</button>
+      </div>
+      <div class="sc-row2">
+        <span class="sc-starttime">${startStr} →</span>
+        <span class="sc-break-summary">${brkText}</span>
+        ${cpDisplay}
+      </div>
     </div>
-    <div class="sc-row2">
-      <span class="sc-starttime">${startStr} →</span>
-      <span class="sc-break-summary">${brkText}</span>
-    </div>
+    <button class="sc-expand-btn" data-id="${st.id}">
+      ${st.expanded ? '▲ Hide breaks' : '▼ Show breaks'}
+    </button>
     <div class="sc-expand-body">
       <div class="sc-breaks-grid">${breaksHtml}</div>
       <button class="sc-add-break" data-id="${st.id}">+ Add Break</button>
@@ -734,137 +794,109 @@ function refreshCard(id) {
   if (!card) return;
   const st = S.students.find(s => s.id === id);
   if (!st) return;
-  const ae = adjEnd(st);
-  const cs = catStart(st.cat);
-  const brk = totalBreak(st);
+
+  const ae   = adjEnd(st);
+  const cs   = S[st.cat].start;
+  const brk  = totalBreak(st);
+  const cpT  = studentCpTime(st);
+  const cpSt = cpState(cpT);
+
   card.querySelector('.sc-endtime').textContent       = ae !== null ? fmtMins(ae) : '—';
   card.querySelector('.sc-starttime').textContent     = (cs !== null ? fmtMins(cs) : '—') + ' →';
   card.querySelector('.sc-break-summary').textContent = brk > 0 ? `+${brk} min break` : '';
+
+  const cpEl = card.querySelector('.sc-cp-notice');
+  if (cpEl) {
+    if (st.cat !== 'normal' && S.changePen && cpT !== null) {
+      applyCpState(cpEl, cpSt);
+    } else {
+      cpEl.className = 'cp-notice sc-cp-notice hidden';
+    }
+  }
 }
 
 function renderAllStudentTimes() { S.students.forEach(s => refreshCard(s.id)); }
 
-// ── Student events (delegation) ────────────────────────────────────────────
+// ── Student events ─────────────────────────────────────────────────────────
 const studentList = document.getElementById('students-list');
 
 studentList.addEventListener('input', e => {
   const id=+e.target.dataset.id, idx=+e.target.dataset.idx;
   const st=S.students.find(s=>s.id===id);
   if (!st) return;
-  if (e.target.classList.contains('sc-name-input'))  { st.name=e.target.value; }
-  else if (e.target.classList.contains('sc-cat-sel'))   { st.cat=e.target.value; refreshCard(id); }
-  else if (e.target.classList.contains('break-start'))  { st.breaks[idx].start=e.target.value; refreshCard(id); }
-  else if (e.target.classList.contains('break-end'))    { st.breaks[idx].end=e.target.value;   refreshCard(id); }
+  if (e.target.classList.contains('sc-name-input'))  { st.name = e.target.value; }
+  else if (e.target.classList.contains('sc-cat-sel')) { st.cat = e.target.value; refreshCard(id); }
+  else if (e.target.classList.contains('break-start')){ st.breaks[idx].start = e.target.value; refreshCard(id); }
+  else if (e.target.classList.contains('break-end'))  { st.breaks[idx].end   = e.target.value; refreshCard(id); }
 });
 
 studentList.addEventListener('click', e => {
   const id=+e.target.dataset.id, idx=+e.target.dataset.idx;
 
-  if (e.target.classList.contains('sc-collapse-btn')) {
-    const st=S.students.find(s=>s.id===id);
-    if (st) { st.expanded=!st.expanded; renderStudents(); }
+  if (e.target.classList.contains('sc-expand-btn')) {
+    const st = S.students.find(s => s.id === id);
+    if (st) { st.expanded = !st.expanded; renderStudents(); }
   } else if (e.target.classList.contains('sc-remove')) {
-    S.students=S.students.filter(s=>s.id!==id); renderStudents();
+    S.students = S.students.filter(s => s.id !== id); renderStudents();
   } else if (e.target.classList.contains('sc-add-break')) {
-    const st=S.students.find(s=>s.id===id);
+    const st = S.students.find(s => s.id === id);
     if (st) { st.breaks.push({start:'',end:''}); renderStudents(); }
   } else if (e.target.classList.contains('break-rem')) {
-    const st=S.students.find(s=>s.id===id);
+    const st = S.students.find(s => s.id === id);
     if (st) { st.breaks.splice(idx,1); renderStudents(); }
   }
 });
 
 document.getElementById('btn-add-student').addEventListener('click', () => {
-  S.students.push({ id:S.nextId++, name:'', cat:'normal', breaks:[{start:'',end:''}], expanded:true });
+  S.students.push({ id: S.nextId++, name: '', cat: 'normal', breaks: [{start:'',end:''}], expanded: true });
   renderStudents();
   const col = document.getElementById('results-col');
   setTimeout(() => col.scrollTop = col.scrollHeight, 50);
 });
 
-// ── Collapse All / Expand All ──────────────────────────────────────────────
+// ── Expand / Collapse All ──────────────────────────────────────────────────
 document.getElementById('btn-collapse-all').addEventListener('click', () => {
-  S.allCollapsed = !S.allCollapsed;
-  S.students.forEach(s => s.expanded = !S.allCollapsed);
-  document.getElementById('btn-collapse-all').textContent = S.allCollapsed ? 'Expand All' : 'Collapse All';
+  S.allExpanded = !S.allExpanded;
+  S.students.forEach(s => s.expanded = S.allExpanded);
+  document.getElementById('btn-collapse-all').textContent = S.allExpanded ? '▲ Collapse All' : '▸ Expand All';
   renderStudents();
 });
 
 // ── CSV Export ─────────────────────────────────────────────────────────────
 document.getElementById('btn-export').addEventListener('click', () => {
-  const now=new Date();
-  const dateStr=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-  let csv='Type,Name,Category,Start Time,Base End Time,Total Break (mins),Adjusted End Time\n';
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  let csv = 'Type,Name,Category,Start Time,Base End Time,Change Pen Time,Total Break (mins),Adjusted End Time\n';
 
   [
-    {label:'Normal Exam End Time',cat:'normal'},
-    {label:'25% Extra Time End',  cat:'et25'  },
-    {label:'50% Extra Time End',  cat:'et50'  },
-  ].forEach(({label,cat}) => {
-    const c=S[cat];
-    const s=c.start!==null?fmtMins(c.start):'';
-    const e=c.end  !==null?fmtMins(c.end)  :'';
-    csv+=`Category,"${label}",,${s},${e},0,${e}\n`;
+    {label:'Normal Exam End Time', cat:'normal'},
+    {label:'25% Extra Time End',   cat:'et25'  },
+    {label:'50% Extra Time End',   cat:'et50'  },
+  ].forEach(({label, cat}) => {
+    const c  = S[cat];
+    const cs = c.start !== null ? fmtMins(c.start) : '';
+    const ce = c.end   !== null ? fmtMins(c.end)   : '';
+    const cp = catCpTime(cat) !== null ? fmtMins(catCpTime(cat)) : '';
+    csv += `Category,"${label}",,${cs},${ce},${cp},0,${ce}\n`;
   });
 
   S.students.forEach(st => {
-    const cats={normal:'Normal',et25:'25% ET',et50:'50% ET'};
-    const cs=catStart(st.cat), ce=catEnd(st.cat), ae=adjEnd(st), brk=totalBreak(st);
-    csv+=`Student,"${(st.name||'Unnamed').replace(/"/g,'""')}","${cats[st.cat]}",`
-        +`${cs!==null?fmtMins(cs):''},${ce!==null?fmtMins(ce):''},${brk},${ae!==null?fmtMins(ae):''}\n`;
+    const cats = {normal:'Normal', et25:'25% ET', et50:'50% ET'};
+    const cs   = S[st.cat].start !== null ? fmtMins(S[st.cat].start) : '';
+    const ce   = S[st.cat].end   !== null ? fmtMins(S[st.cat].end)   : '';
+    const cp   = studentCpTime(st) !== null ? fmtMins(studentCpTime(st)) : '';
+    const brk  = totalBreak(st);
+    const ae   = adjEnd(st);
+    csv += `Student,"${(st.name||'Unnamed').replace(/"/g,'""')}","${cats[st.cat]}",${cs},${ce},${cp},${brk},${ae!==null?fmtMins(ae):''}\n`;
   });
 
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
-  a.download=`exam-times-${dateStr}.csv`;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8;'}));
+  a.download = `exam-times-${dateStr}.csv`;
   a.click();
 });
 
-// ── Change Pen toggle ─────────────────────────────────────────────────────
-S.changePen = false;
-
-document.getElementById('cp-toggle').addEventListener('click', () => {
-  S.changePen = !S.changePen;
-  document.getElementById('cp-toggle').classList.toggle('on', S.changePen);
-  updateCpNotice();
-});
-
-function changePenTimeMins() {
-  // Change pen = when normal-length time ends = S.normal.end
-  return S.normal.end;
-}
-
-function updateCpNotice() {
-  const notice = document.getElementById('cp-notice');
-  const cpTime = changePenTimeMins();
-
-  if (!S.changePen || cpTime === null) {
-    notice.className = 'hidden';
-    return;
-  }
-
-  const now = new Date();
-  const nowMins = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
-  const minsUntil = cpTime - nowMins;
-
-  if (minsUntil <= 0) {
-    // Time has passed — green alert
-    notice.className = 'cp-now';
-    notice.textContent = '🖊 Please change pen — you are now into your extra time.';
-  } else if (minsUntil <= 5) {
-    // Within 5 minutes — amber warning
-    notice.className = 'cp-soon';
-    notice.textContent = `⏳ Change colour pen in ${Math.ceil(minsUntil)} min (at ${fmtMins(cpTime)}).`;
-  } else {
-    // More than 5 minutes away — neutral info
-    notice.className = '';
-    notice.textContent = `Please change colour pen at ${fmtMins(cpTime)}.`;
-  }
-}
-
-setInterval(updateCpNotice, 5000);
-
 // ── Init ──────────────────────────────────────────────────────────────────
-// Sync initial category states to DOM
 ['normal','et25','et50'].forEach(cat => {
   const on = S[cat].on;
   document.querySelector(`.cat-tog[data-cat="${cat}"]`).classList.toggle('off', !on);
