@@ -10,26 +10,17 @@
 
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
-      background: #f0f0f0;
-      color: #1a1a1a;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      overflow: hidden;
+      background: #f0f0f0; color: #1a1a1a;
+      display: flex; flex-direction: column; height: 100vh; overflow: hidden;
       transition: background .3s, color .3s;
     }
     body.dark { background: #2a2a2a; color: #e8e8e8; }
 
     /* ── Nav ── */
     nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: .38rem .85rem;
-      background: #fff;
-      border-bottom: 1px solid #ddd;
-      flex-shrink: 0;
-      transition: background .3s, border-color .3s;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .38rem .85rem; background: #fff; border-bottom: 1px solid #ddd;
+      flex-shrink: 0; transition: background .3s, border-color .3s;
     }
     body.dark nav { background: #333; border-color: #444; }
     body.dark.fs-mode nav { display: none; }
@@ -50,17 +41,15 @@
     }
     body.dark #btn-fs { border-color: #555; }
 
-    /* ── Main layout ── */
+    /* ── Main ── */
     #main { flex: 1; display: flex; min-height: 0; }
 
-    /* ── Clock column ── */
+    /* ── Clock ── */
     #clock-col { flex: 3; min-width: 0; display: flex; align-items: stretch; }
     .clock-page { display: none; width: 100%; align-items: center; justify-content: center; padding: .75rem; }
     .clock-page.active { display: flex; }
-
     #analog-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
     #analog-canvas { display: block; }
-
     #digital-wrap { text-align: center; }
     #digital-time {
       font-size: clamp(3rem, 13vw, 11rem); font-weight: 200;
@@ -72,7 +61,7 @@
     #results-col {
       flex: 2; border-left: 1px solid #ddd; background: #fff;
       display: flex; flex-direction: column; overflow-y: auto;
-      padding: .6rem .7rem; gap: .5rem;
+      padding: .6rem .7rem; gap: .45rem;
       transition: background .3s, border-color .3s;
     }
     body.dark #results-col { background: #323232; border-color: #444; }
@@ -80,33 +69,27 @@
     /* ── Setup accordion ── */
     #setup-section { border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; flex-shrink: 0; }
     body.dark #setup-section { border-color: #484848; }
-
     #setup-head {
       display: flex; align-items: center; justify-content: space-between;
-      padding: .42rem .7rem; background: #f5f5f5; cursor: pointer; user-select: none;
-      font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #555;
-      transition: background .15s;
+      padding: .4rem .7rem; background: #f5f5f5; cursor: pointer; user-select: none;
+      font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #555;
     }
     #setup-head:hover { background: #eee; }
-    body.dark #setup-head { background: #2a2a2a; color: #999; }
-    body.dark #setup-head:hover { background: #252525; }
-    #setup-arrow { font-size: .7rem; transition: transform .2s; }
+    body.dark #setup-head { background: #2a2a2a; color: #888; }
+    #setup-arrow { transition: transform .2s; font-size: .7rem; }
     #setup-section.closed #setup-arrow { transform: rotate(-90deg); }
-
-    #setup-body { padding: .55rem .7rem; border-top: 1px solid #e0e0e0; }
+    #setup-body { padding: .5rem .7rem; border-top: 1px solid #e0e0e0; }
     body.dark #setup-body { border-color: #484848; }
     #setup-section.closed #setup-body { display: none; }
 
-    .setup-row { display: flex; align-items: flex-end; gap: .55rem; flex-wrap: wrap; }
-
+    .setup-row { display: flex; align-items: flex-end; gap: .5rem; flex-wrap: wrap; }
     .mode-group { display: flex; background: #ebebeb; border-radius: 6px; padding: 2px; gap: 2px; }
     body.dark .mode-group { background: #222; }
     .mode-btn {
-      padding: .22rem .6rem; border: none; background: transparent;
+      padding: .22rem .58rem; border: none; background: transparent;
       border-radius: 4px; font-size: .72rem; cursor: pointer; color: #777; white-space: nowrap;
     }
     .mode-btn.active { background: #fff; color: #111; box-shadow: 0 1px 2px rgba(0,0,0,.1); }
-    body.dark .mode-btn { color: #777; }
     body.dark .mode-btn.active { background: #555; color: #eee; }
 
     .sf { display: flex; flex-direction: column; gap: .15rem; }
@@ -122,17 +105,20 @@
     .sf input[type="time"]   { width: 7rem; }
     .dur-row { display: flex; align-items: center; gap: .2rem; }
     .dur-row span { font-size: .72rem; color: #888; }
-
     #btn-calc {
       padding: .3rem .85rem; border: none; background: #1a1a1a; color: #fff;
       border-radius: 5px; font-size: .8rem; font-weight: 600; cursor: pointer; align-self: flex-end;
     }
     body.dark #btn-calc { background: #e0e0e0; color: #1a1a1a; }
 
+    /* mode hint */
+    .mode-hint { font-size: .68rem; color: #aaa; margin-top: .35rem; font-style: italic; }
+    body.dark .mode-hint { color: #666; }
+
     /* ── Category toggles ── */
     #cat-toggles {
       display: flex; gap: .35rem; flex-wrap: wrap;
-      padding-bottom: .4rem; border-bottom: 1px solid #eee; flex-shrink: 0;
+      padding-bottom: .35rem; border-bottom: 1px solid #eee; flex-shrink: 0;
     }
     body.dark #cat-toggles { border-color: #444; }
     .cat-tog {
@@ -142,43 +128,36 @@
     }
     .cat-tog.off { background: transparent; color: #aaa; border-color: #ccc; text-decoration: line-through; }
     body.dark .cat-tog { border-color: #ddd; background: #ddd; color: #1a1a1a; }
-    body.dark .cat-tog.off { background: transparent; color: #666; border-color: #555; }
+    body.dark .cat-tog.off { background: transparent; color: #555; border-color: #555; }
 
     /* ── Category cards ── */
     .cat-card {
-      padding: .45rem .65rem; border: 1px solid #e5e5e5; border-radius: 8px;
-      background: #fafafa; flex-shrink: 0; transition: background .3s, border-color .3s;
+      padding: .4rem .65rem; border: 1px solid #e5e5e5; border-radius: 8px;
+      background: #fafafa; flex-shrink: 0;
     }
     body.dark .cat-card { background: #2a2a2a; border-color: #444; }
     .cat-card.hidden { display: none; }
-
-    .cat-card-label { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #888; margin-bottom: .25rem; }
-    body.dark .cat-card-label { color: #777; }
-
+    .cat-card-label { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #888; margin-bottom: .2rem; }
     .cat-times { display: flex; align-items: baseline; gap: .4rem; }
-    .ct-start { font-size: clamp(1rem, 1.8vw, 1.6rem); font-variant-numeric: tabular-nums; color: #999; }
-    .ct-arrow { color: #ccc; font-size: clamp(.85rem, 1.3vw, 1.2rem); }
-    .ct-end   { font-size: clamp(1.7rem, 3vw, 3rem); font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+    .ct-start { font-size: clamp(.95rem, 1.7vw, 1.5rem); font-variant-numeric: tabular-nums; color: #999; }
+    .ct-arrow { color: #ccc; font-size: clamp(.8rem, 1.2vw, 1.1rem); }
+    .ct-end   { font-size: clamp(1.6rem, 2.8vw, 2.8rem); font-weight: 700; font-variant-numeric: tabular-nums; }
 
     /* ── Actions bar ── */
-    #actions-bar {
-      display: flex; gap: .4rem; flex-wrap: wrap; flex-shrink: 0;
-      padding-top: .1rem;
-    }
+    #actions-bar { display: flex; gap: .4rem; flex-wrap: wrap; flex-shrink: 0; padding-top: .1rem; }
     #btn-add-student {
-      flex: 1; padding: .33rem .6rem; border: 1.5px dashed #bbb;
+      flex: 1; padding: .32rem .6rem; border: 1.5px dashed #bbb;
       background: transparent; border-radius: 6px; font-size: .78rem; color: #888; cursor: pointer;
     }
     #btn-add-student:hover { border-color: #888; color: #555; }
-    #btn-lock {
-      padding: .33rem .65rem; border: 1px solid #ccc; background: transparent;
+    #btn-collapse-all {
+      padding: .32rem .65rem; border: 1px solid #ccc; background: transparent;
       border-radius: 6px; font-size: .78rem; cursor: pointer; color: #666; white-space: nowrap;
     }
-    #btn-lock:hover { border-color: #888; }
-    #btn-lock.locked { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
-    body.dark #btn-lock.locked { background: #ddd; color: #111; border-color: #ddd; }
+    #btn-collapse-all:hover { border-color: #888; color: #333; }
+    body.dark #btn-collapse-all { border-color: #555; color: #999; }
     #btn-export {
-      padding: .33rem .65rem; border: 1px solid #1a1a1a; background: transparent;
+      padding: .32rem .65rem; border: 1px solid #1a1a1a; background: transparent;
       border-radius: 6px; font-size: .78rem; font-weight: 600; color: #1a1a1a; cursor: pointer;
     }
     #btn-export:hover { background: #1a1a1a; color: #fff; }
@@ -186,91 +165,131 @@
     body.dark #btn-export:hover { background: #ddd; color: #111; }
 
     /* ── Student cards ── */
-    #students-list { display: flex; flex-direction: column; gap: .45rem; }
+    #students-list { display: flex; flex-direction: column; gap: .4rem; }
 
     .student-card {
       border: 1px solid #e5e5e5; border-radius: 8px; background: #fafafa;
-      padding: .45rem .6rem; display: flex; flex-direction: column; gap: .3rem;
-      transition: background .3s, border-color .3s;
+      padding: .4rem .6rem; display: flex; flex-direction: column; gap: .25rem;
     }
     body.dark .student-card { background: #2a2a2a; border-color: #444; }
 
-    /* Locked cards: fixed height with scroll */
-    .student-card.locked { max-height: 130px; overflow-y: auto; }
-
-    /* Row 1: name | category | end-time | × */
-    .sc-row1 { display: flex; align-items: center; gap: .35rem; }
+    /* Row 1: name | category | end-time | collapse | × */
+    .sc-row1 { display: flex; align-items: center; gap: .3rem; }
 
     .sc-name-input {
-      flex: 1; min-width: 0; padding: .22rem .4rem; border: 1px solid #e0e0e0;
-      border-radius: 5px; font-size: clamp(.85rem, 1.5vw, 1.25rem); font-weight: 600;
+      flex: 1; min-width: 0; padding: .2rem .38rem; border: 1px solid #e0e0e0;
+      border-radius: 5px; font-size: clamp(.85rem, 1.4vw, 1.2rem); font-weight: 600;
       background: transparent; color: inherit; outline: none;
     }
     body.dark .sc-name-input { border-color: #555; }
     .sc-name-input:focus { border-color: #999; }
 
     .sc-cat-sel {
-      padding: .22rem .3rem; border: 1px solid #e0e0e0; border-radius: 5px;
-      font-size: .75rem; background: transparent; color: inherit; cursor: pointer; flex-shrink: 0;
+      padding: .2rem .28rem; border: 1px solid #e0e0e0; border-radius: 5px;
+      font-size: .73rem; background: transparent; color: inherit; cursor: pointer; flex-shrink: 0;
     }
     body.dark .sc-cat-sel { border-color: #555; background: #2a2a2a; }
 
     .sc-endtime {
-      font-size: clamp(1.2rem, 2.2vw, 2rem); font-weight: 700; font-variant-numeric: tabular-nums;
-      white-space: nowrap; letter-spacing: .02em; flex-shrink: 0;
+      font-size: clamp(1.15rem, 2vw, 1.9rem); font-weight: 700;
+      font-variant-numeric: tabular-nums; white-space: nowrap; flex-shrink: 0;
     }
 
+    .sc-collapse-btn {
+      width: 1.4rem; height: 1.4rem; border: none; background: transparent; color: #bbb;
+      font-size: .7rem; cursor: pointer; border-radius: 3px; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0; transition: transform .2s;
+    }
+    .sc-collapse-btn:hover { color: #666; }
+    .student-card.sc-expanded .sc-collapse-btn { transform: rotate(0deg); }
+    .student-card:not(.sc-expanded) .sc-collapse-btn { transform: rotate(-90deg); }
+
     .sc-remove {
-      width: 1.5rem; height: 1.5rem; border: none; background: transparent; color: #bbb;
-      font-size: 1rem; cursor: pointer; border-radius: 4px; display: flex; align-items: center;
-      justify-content: center; flex-shrink: 0;
+      width: 1.4rem; height: 1.4rem; border: none; background: transparent; color: #ccc;
+      font-size: .95rem; cursor: pointer; border-radius: 4px; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0;
     }
     .sc-remove:hover { background: #fee; color: #c00; }
 
-    /* Row 2: start → | break summary */
-    .sc-row2 { display: flex; align-items: center; gap: .4rem; }
-    .sc-starttime { font-size: clamp(.8rem, 1.3vw, 1.1rem); color: #999; font-variant-numeric: tabular-nums; }
-    .sc-break-summary { font-size: .72rem; color: #aaa; }
+    /* Row 2: start → break summary (always visible) */
+    .sc-row2 { display: flex; align-items: center; gap: .35rem; }
+    .sc-starttime { font-size: clamp(.78rem, 1.2vw, 1rem); color: #999; font-variant-numeric: tabular-nums; }
+    .sc-break-summary { font-size: .7rem; color: #aaa; }
+
+    /* Expandable section — hidden when collapsed */
+    .sc-expand-body { display: flex; flex-direction: column; gap: .22rem; }
+    .student-card:not(.sc-expanded) .sc-expand-body { display: none; }
 
     /* Breaks grid: 2 per row */
-    .sc-breaks-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: .25rem .4rem;
-    }
+    .sc-breaks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .22rem .35rem; }
 
     .break-item {
-      display: flex; align-items: center; gap: .18rem;
-      background: #f4f4f4; border-radius: 5px; padding: .18rem .3rem;
+      display: flex; align-items: center; gap: .15rem;
+      background: #f4f4f4; border-radius: 5px; padding: .15rem .28rem;
     }
     body.dark .break-item { background: #232323; }
-
-    .bi-lbl { font-size: .6rem; color: #aaa; text-transform: uppercase; letter-spacing: .05em; min-width: 1.4rem; }
-
+    .bi-lbl { font-size: .58rem; color: #bbb; text-transform: uppercase; letter-spacing: .05em; min-width: 1.3rem; }
     .bi-time {
-      padding: .15rem .2rem; border: 1px solid #e0e0e0; border-radius: 3px;
-      font-size: .75rem; font-variant-numeric: tabular-nums; background: #fff;
-      color: inherit; outline: none; width: 5.5rem;
+      padding: .13rem .18rem; border: 1px solid #e0e0e0; border-radius: 3px;
+      font-size: .73rem; font-variant-numeric: tabular-nums; background: #fff; color: inherit; outline: none; width: 5.4rem;
     }
     body.dark .bi-time { background: #1e1e1e; border-color: #484848; color-scheme: dark; }
     .bi-time:focus { border-color: #888; }
-
-    .bi-sep { font-size: .7rem; color: #bbb; flex-shrink: 0; }
-
+    .bi-sep { font-size: .68rem; color: #ccc; flex-shrink: 0; }
     .break-rem {
-      width: 1.2rem; height: 1.2rem; border: none; background: transparent; color: #ccc;
-      font-size: .85rem; cursor: pointer; border-radius: 3px; display: flex;
+      width: 1.1rem; height: 1.1rem; border: none; background: transparent; color: #ccc;
+      font-size: .8rem; cursor: pointer; border-radius: 3px; display: flex;
       align-items: center; justify-content: center; flex-shrink: 0; margin-left: auto;
     }
     .break-rem:hover { background: #fee; color: #c00; }
-
     .sc-add-break {
-      align-self: flex-start; padding: .15rem .5rem; border: 1px dashed #ccc;
-      background: transparent; border-radius: 4px; font-size: .72rem; color: #999; cursor: pointer;
+      align-self: flex-start; padding: .13rem .45rem; border: 1px dashed #ccc;
+      background: transparent; border-radius: 4px; font-size: .7rem; color: #999; cursor: pointer;
     }
     .sc-add-break:hover { border-color: #888; color: #555; }
 
-    /* ── Fullscreen overlay bar ── */
+    /* ── Change pen toggle ── */
+    #cp-toggle {
+      padding: .2rem .65rem; border: 1.5px solid #2d7a4f; background: transparent;
+      color: #2d7a4f; border-radius: 20px; font-size: .72rem; font-weight: 600;
+      cursor: pointer; letter-spacing: .04em; transition: background .15s, color .15s;
+      margin-left: auto;
+    }
+    #cp-toggle.on { background: #2d7a4f; color: #fff; }
+    body.dark #cp-toggle { border-color: #4aba7f; color: #4aba7f; }
+    body.dark #cp-toggle.on { background: #2d7a4f; color: #fff; }
+
+    /* ── Change pen notice ── */
+    #cp-notice {
+      padding: .45rem .7rem; border-radius: 8px; border: 1px solid #ddd;
+      background: #fafafa; font-size: .82rem; color: #555;
+      transition: background .6s, border-color .6s, color .6s;
+      flex-shrink: 0;
+    }
+    #cp-notice.hidden { display: none; }
+    #cp-notice.cp-soon {
+      background: #fff8e1; border-color: #f0c050; color: #7a5c00;
+    }
+    #cp-notice.cp-now {
+      background: #d4edda; border-color: #7ec89a; color: #155724;
+      font-weight: 600; font-size: .88rem;
+    }
+    body.dark #cp-notice { background: #2a2a2a; border-color: #444; color: #aaa; }
+    body.dark #cp-notice.cp-now { background: #1a3d2a; border-color: #3a8a5a; color: #7eda9f; }
+
+    /* ── Setup instructions ── */
+    .setup-instructions {
+      margin-top: .45rem; padding: .4rem .5rem; background: #f5f7ff;
+      border-radius: 6px; border: 1px solid #e0e5f5;
+      font-size: .73rem; color: #555; line-height: 1.55;
+    }
+    body.dark .setup-instructions { background: #222b3a; border-color: #334; color: #99a; }
+    .setup-instructions strong { color: #333; }
+    body.dark .setup-instructions strong { color: #bbc; }
+    .setup-instructions ol { margin-left: 1rem; }
+    .setup-instructions li { margin-bottom: .18rem; }
+
+    /* ── Fullscreen overlay ── */
     #fs-bar {
       display: none; position: fixed; bottom: 0; left: 0; right: 0;
       background: rgba(0,0,0,.55); backdrop-filter: blur(6px);
@@ -278,9 +297,9 @@
     }
     #fs-bar.show { display: flex; justify-content: space-around; }
     .fs-card { text-align: center; }
-    .fs-type { font-size: .58rem; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .12rem; }
-    .fs-times { display: flex; align-items: center; gap: .45rem; justify-content: center; }
-    .fs-start { font-size: .95rem; color: rgba(255,255,255,.5); font-variant-numeric: tabular-nums; }
+    .fs-type { font-size: .58rem; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .1rem; }
+    .fs-times { display: flex; align-items: center; gap: .4rem; justify-content: center; }
+    .fs-start { font-size: .9rem; color: rgba(255,255,255,.5); font-variant-numeric: tabular-nums; }
     .fs-arr { color: rgba(255,255,255,.3); }
     .fs-end { font-size: 1.5rem; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
   </style>
@@ -296,7 +315,7 @@
 </nav>
 
 <div id="main">
-  <!-- ── Clock ── -->
+  <!-- Clock -->
   <div id="clock-col">
     <div id="page-analog" class="clock-page active">
       <div id="analog-wrap"><canvas id="analog-canvas"></canvas></div>
@@ -309,15 +328,12 @@
     </div>
   </div>
 
-  <!-- ── Results column ── -->
+  <!-- Results -->
   <div id="results-col">
 
-    <!-- Setup accordion -->
+    <!-- Setup -->
     <div id="setup-section">
-      <div id="setup-head">
-        <span>Setup</span>
-        <span id="setup-arrow">▾</span>
-      </div>
+      <div id="setup-head"><span>Setup</span><span id="setup-arrow">▾</span></div>
       <div id="setup-body">
         <div class="setup-row">
           <div class="mode-group">
@@ -339,6 +355,17 @@
           </div>
           <button id="btn-calc">Calculate</button>
         </div>
+        <div class="mode-hint" id="mode-hint">All groups start together — end times differ by allowance.</div>
+        <div class="setup-instructions">
+          <strong>How to use:</strong>
+          <ol>
+            <li><strong>From Start</strong> — enter when the exam begins. Each group's end time is calculated forward based on their allowance.</li>
+            <li><strong>From End</strong> — enter the fixed finish time for all groups. Start times are calculated backward so everyone finishes at the same time.</li>
+            <li>Toggle <strong>Normal / 25% / 50% Extra Time</strong> to show only the groups in your room.</li>
+            <li>Enable <strong>Change Pen</strong> to display a live reminder when extra time students move into their additional time.</li>
+            <li>Use <strong>Add student for rest breaks</strong> to add individuals with timed breaks — their end time adjusts automatically.</li>
+          </ol>
+        </div>
       </div>
     </div>
 
@@ -347,9 +374,10 @@
       <button class="cat-tog"     data-cat="normal">Normal</button>
       <button class="cat-tog"     data-cat="et25">25% Extra Time</button>
       <button class="cat-tog off" data-cat="et50">50% Extra Time</button>
+      <button id="cp-toggle" title="Show a live reminder when ET students enter their extra time">Change Pen</button>
     </div>
 
-    <!-- Category result cards -->
+    <!-- Category cards -->
     <div class="cat-card" id="card-normal">
       <div class="cat-card-label">Normal Exam End Time</div>
       <div class="cat-times">
@@ -377,18 +405,21 @@
       </div>
     </div>
 
+    <!-- Change pen notice (live) -->
+    <div id="cp-notice" class="hidden"></div>
+
     <!-- Students -->
     <div id="students-list"></div>
 
     <!-- Actions -->
     <div id="actions-bar">
-      <button id="btn-add-student">+ Add Student</button>
-      <button id="btn-lock" title="Prevent cards resizing when breaks are added">Auto-size</button>
+      <button id="btn-add-student">+ Add student for rest breaks</button>
+      <button id="btn-collapse-all">Collapse All</button>
       <button id="btn-export">Export CSV</button>
     </div>
 
-  </div><!-- /results-col -->
-</div><!-- /main -->
+  </div>
+</div>
 
 <!-- Fullscreen overlay -->
 <div id="fs-bar">
@@ -415,20 +446,19 @@
 <script>
 // ── State ─────────────────────────────────────────────────────────────────
 const S = {
-  startMins:  null,
-  normalEnd:  null,
-  et25End:    null,
-  et50End:    null,
-  calcMode:   'forward',
-  cats:       { normal: true, et25: true, et50: false },
+  calcMode: 'forward',
+  // Per-category times (start and end may differ by mode)
+  normal: { start: null, end: null, on: true  },
+  et25:   { start: null, end: null, on: true  },
+  et50:   { start: null, end: null, on: false },
   students:   [],
   nextId:     1,
   hasResults: false,
   isFs:       false,
-  locked:     false,
+  allCollapsed: false,
 };
 
-// ── Tabs ──────────────────────────────────────────────────────────────────
+// ── Tabs ───────────────────────────────────────────────────────────────────
 document.querySelectorAll('.pill-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
@@ -457,15 +487,14 @@ document.addEventListener('fullscreenchange', () => {
   syncFsBar();
   resizeCanvas();
 });
-
 function syncFsBar() {
   document.getElementById('fs-bar').classList.toggle('show', S.isFs && S.hasResults);
-  document.getElementById('fs-normal').style.display = S.cats.normal ? '' : 'none';
-  document.getElementById('fs-et25').style.display   = S.cats.et25   ? '' : 'none';
-  document.getElementById('fs-et50').style.display   = S.cats.et50   ? '' : 'none';
+  document.getElementById('fs-normal').style.display = S.normal.on ? '' : 'none';
+  document.getElementById('fs-et25').style.display   = S.et25.on   ? '' : 'none';
+  document.getElementById('fs-et50').style.display   = S.et50.on   ? '' : 'none';
 }
 
-// ── Digital ────────────────────────────────────────────────────────────────
+// ── Digital clock ─────────────────────────────────────────────────────────
 const DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 function updateDigital() {
@@ -476,7 +505,7 @@ function updateDigital() {
 setInterval(updateDigital, 1000);
 updateDigital();
 
-// ── Analog clock (Pyramid style) ──────────────────────────────────────────
+// ── Analog clock ───────────────────────────────────────────────────────────
 const canvas = document.getElementById('analog-canvas');
 const ctx    = canvas.getContext('2d');
 
@@ -499,96 +528,81 @@ function drawBlockHand(cx, cy, angle, len, halfW, tailLen, color) {
   ctx.translate(cx, cy);
   ctx.rotate(angle + Math.PI / 2);
   ctx.beginPath();
-  ctx.moveTo(-halfW,        tailLen);
-  ctx.lineTo(-halfW,       -len * 0.55);
-  ctx.lineTo(-halfW * 0.3, -len);
-  ctx.lineTo( halfW * 0.3, -len);
-  ctx.lineTo( halfW,       -len * 0.55);
-  ctx.lineTo( halfW,        tailLen);
+  ctx.moveTo(-halfW, tailLen); ctx.lineTo(-halfW, -len*0.55);
+  ctx.lineTo(-halfW*0.3, -len); ctx.lineTo(halfW*0.3, -len);
+  ctx.lineTo(halfW, -len*0.55); ctx.lineTo(halfW, tailLen);
   ctx.closePath();
-  ctx.fillStyle = color;
-  ctx.fill();
+  ctx.fillStyle = color; ctx.fill();
   ctx.restore();
 }
 
 function drawClock() {
   const sz = canvas.width / (window.devicePixelRatio || 1);
-  const cx = sz / 2, cy = sz / 2, R = sz * 0.44;
-
+  const cx = sz/2, cy = sz/2, R = sz*0.44;
   ctx.clearRect(0, 0, sz, sz);
 
-  ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2*Math.PI);
-  ctx.fillStyle = '#ffffff'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx,cy,R,0,2*Math.PI); ctx.fillStyle='#fff'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx,cy,R,0,2*Math.PI); ctx.strokeStyle='#111'; ctx.lineWidth=R*0.09; ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx,cy,R-R*0.045,0,2*Math.PI); ctx.strokeStyle='rgba(255,255,255,0.18)'; ctx.lineWidth=R*0.006; ctx.stroke();
 
-  ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2*Math.PI);
-  ctx.strokeStyle = '#111'; ctx.lineWidth = R * 0.09; ctx.stroke();
-
-  ctx.beginPath(); ctx.arc(cx, cy, R - R*0.045, 0, 2*Math.PI);
-  ctx.strokeStyle = 'rgba(255,255,255,0.18)'; ctx.lineWidth = R*0.006; ctx.stroke();
-
-  const faceR = R - R * 0.09;
+  const faceR = R - R*0.09;
   for (let i = 0; i < 60; i++) {
-    const a = (i/60)*2*Math.PI - Math.PI/2;
-    const isH = i % 5 === 0;
+    const a = (i/60)*2*Math.PI - Math.PI/2, isH = i%5===0;
     ctx.beginPath();
-    ctx.moveTo(cx + Math.cos(a)*(faceR - R*0.01), cy + Math.sin(a)*(faceR - R*0.01));
-    ctx.lineTo(cx + Math.cos(a)*(faceR - R*0.01 - (isH ? R*0.085 : R*0.044)),
-               cy + Math.sin(a)*(faceR - R*0.01 - (isH ? R*0.085 : R*0.044)));
-    ctx.strokeStyle = '#111'; ctx.lineWidth = isH ? R*0.025 : R*0.008; ctx.lineCap = 'butt'; ctx.stroke();
+    ctx.moveTo(cx+Math.cos(a)*(faceR-R*0.01),cy+Math.sin(a)*(faceR-R*0.01));
+    ctx.lineTo(cx+Math.cos(a)*(faceR-R*0.01-(isH?R*0.085:R*0.044)),cy+Math.sin(a)*(faceR-R*0.01-(isH?R*0.085:R*0.044)));
+    ctx.strokeStyle='#111'; ctx.lineWidth=isH?R*0.025:R*0.008; ctx.lineCap='butt'; ctx.stroke();
   }
 
-  ctx.fillStyle = '#111'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  ctx.font = `bold ${R*0.2}px 'Segoe UI', Arial, sans-serif`;
-  const numR = faceR * 0.72;
-  for (let i = 1; i <= 12; i++) {
-    const a = (i/12)*2*Math.PI - Math.PI/2;
-    ctx.fillText(i, cx + Math.cos(a)*numR, cy + Math.sin(a)*numR);
+  ctx.fillStyle='#111'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.font=`bold ${R*0.2}px 'Segoe UI',Arial,sans-serif`;
+  for (let i=1;i<=12;i++) {
+    const a=(i/12)*2*Math.PI-Math.PI/2;
+    ctx.fillText(i,cx+Math.cos(a)*faceR*0.72,cy+Math.sin(a)*faceR*0.72);
   }
 
-  const now = new Date();
-  const s = now.getSeconds() + now.getMilliseconds()/1000;
-  const m = now.getMinutes() + s/60;
-  const h = (now.getHours()%12) + m/60;
+  const now=new Date(), s=now.getSeconds()+now.getMilliseconds()/1000;
+  const m=now.getMinutes()+s/60, h=(now.getHours()%12)+m/60;
+  drawBlockHand(cx,cy,(h/12)*2*Math.PI-Math.PI/2, R*0.5, R*0.042,R*0.07,'#111');
+  drawBlockHand(cx,cy,(m/60)*2*Math.PI-Math.PI/2, R*0.73,R*0.027,R*0.07,'#111');
 
-  drawBlockHand(cx, cy, (h /12)*2*Math.PI - Math.PI/2, R*0.5,  R*0.042, R*0.07, '#111');
-  drawBlockHand(cx, cy, (m /60)*2*Math.PI - Math.PI/2, R*0.73, R*0.027, R*0.07, '#111');
-
-  const sa = (s/60)*2*Math.PI - Math.PI/2;
-  ctx.save();
-  ctx.strokeStyle = '#cc0000'; ctx.lineWidth = R*0.01; ctx.lineCap = 'round';
+  const sa=(s/60)*2*Math.PI-Math.PI/2;
+  ctx.save(); ctx.strokeStyle='#cc0000'; ctx.lineWidth=R*0.01; ctx.lineCap='round';
   ctx.beginPath();
-  ctx.moveTo(cx - Math.cos(sa)*R*0.2, cy - Math.sin(sa)*R*0.2);
-  ctx.lineTo(cx + Math.cos(sa)*R*0.84, cy + Math.sin(sa)*R*0.84);
+  ctx.moveTo(cx-Math.cos(sa)*R*0.2,cy-Math.sin(sa)*R*0.2);
+  ctx.lineTo(cx+Math.cos(sa)*R*0.84,cy+Math.sin(sa)*R*0.84);
   ctx.stroke(); ctx.restore();
 
-  ctx.beginPath(); ctx.arc(cx, cy, R*0.032, 0, 2*Math.PI); ctx.fillStyle = '#888'; ctx.fill();
-  ctx.beginPath(); ctx.arc(cx, cy, R*0.013, 0, 2*Math.PI); ctx.fillStyle = '#555'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx,cy,R*0.032,0,2*Math.PI); ctx.fillStyle='#888'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx,cy,R*0.013,0,2*Math.PI); ctx.fillStyle='#555'; ctx.fill();
 }
+(function loop(){ drawClock(); requestAnimationFrame(loop); })();
 
-(function loop() { drawClock(); requestAnimationFrame(loop); })();
-
-// ── Time helpers ───────────────────────────────────────────────────────────
+// ── Helpers ────────────────────────────────────────────────────────────────
 const pad = n => String(n).padStart(2,'0');
-function toMins(str) { const [h,m] = str.split(':').map(Number); return h*60+m; }
-function fmtMins(t) {
-  const total = ((t%1440)+1440)%1440;
-  const h = Math.floor(total/60), m = Math.floor(total%60);
-  const sec = Math.round((t - Math.floor(t))*60);
-  return sec > 0 ? `${pad(h)}:${pad(m)}:${pad(sec)}` : `${pad(h)}:${pad(m)}`;
+function toMins(str){ const [h,m]=str.split(':').map(Number); return h*60+m; }
+function fmtMins(t){
+  const total=((t%1440)+1440)%1440, h=Math.floor(total/60), m=Math.floor(total%60);
+  const sec=Math.round((t-Math.floor(t))*60);
+  return sec>0 ? `${pad(h)}:${pad(m)}:${pad(sec)}` : `${pad(h)}:${pad(m)}`;
 }
 
 // ── Category toggles ───────────────────────────────────────────────────────
 document.querySelectorAll('.cat-tog').forEach(btn => {
   btn.addEventListener('click', () => {
     const cat = btn.dataset.cat;
-    S.cats[cat] = !S.cats[cat];
-    btn.classList.toggle('off', !S.cats[cat]);
-    document.getElementById('card-' + cat).classList.toggle('hidden', !S.cats[cat]);
+    S[cat].on = !S[cat].on;
+    btn.classList.toggle('off', !S[cat].on);
+    document.getElementById('card-' + cat).classList.toggle('hidden', !S[cat].on);
     syncFsBar();
   });
 });
 
-// ── Calculator ─────────────────────────────────────────────────────────────
+// ── Mode toggle ────────────────────────────────────────────────────────────
+const HINTS = {
+  forward:  'All groups start together — end times differ by allowance.',
+  backward: 'End time is fixed for all — start times differ by allowance.',
+};
 document.querySelectorAll('.mode-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     S.calcMode = btn.dataset.mode;
@@ -596,9 +610,11 @@ document.querySelectorAll('.mode-btn').forEach(btn => {
     btn.classList.add('active');
     document.getElementById('inp-time-label').textContent = S.calcMode === 'forward' ? 'Start Time' : 'End Time';
     document.getElementById('inp-time').value = S.calcMode === 'forward' ? '09:00' : '10:15';
+    document.getElementById('mode-hint').textContent = HINTS[S.calcMode];
   });
 });
 
+// ── Calculator ─────────────────────────────────────────────────────────────
 document.getElementById('btn-calc').addEventListener('click', () => {
   const tv   = document.getElementById('inp-time').value;
   const lenH = parseInt(document.getElementById('inp-h').value) || 0;
@@ -607,73 +623,70 @@ document.getElementById('btn-calc').addEventListener('click', () => {
   if (!tv || len <= 0) return;
 
   const ref = toMins(tv);
-  S.startMins = S.calcMode === 'forward' ? ref : ref - len;
-  S.normalEnd = S.startMins + len;
-  S.et25End   = S.startMins + len*1.25;
-  S.et50End   = S.startMins + len*1.50;
+
+  if (S.calcMode === 'forward') {
+    // Fixed start — end times differ
+    S.normal = { ...S.normal, start: ref,             end: ref + len        };
+    S.et25   = { ...S.et25,   start: ref,             end: ref + len * 1.25 };
+    S.et50   = { ...S.et50,   start: ref,             end: ref + len * 1.5  };
+  } else {
+    // Fixed end — start times differ (each group starts earlier to all finish at same time)
+    S.normal = { ...S.normal, start: ref - len,        end: ref };
+    S.et25   = { ...S.et25,   start: ref - len * 1.25, end: ref };
+    S.et50   = { ...S.et50,   start: ref - len * 1.5,  end: ref };
+  }
+
   S.hasResults = true;
 
-  const ss = fmtMins(S.startMins);
-  document.getElementById('r-n-s').textContent  = ss;
-  document.getElementById('r-n-e').textContent  = fmtMins(S.normalEnd);
-  document.getElementById('r-25-s').textContent = ss;
-  document.getElementById('r-25-e').textContent = fmtMins(S.et25End);
-  document.getElementById('r-50-s').textContent = ss;
-  document.getElementById('r-50-e').textContent = fmtMins(S.et50End);
-
-  document.getElementById('fs-n-s').textContent  = ss;
-  document.getElementById('fs-n-e').textContent  = fmtMins(S.normalEnd);
-  document.getElementById('fs-25-s').textContent = ss;
-  document.getElementById('fs-25-e').textContent = fmtMins(S.et25End);
-  document.getElementById('fs-50-s').textContent = ss;
-  document.getElementById('fs-50-e').textContent = fmtMins(S.et50End);
+  // Update category cards
+  [
+    ['normal','r-n-s','r-n-e','fs-n-s','fs-n-e'],
+    ['et25',  'r-25-s','r-25-e','fs-25-s','fs-25-e'],
+    ['et50',  'r-50-s','r-50-e','fs-50-s','fs-50-e'],
+  ].forEach(([cat,rs,re,fss,fse]) => {
+    const c = S[cat];
+    document.getElementById(rs).textContent  = c.start !== null ? fmtMins(c.start) : '—';
+    document.getElementById(re).textContent  = c.end   !== null ? fmtMins(c.end)   : '—';
+    document.getElementById(fss).textContent = c.start !== null ? fmtMins(c.start) : '—';
+    document.getElementById(fse).textContent = c.end   !== null ? fmtMins(c.end)   : '—';
+  });
 
   renderAllStudentTimes();
   syncFsBar();
-
-  // Auto-collapse setup
+  updateCpNotice();
   document.getElementById('setup-section').classList.add('closed');
 });
 
-// ── Lock toggle ────────────────────────────────────────────────────────────
-document.getElementById('btn-lock').addEventListener('click', () => {
-  S.locked = !S.locked;
-  const btn = document.getElementById('btn-lock');
-  btn.classList.toggle('locked', S.locked);
-  btn.textContent = S.locked ? 'Fixed Size' : 'Auto-size';
-  document.querySelectorAll('.student-card').forEach(c => c.classList.toggle('locked', S.locked));
-});
+// ── Student helpers ────────────────────────────────────────────────────────
+function catData(cat)  { return S[cat]; }
+function catEnd(cat)   { return catData(cat).end; }
+function catStart(cat) { return catData(cat).start; }
 
-// ── Students ───────────────────────────────────────────────────────────────
-function baseEnd(cat) { return { normal: S.normalEnd, et25: S.et25End, et50: S.et50End }[cat]; }
-
-function adjEnd(student) {
-  const b = baseEnd(student.cat);
-  if (b === null) return null;
-  let brk = 0;
-  student.breaks.forEach(({start,end}) => {
-    if (start && end) { const d = toMins(end)-toMins(start); if (d>0) brk += d; }
-  });
-  return b + brk;
-}
-
-function totalBreakMins(student) {
+function totalBreak(student) {
   let t = 0;
   student.breaks.forEach(({start,end}) => {
-    if (start && end) { const d = toMins(end)-toMins(start); if (d>0) t += d; }
+    if (start && end) { const d = toMins(end)-toMins(start); if(d>0) t+=d; }
   });
   return t;
 }
 
+function adjEnd(student) {
+  const base = catEnd(student.cat);
+  if (base === null) return null;
+  return base + totalBreak(student);
+}
+
+// ── Build student card ─────────────────────────────────────────────────────
 function buildCard(st) {
   const div = document.createElement('div');
-  div.className = 'student-card' + (S.locked ? ' locked' : '');
+  div.className = 'student-card' + (st.expanded ? ' sc-expanded' : '');
   div.dataset.id = st.id;
 
   const ae       = adjEnd(st);
-  const startStr = S.startMins !== null ? fmtMins(S.startMins) : '—';
+  const cs       = catStart(st.cat);
+  const startStr = cs !== null ? fmtMins(cs) : '—';
   const endStr   = ae !== null ? fmtMins(ae) : '—';
-  const brk      = totalBreakMins(st);
+  const brk      = totalBreak(st);
   const brkText  = brk > 0 ? `+${brk} min break` : '';
 
   const breaksHtml = st.breaks.map((b,i) => `
@@ -681,8 +694,8 @@ function buildCard(st) {
       <span class="bi-lbl">B${i+1}</span>
       <input type="time" class="bi-time break-start" data-id="${st.id}" data-idx="${i}" value="${b.start}">
       <span class="bi-sep">→</span>
-      <input type="time" class="bi-time break-end" data-id="${st.id}" data-idx="${i}" value="${b.end}">
-      <button class="break-rem" data-id="${st.id}" data-idx="${i}" title="Remove break">×</button>
+      <input type="time" class="bi-time break-end"   data-id="${st.id}" data-idx="${i}" value="${b.end}">
+      <button class="break-rem" data-id="${st.id}" data-idx="${i}">×</button>
     </div>
   `).join('');
 
@@ -695,14 +708,17 @@ function buildCard(st) {
         <option value="et50"   ${st.cat==='et50'  ?'selected':''}>50% ET</option>
       </select>
       <span class="sc-endtime">${endStr}</span>
-      <button class="sc-remove" data-id="${st.id}">×</button>
+      <button class="sc-collapse-btn" data-id="${st.id}" title="Expand / collapse">▾</button>
+      <button class="sc-remove"       data-id="${st.id}" title="Remove">×</button>
     </div>
     <div class="sc-row2">
       <span class="sc-starttime">${startStr} →</span>
       <span class="sc-break-summary">${brkText}</span>
     </div>
-    <div class="sc-breaks-grid">${breaksHtml}</div>
-    <button class="sc-add-break" data-id="${st.id}">+ Add Break</button>
+    <div class="sc-expand-body">
+      <div class="sc-breaks-grid">${breaksHtml}</div>
+      <button class="sc-add-break" data-id="${st.id}">+ Add Break</button>
+    </div>
   `;
   return div;
 }
@@ -719,89 +735,140 @@ function refreshCard(id) {
   const st = S.students.find(s => s.id === id);
   if (!st) return;
   const ae = adjEnd(st);
-  const startStr = S.startMins !== null ? fmtMins(S.startMins) : '—';
-  const endStr   = ae !== null ? fmtMins(ae) : '—';
-  const brk      = totalBreakMins(st);
-  card.querySelector('.sc-endtime').textContent      = endStr;
-  card.querySelector('.sc-starttime').textContent    = startStr + ' →';
+  const cs = catStart(st.cat);
+  const brk = totalBreak(st);
+  card.querySelector('.sc-endtime').textContent       = ae !== null ? fmtMins(ae) : '—';
+  card.querySelector('.sc-starttime').textContent     = (cs !== null ? fmtMins(cs) : '—') + ' →';
   card.querySelector('.sc-break-summary').textContent = brk > 0 ? `+${brk} min break` : '';
 }
 
 function renderAllStudentTimes() { S.students.forEach(s => refreshCard(s.id)); }
 
+// ── Student events (delegation) ────────────────────────────────────────────
 const studentList = document.getElementById('students-list');
 
 studentList.addEventListener('input', e => {
-  const id  = +e.target.dataset.id;
-  const idx = +e.target.dataset.idx;
-  const st  = S.students.find(s => s.id === id);
+  const id=+e.target.dataset.id, idx=+e.target.dataset.idx;
+  const st=S.students.find(s=>s.id===id);
   if (!st) return;
-
-  if (e.target.classList.contains('sc-name-input'))  { st.name = e.target.value; }
-  else if (e.target.classList.contains('sc-cat-sel')) { st.cat = e.target.value; refreshCard(id); }
-  else if (e.target.classList.contains('break-start')){ st.breaks[idx].start = e.target.value; refreshCard(id); }
-  else if (e.target.classList.contains('break-end'))  { st.breaks[idx].end   = e.target.value; refreshCard(id); }
+  if (e.target.classList.contains('sc-name-input'))  { st.name=e.target.value; }
+  else if (e.target.classList.contains('sc-cat-sel'))   { st.cat=e.target.value; refreshCard(id); }
+  else if (e.target.classList.contains('break-start'))  { st.breaks[idx].start=e.target.value; refreshCard(id); }
+  else if (e.target.classList.contains('break-end'))    { st.breaks[idx].end=e.target.value;   refreshCard(id); }
 });
 
 studentList.addEventListener('click', e => {
-  const id  = +e.target.dataset.id;
-  const idx = +e.target.dataset.idx;
+  const id=+e.target.dataset.id, idx=+e.target.dataset.idx;
 
-  if (e.target.classList.contains('sc-remove')) {
-    S.students = S.students.filter(s => s.id !== id);
-    renderStudents();
+  if (e.target.classList.contains('sc-collapse-btn')) {
+    const st=S.students.find(s=>s.id===id);
+    if (st) { st.expanded=!st.expanded; renderStudents(); }
+  } else if (e.target.classList.contains('sc-remove')) {
+    S.students=S.students.filter(s=>s.id!==id); renderStudents();
   } else if (e.target.classList.contains('sc-add-break')) {
-    const st = S.students.find(s => s.id === id);
+    const st=S.students.find(s=>s.id===id);
     if (st) { st.breaks.push({start:'',end:''}); renderStudents(); }
   } else if (e.target.classList.contains('break-rem')) {
-    const st = S.students.find(s => s.id === id);
+    const st=S.students.find(s=>s.id===id);
     if (st) { st.breaks.splice(idx,1); renderStudents(); }
   }
 });
 
 document.getElementById('btn-add-student').addEventListener('click', () => {
-  S.students.push({ id: S.nextId++, name:'', cat:'normal', breaks:[{start:'',end:''}] });
+  S.students.push({ id:S.nextId++, name:'', cat:'normal', breaks:[{start:'',end:''}], expanded:true });
   renderStudents();
   const col = document.getElementById('results-col');
-  col.scrollTop = col.scrollHeight;
+  setTimeout(() => col.scrollTop = col.scrollHeight, 50);
+});
+
+// ── Collapse All / Expand All ──────────────────────────────────────────────
+document.getElementById('btn-collapse-all').addEventListener('click', () => {
+  S.allCollapsed = !S.allCollapsed;
+  S.students.forEach(s => s.expanded = !S.allCollapsed);
+  document.getElementById('btn-collapse-all').textContent = S.allCollapsed ? 'Expand All' : 'Collapse All';
+  renderStudents();
 });
 
 // ── CSV Export ─────────────────────────────────────────────────────────────
 document.getElementById('btn-export').addEventListener('click', () => {
-  const now = new Date();
-  const dateStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-  const ss = S.startMins !== null ? fmtMins(S.startMins) : '';
-
-  let csv = 'Type,Name,Category,Start Time,Base End Time,Total Break (mins),Adjusted End Time\n';
+  const now=new Date();
+  const dateStr=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  let csv='Type,Name,Category,Start Time,Base End Time,Total Break (mins),Adjusted End Time\n';
 
   [
-    { label:'Normal Exam End Time', cat:'normal', end: S.normalEnd },
-    { label:'25% Extra Time End',   cat:'et25',   end: S.et25End   },
-    { label:'50% Extra Time End',   cat:'et50',   end: S.et50End   },
-  ].forEach(({label,end}) => {
-    const e = end !== null ? fmtMins(end) : '';
-    csv += `Category,"${label}",,${ss},${e},0,${e}\n`;
+    {label:'Normal Exam End Time',cat:'normal'},
+    {label:'25% Extra Time End',  cat:'et25'  },
+    {label:'50% Extra Time End',  cat:'et50'  },
+  ].forEach(({label,cat}) => {
+    const c=S[cat];
+    const s=c.start!==null?fmtMins(c.start):'';
+    const e=c.end  !==null?fmtMins(c.end)  :'';
+    csv+=`Category,"${label}",,${s},${e},0,${e}\n`;
   });
 
   S.students.forEach(st => {
-    const cats = {normal:'Normal',et25:'25% ET',et50:'50% ET'};
-    const b    = baseEnd(st.cat);
-    const brk  = totalBreakMins(st);
-    const ae   = adjEnd(st);
-    csv += `Student,"${(st.name||'Unnamed').replace(/"/g,'""')}","${cats[st.cat]}",${ss},${b!==null?fmtMins(b):''},${brk},${ae!==null?fmtMins(ae):''}\n`;
+    const cats={normal:'Normal',et25:'25% ET',et50:'50% ET'};
+    const cs=catStart(st.cat), ce=catEnd(st.cat), ae=adjEnd(st), brk=totalBreak(st);
+    csv+=`Student,"${(st.name||'Unnamed').replace(/"/g,'""')}","${cats[st.cat]}",`
+        +`${cs!==null?fmtMins(cs):''},${ce!==null?fmtMins(ce):''},${brk},${ae!==null?fmtMins(ae):''}\n`;
   });
 
-  const a  = document.createElement('a');
-  a.href   = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
-  a.download = `exam-times-${dateStr}.csv`;
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
+  a.download=`exam-times-${dateStr}.csv`;
   a.click();
 });
 
-// ── Init: sync toggle state to DOM ─────────────────────────────────────────
-document.querySelectorAll('.cat-tog').forEach(btn => {
-  const cat = btn.dataset.cat;
-  if (!S.cats[cat]) btn.classList.add('off');
-  document.getElementById('card-' + cat).classList.toggle('hidden', !S.cats[cat]);
+// ── Change Pen toggle ─────────────────────────────────────────────────────
+S.changePen = false;
+
+document.getElementById('cp-toggle').addEventListener('click', () => {
+  S.changePen = !S.changePen;
+  document.getElementById('cp-toggle').classList.toggle('on', S.changePen);
+  updateCpNotice();
+});
+
+function changePenTimeMins() {
+  // Change pen = when normal-length time ends = S.normal.end
+  return S.normal.end;
+}
+
+function updateCpNotice() {
+  const notice = document.getElementById('cp-notice');
+  const cpTime = changePenTimeMins();
+
+  if (!S.changePen || cpTime === null) {
+    notice.className = 'hidden';
+    return;
+  }
+
+  const now = new Date();
+  const nowMins = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+  const minsUntil = cpTime - nowMins;
+
+  if (minsUntil <= 0) {
+    // Time has passed — green alert
+    notice.className = 'cp-now';
+    notice.textContent = '🖊 Please change pen — you are now into your extra time.';
+  } else if (minsUntil <= 5) {
+    // Within 5 minutes — amber warning
+    notice.className = 'cp-soon';
+    notice.textContent = `⏳ Change colour pen in ${Math.ceil(minsUntil)} min (at ${fmtMins(cpTime)}).`;
+  } else {
+    // More than 5 minutes away — neutral info
+    notice.className = '';
+    notice.textContent = `Please change colour pen at ${fmtMins(cpTime)}.`;
+  }
+}
+
+setInterval(updateCpNotice, 5000);
+
+// ── Init ──────────────────────────────────────────────────────────────────
+// Sync initial category states to DOM
+['normal','et25','et50'].forEach(cat => {
+  const on = S[cat].on;
+  document.querySelector(`.cat-tog[data-cat="${cat}"]`).classList.toggle('off', !on);
+  document.getElementById('card-' + cat).classList.toggle('hidden', !on);
 });
 </script>
 </body>
