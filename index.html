@@ -177,6 +177,13 @@
     body.dark .cp-notice.cp-soon { background: #332a00; border-color: #806000; color: #f0c050; }
     body.dark .cp-notice.cp-now  { background: #1a3d2a; border-color: #3a8a5a; color: #7eda9f; }
 
+    /* ── Rounding note ── */
+    .rounding-note {
+      font-size: .67rem; color: #aaa; font-style: italic; flex-shrink: 0;
+    }
+    .rounding-note.hidden { display: none; }
+    body.dark .rounding-note { color: #666; }
+
     /* ── Actions bar ── */
     #actions-bar { display: flex; gap: .4rem; flex-wrap: wrap; flex-shrink: 0; margin-top: .1rem; }
 
@@ -446,6 +453,9 @@
       <div class="cp-notice hidden" id="cp-card-et50"></div>
     </div>
 
+    <!-- Rounding note -->
+    <p id="rounding-note" class="rounding-note hidden">* Extra time durations have been rounded up to the nearest minute in line with JCQ practice.</p>
+
     <!-- Students -->
     <div id="students-list"></div>
 
@@ -708,6 +718,7 @@ document.getElementById('btn-calc').addEventListener('click', () => {
   }
 
   S.hasResults = true;
+  document.getElementById('rounding-note').classList.remove('hidden');
 
   [
     ['normal','r-n-s','r-n-e','fs-n-s','fs-n-e'],
