@@ -25,485 +25,264 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: .4rem 1rem;
+      padding: .38rem .85rem;
       background: #fff;
       border-bottom: 1px solid #ddd;
       flex-shrink: 0;
-      z-index: 10;
       transition: background .3s, border-color .3s;
     }
     body.dark nav { background: #333; border-color: #444; }
     body.dark.fs-mode nav { display: none; }
 
-    .pill-group {
-      display: flex;
-      background: #ebebeb;
-      border-radius: 7px;
-      padding: 3px;
-      gap: 2px;
-    }
+    .pill-group { display: flex; background: #ebebeb; border-radius: 7px; padding: 2px; gap: 2px; }
     body.dark .pill-group { background: #222; }
-
     .pill-btn {
-      padding: .26rem .85rem;
-      border: none;
-      background: transparent;
-      border-radius: 5px;
-      font-size: .82rem;
-      cursor: pointer;
-      color: #666;
-      transition: background .15s, color .15s;
+      padding: .24rem .8rem; border: none; background: transparent; border-radius: 5px;
+      font-size: .8rem; cursor: pointer; color: #666; transition: background .15s, color .15s;
     }
     .pill-btn.active { background: #fff; color: #111; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
     body.dark .pill-btn { color: #888; }
     body.dark .pill-btn.active { background: #555; color: #eee; }
 
-    .nav-right { display: flex; gap: .5rem; align-items: center; }
-
-    #btn-setup {
-      padding: .26rem .85rem;
-      border: 1px solid #ccc;
-      background: transparent;
-      border-radius: 6px;
-      font-size: .82rem;
-      cursor: pointer;
-      color: inherit;
-    }
-    body.dark #btn-setup { border-color: #555; }
-
     #btn-fs {
-      padding: .26rem .85rem;
-      border: 1px solid #ccc;
-      background: transparent;
-      border-radius: 6px;
-      font-size: .82rem;
-      cursor: pointer;
-      color: inherit;
+      padding: .24rem .8rem; border: 1px solid #ccc; background: transparent;
+      border-radius: 6px; font-size: .8rem; cursor: pointer; color: inherit;
     }
     body.dark #btn-fs { border-color: #555; }
 
     /* ── Main layout ── */
-    #main {
-      flex: 1;
-      display: flex;
-      min-height: 0;
-    }
+    #main { flex: 1; display: flex; min-height: 0; }
 
     /* ── Clock column ── */
-    #clock-col {
-      flex: 3;
-      min-width: 0;
-      display: flex;
-      align-items: stretch;
-      position: relative;
-    }
-
-    .clock-page {
-      display: none;
-      width: 100%;
-      align-items: center;
-      justify-content: center;
-      padding: .75rem;
-    }
+    #clock-col { flex: 3; min-width: 0; display: flex; align-items: stretch; }
+    .clock-page { display: none; width: 100%; align-items: center; justify-content: center; padding: .75rem; }
     .clock-page.active { display: flex; }
 
-    #analog-wrap {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    #analog-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
     #analog-canvas { display: block; }
 
     #digital-wrap { text-align: center; }
     #digital-time {
-      font-size: clamp(3.5rem, 14vw, 12rem);
-      font-weight: 200;
-      letter-spacing: .04em;
-      font-variant-numeric: tabular-nums;
-      line-height: 1;
+      font-size: clamp(3rem, 13vw, 11rem); font-weight: 200;
+      letter-spacing: .04em; font-variant-numeric: tabular-nums; line-height: 1;
     }
-    #digital-date {
-      margin-top: .4rem;
-      font-size: clamp(.9rem, 2vw, 1.6rem);
-      font-weight: 300;
-      color: #999;
-      letter-spacing: .06em;
-    }
+    #digital-date { margin-top: .4rem; font-size: clamp(.85rem, 1.8vw, 1.5rem); font-weight: 300; color: #999; letter-spacing: .06em; }
 
     /* ── Results column ── */
     #results-col {
-      flex: 2;
-      border-left: 1px solid #ddd;
-      background: #fff;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-      padding: .75rem .85rem;
-      gap: .65rem;
+      flex: 2; border-left: 1px solid #ddd; background: #fff;
+      display: flex; flex-direction: column; overflow-y: auto;
+      padding: .6rem .7rem; gap: .5rem;
       transition: background .3s, border-color .3s;
     }
     body.dark #results-col { background: #323232; border-color: #444; }
-    body.dark.fs-mode #results-col { border-color: #3a3a3a; }
 
-    /* Category toggles */
-    #cat-toggles {
-      display: flex;
-      gap: .4rem;
-      flex-wrap: wrap;
-      padding-bottom: .2rem;
-      border-bottom: 1px solid #eee;
+    /* ── Setup accordion ── */
+    #setup-section { border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; flex-shrink: 0; }
+    body.dark #setup-section { border-color: #484848; }
+
+    #setup-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .42rem .7rem; background: #f5f5f5; cursor: pointer; user-select: none;
+      font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #555;
+      transition: background .15s;
     }
-    body.dark #cat-toggles { border-color: #444; }
+    #setup-head:hover { background: #eee; }
+    body.dark #setup-head { background: #2a2a2a; color: #999; }
+    body.dark #setup-head:hover { background: #252525; }
+    #setup-arrow { font-size: .7rem; transition: transform .2s; }
+    #setup-section.closed #setup-arrow { transform: rotate(-90deg); }
 
-    .cat-tog {
-      padding: .22rem .75rem;
-      border: 1.5px solid #1a1a1a;
-      background: #1a1a1a;
-      color: #fff;
-      border-radius: 20px;
-      font-size: .75rem;
-      font-weight: 600;
-      cursor: pointer;
-      letter-spacing: .04em;
-      transition: background .15s, color .15s;
-    }
-    .cat-tog.off {
-      background: transparent;
-      color: #aaa;
-      border-color: #ccc;
-      text-decoration: line-through;
-    }
-    body.dark .cat-tog { border-color: #e0e0e0; background: #e0e0e0; color: #1a1a1a; }
-    body.dark .cat-tog.off { background: transparent; color: #666; border-color: #555; }
+    #setup-body { padding: .55rem .7rem; border-top: 1px solid #e0e0e0; }
+    body.dark #setup-body { border-color: #484848; }
+    #setup-section.closed #setup-body { display: none; }
 
-    /* Category cards */
-    .cat-card {
-      padding: .55rem .7rem;
-      border: 1px solid #e5e5e5;
-      border-radius: 8px;
-      background: #fafafa;
-      transition: background .3s, border-color .3s;
-    }
-    body.dark .cat-card { background: #2a2a2a; border-color: #444; }
-    .cat-card.hidden { display: none; }
+    .setup-row { display: flex; align-items: flex-end; gap: .55rem; flex-wrap: wrap; }
 
-    .cat-card-label {
-      font-size: .65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      color: #888;
-      margin-bottom: .3rem;
-    }
-    body.dark .cat-card-label { color: #888; }
-
-    .cat-times {
-      display: flex;
-      align-items: baseline;
-      gap: .5rem;
-    }
-
-    .ct-start {
-      font-size: clamp(1.1rem, 2vw, 1.8rem);
-      font-variant-numeric: tabular-nums;
-      color: #888;
-    }
-    body.dark .ct-start { color: #777; }
-
-    .ct-arrow {
-      color: #bbb;
-      font-size: clamp(.9rem, 1.4vw, 1.3rem);
-    }
-
-    .ct-end {
-      font-size: clamp(1.8rem, 3.2vw, 3.2rem);
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      letter-spacing: .02em;
-    }
-
-    /* Students */
-    #students-list {
-      display: flex;
-      flex-direction: column;
-      gap: .55rem;
-    }
-
-    .student-card {
-      border: 1px solid #e5e5e5;
-      border-radius: 8px;
-      background: #fafafa;
-      padding: .55rem .7rem;
-      display: flex;
-      flex-direction: column;
-      gap: .4rem;
-    }
-    body.dark .student-card { background: #2a2a2a; border-color: #444; }
-
-    .sc-header {
-      display: flex;
-      align-items: center;
-      gap: .4rem;
-    }
-
-    .sc-name-input {
-      flex: 1;
-      min-width: 0;
-      padding: .28rem .5rem;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: clamp(.9rem, 1.6vw, 1.4rem);
-      font-weight: 600;
-      background: transparent;
-      color: inherit;
-      outline: none;
-    }
-    body.dark .sc-name-input { border-color: #555; }
-    .sc-name-input:focus { border-color: #888; }
-
-    .sc-cat-sel {
-      padding: .28rem .4rem;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: .78rem;
-      background: transparent;
-      color: inherit;
-      cursor: pointer;
-    }
-    body.dark .sc-cat-sel { border-color: #555; background: #2a2a2a; }
-
-    .sc-remove {
-      width: 1.6rem;
-      height: 1.6rem;
-      border: none;
-      background: transparent;
-      color: #aaa;
-      font-size: 1.1rem;
-      cursor: pointer;
-      border-radius: 4px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .sc-remove:hover { background: #fee; color: #c00; }
-    body.dark .sc-remove:hover { background: #400; color: #f88; }
-
-    .sc-breaks { display: flex; flex-direction: column; gap: .28rem; }
-
-    .break-row {
-      display: flex;
-      align-items: center;
-      gap: .3rem;
-      font-size: .78rem;
-    }
-
-    .break-lbl { color: #888; min-width: 3rem; font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; }
-
-    .break-time-inp {
-      padding: .22rem .35rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: .82rem;
-      font-variant-numeric: tabular-nums;
-      background: transparent;
-      color: inherit;
-      width: 6.5rem;
-    }
-    body.dark .break-time-inp { border-color: #555; color-scheme: dark; }
-
-    .break-to { color: #aaa; font-size: .75rem; }
-
-    .break-rem {
-      width: 1.4rem;
-      height: 1.4rem;
-      border: none;
-      background: transparent;
-      color: #bbb;
-      font-size: .95rem;
-      cursor: pointer;
-      border-radius: 3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .break-rem:hover { background: #fee; color: #c00; }
-
-    .sc-add-break {
-      align-self: flex-start;
-      padding: .18rem .55rem;
-      border: 1px dashed #ccc;
-      background: transparent;
-      border-radius: 4px;
-      font-size: .75rem;
-      color: #888;
-      cursor: pointer;
-    }
-    .sc-add-break:hover { border-color: #888; color: #555; }
-
-    .sc-result {
-      display: flex;
-      align-items: baseline;
-      gap: .4rem;
-      margin-top: .1rem;
-    }
-
-    .sc-start {
-      font-size: clamp(.95rem, 1.5vw, 1.4rem);
-      font-variant-numeric: tabular-nums;
-      color: #888;
-    }
-    .sc-arrow-d { color: #bbb; font-size: .9rem; }
-    .sc-end {
-      font-size: clamp(1.5rem, 2.8vw, 2.6rem);
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .sc-breaks-summary {
-      font-size: .72rem;
-      color: #aaa;
-      margin-left: .2rem;
-    }
-
-    /* Results actions */
-    #results-actions {
-      display: flex;
-      gap: .5rem;
-      margin-top: auto;
-      padding-top: .4rem;
-      flex-wrap: wrap;
-    }
-
-    #btn-add-student {
-      flex: 1;
-      padding: .38rem .7rem;
-      border: 1.5px dashed #ccc;
-      background: transparent;
-      border-radius: 7px;
-      font-size: .82rem;
-      color: #888;
-      cursor: pointer;
-    }
-    #btn-add-student:hover { border-color: #888; color: #555; }
-
-    #btn-export {
-      padding: .38rem .85rem;
-      border: 1px solid #1a1a1a;
-      background: transparent;
-      border-radius: 7px;
-      font-size: .82rem;
-      font-weight: 600;
-      color: #1a1a1a;
-      cursor: pointer;
-    }
-    #btn-export:hover { background: #1a1a1a; color: #fff; }
-    body.dark #btn-export { border-color: #e0e0e0; color: #e0e0e0; }
-    body.dark #btn-export:hover { background: #e0e0e0; color: #1a1a1a; }
-
-    /* ── Calculator bar ── */
-    #calc-bar {
-      flex-shrink: 0;
-      background: #fff;
-      border-top: 1px solid #ddd;
-      padding: .55rem 1rem;
-      transition: background .3s, border-color .3s;
-    }
-    body.dark #calc-bar { background: #333; border-color: #444; }
-    body.dark.fs-mode #calc-bar { display: none; }
-    #calc-bar.hidden { display: none; }
-
-    .calc-row {
-      display: flex;
-      align-items: flex-end;
-      gap: .7rem;
-      flex-wrap: wrap;
-    }
-
-    .mode-group {
-      display: flex;
-      background: #ebebeb;
-      border-radius: 6px;
-      padding: 2px;
-      gap: 2px;
-    }
+    .mode-group { display: flex; background: #ebebeb; border-radius: 6px; padding: 2px; gap: 2px; }
     body.dark .mode-group { background: #222; }
-
     .mode-btn {
-      padding: .24rem .65rem;
-      border: none;
-      background: transparent;
-      border-radius: 4px;
-      font-size: .75rem;
-      cursor: pointer;
-      color: #777;
-      white-space: nowrap;
+      padding: .22rem .6rem; border: none; background: transparent;
+      border-radius: 4px; font-size: .72rem; cursor: pointer; color: #777; white-space: nowrap;
     }
     .mode-btn.active { background: #fff; color: #111; box-shadow: 0 1px 2px rgba(0,0,0,.1); }
     body.dark .mode-btn { color: #777; }
     body.dark .mode-btn.active { background: #555; color: #eee; }
 
-    .c-field { display: flex; flex-direction: column; gap: .18rem; }
-    .c-field label { font-size: .67rem; color: #888; letter-spacing: .08em; text-transform: uppercase; }
-
-    .c-field input[type="time"],
-    .c-field input[type="number"] {
-      padding: .28rem .4rem;
-      border: 1px solid #d0d0d0;
-      border-radius: 5px;
-      font-size: .88rem;
-      font-variant-numeric: tabular-nums;
-      background: #fafafa;
-      color: #1a1a1a;
-      outline: none;
+    .sf { display: flex; flex-direction: column; gap: .15rem; }
+    .sf label { font-size: .62rem; color: #888; letter-spacing: .08em; text-transform: uppercase; }
+    .sf input[type="time"], .sf input[type="number"] {
+      padding: .26rem .38rem; border: 1px solid #d0d0d0; border-radius: 5px;
+      font-size: .85rem; font-variant-numeric: tabular-nums; background: #fafafa; color: #1a1a1a; outline: none;
     }
-    body.dark .c-field input[type="time"],
-    body.dark .c-field input[type="number"] {
-      background: #222;
-      border-color: #555;
-      color: #e8e8e8;
-      color-scheme: dark;
+    body.dark .sf input[type="time"], body.dark .sf input[type="number"] {
+      background: #222; border-color: #555; color: #e8e8e8; color-scheme: dark;
     }
-    .c-field input[type="number"] { width: 3.6rem; }
-    .c-field input[type="time"]   { width: 7.2rem; }
-
-    .dur-row { display: flex; align-items: center; gap: .22rem; }
-    .dur-row span { font-size: .75rem; color: #888; }
+    .sf input[type="number"] { width: 3.4rem; }
+    .sf input[type="time"]   { width: 7rem; }
+    .dur-row { display: flex; align-items: center; gap: .2rem; }
+    .dur-row span { font-size: .72rem; color: #888; }
 
     #btn-calc {
-      padding: .33rem .95rem;
-      border: none;
-      background: #1a1a1a;
-      color: #fff;
-      border-radius: 5px;
-      font-size: .82rem;
-      font-weight: 600;
-      cursor: pointer;
-      align-self: flex-end;
+      padding: .3rem .85rem; border: none; background: #1a1a1a; color: #fff;
+      border-radius: 5px; font-size: .8rem; font-weight: 600; cursor: pointer; align-self: flex-end;
     }
     body.dark #btn-calc { background: #e0e0e0; color: #1a1a1a; }
 
-    /* Fullscreen overlay bar */
+    /* ── Category toggles ── */
+    #cat-toggles {
+      display: flex; gap: .35rem; flex-wrap: wrap;
+      padding-bottom: .4rem; border-bottom: 1px solid #eee; flex-shrink: 0;
+    }
+    body.dark #cat-toggles { border-color: #444; }
+    .cat-tog {
+      padding: .2rem .65rem; border: 1.5px solid #1a1a1a; background: #1a1a1a;
+      color: #fff; border-radius: 20px; font-size: .72rem; font-weight: 600;
+      cursor: pointer; letter-spacing: .04em; transition: background .15s, color .15s, border-color .15s;
+    }
+    .cat-tog.off { background: transparent; color: #aaa; border-color: #ccc; text-decoration: line-through; }
+    body.dark .cat-tog { border-color: #ddd; background: #ddd; color: #1a1a1a; }
+    body.dark .cat-tog.off { background: transparent; color: #666; border-color: #555; }
+
+    /* ── Category cards ── */
+    .cat-card {
+      padding: .45rem .65rem; border: 1px solid #e5e5e5; border-radius: 8px;
+      background: #fafafa; flex-shrink: 0; transition: background .3s, border-color .3s;
+    }
+    body.dark .cat-card { background: #2a2a2a; border-color: #444; }
+    .cat-card.hidden { display: none; }
+
+    .cat-card-label { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #888; margin-bottom: .25rem; }
+    body.dark .cat-card-label { color: #777; }
+
+    .cat-times { display: flex; align-items: baseline; gap: .4rem; }
+    .ct-start { font-size: clamp(1rem, 1.8vw, 1.6rem); font-variant-numeric: tabular-nums; color: #999; }
+    .ct-arrow { color: #ccc; font-size: clamp(.85rem, 1.3vw, 1.2rem); }
+    .ct-end   { font-size: clamp(1.7rem, 3vw, 3rem); font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+
+    /* ── Actions bar ── */
+    #actions-bar {
+      display: flex; gap: .4rem; flex-wrap: wrap; flex-shrink: 0;
+      padding-top: .1rem;
+    }
+    #btn-add-student {
+      flex: 1; padding: .33rem .6rem; border: 1.5px dashed #bbb;
+      background: transparent; border-radius: 6px; font-size: .78rem; color: #888; cursor: pointer;
+    }
+    #btn-add-student:hover { border-color: #888; color: #555; }
+    #btn-lock {
+      padding: .33rem .65rem; border: 1px solid #ccc; background: transparent;
+      border-radius: 6px; font-size: .78rem; cursor: pointer; color: #666; white-space: nowrap;
+    }
+    #btn-lock:hover { border-color: #888; }
+    #btn-lock.locked { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    body.dark #btn-lock.locked { background: #ddd; color: #111; border-color: #ddd; }
+    #btn-export {
+      padding: .33rem .65rem; border: 1px solid #1a1a1a; background: transparent;
+      border-radius: 6px; font-size: .78rem; font-weight: 600; color: #1a1a1a; cursor: pointer;
+    }
+    #btn-export:hover { background: #1a1a1a; color: #fff; }
+    body.dark #btn-export { border-color: #ddd; color: #ddd; }
+    body.dark #btn-export:hover { background: #ddd; color: #111; }
+
+    /* ── Student cards ── */
+    #students-list { display: flex; flex-direction: column; gap: .45rem; }
+
+    .student-card {
+      border: 1px solid #e5e5e5; border-radius: 8px; background: #fafafa;
+      padding: .45rem .6rem; display: flex; flex-direction: column; gap: .3rem;
+      transition: background .3s, border-color .3s;
+    }
+    body.dark .student-card { background: #2a2a2a; border-color: #444; }
+
+    /* Locked cards: fixed height with scroll */
+    .student-card.locked { max-height: 130px; overflow-y: auto; }
+
+    /* Row 1: name | category | end-time | × */
+    .sc-row1 { display: flex; align-items: center; gap: .35rem; }
+
+    .sc-name-input {
+      flex: 1; min-width: 0; padding: .22rem .4rem; border: 1px solid #e0e0e0;
+      border-radius: 5px; font-size: clamp(.85rem, 1.5vw, 1.25rem); font-weight: 600;
+      background: transparent; color: inherit; outline: none;
+    }
+    body.dark .sc-name-input { border-color: #555; }
+    .sc-name-input:focus { border-color: #999; }
+
+    .sc-cat-sel {
+      padding: .22rem .3rem; border: 1px solid #e0e0e0; border-radius: 5px;
+      font-size: .75rem; background: transparent; color: inherit; cursor: pointer; flex-shrink: 0;
+    }
+    body.dark .sc-cat-sel { border-color: #555; background: #2a2a2a; }
+
+    .sc-endtime {
+      font-size: clamp(1.2rem, 2.2vw, 2rem); font-weight: 700; font-variant-numeric: tabular-nums;
+      white-space: nowrap; letter-spacing: .02em; flex-shrink: 0;
+    }
+
+    .sc-remove {
+      width: 1.5rem; height: 1.5rem; border: none; background: transparent; color: #bbb;
+      font-size: 1rem; cursor: pointer; border-radius: 4px; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
+    }
+    .sc-remove:hover { background: #fee; color: #c00; }
+
+    /* Row 2: start → | break summary */
+    .sc-row2 { display: flex; align-items: center; gap: .4rem; }
+    .sc-starttime { font-size: clamp(.8rem, 1.3vw, 1.1rem); color: #999; font-variant-numeric: tabular-nums; }
+    .sc-break-summary { font-size: .72rem; color: #aaa; }
+
+    /* Breaks grid: 2 per row */
+    .sc-breaks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .25rem .4rem;
+    }
+
+    .break-item {
+      display: flex; align-items: center; gap: .18rem;
+      background: #f4f4f4; border-radius: 5px; padding: .18rem .3rem;
+    }
+    body.dark .break-item { background: #232323; }
+
+    .bi-lbl { font-size: .6rem; color: #aaa; text-transform: uppercase; letter-spacing: .05em; min-width: 1.4rem; }
+
+    .bi-time {
+      padding: .15rem .2rem; border: 1px solid #e0e0e0; border-radius: 3px;
+      font-size: .75rem; font-variant-numeric: tabular-nums; background: #fff;
+      color: inherit; outline: none; width: 5.5rem;
+    }
+    body.dark .bi-time { background: #1e1e1e; border-color: #484848; color-scheme: dark; }
+    .bi-time:focus { border-color: #888; }
+
+    .bi-sep { font-size: .7rem; color: #bbb; flex-shrink: 0; }
+
+    .break-rem {
+      width: 1.2rem; height: 1.2rem; border: none; background: transparent; color: #ccc;
+      font-size: .85rem; cursor: pointer; border-radius: 3px; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0; margin-left: auto;
+    }
+    .break-rem:hover { background: #fee; color: #c00; }
+
+    .sc-add-break {
+      align-self: flex-start; padding: .15rem .5rem; border: 1px dashed #ccc;
+      background: transparent; border-radius: 4px; font-size: .72rem; color: #999; cursor: pointer;
+    }
+    .sc-add-break:hover { border-color: #888; color: #555; }
+
+    /* ── Fullscreen overlay bar ── */
     #fs-bar {
-      display: none;
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: rgba(0,0,0,.55);
-      backdrop-filter: blur(6px);
-      padding: .6rem 1.5rem;
-      gap: 1.5rem;
-      z-index: 30;
+      display: none; position: fixed; bottom: 0; left: 0; right: 0;
+      background: rgba(0,0,0,.55); backdrop-filter: blur(6px);
+      padding: .5rem 1.5rem; gap: 1.5rem; z-index: 30;
     }
     #fs-bar.show { display: flex; justify-content: space-around; }
-
     .fs-card { text-align: center; }
-    .fs-type { font-size: .6rem; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .15rem; }
-    .fs-times { display: flex; align-items: center; gap: .5rem; justify-content: center; }
-    .fs-start { font-size: 1rem; color: rgba(255,255,255,.55); font-variant-numeric: tabular-nums; }
+    .fs-type { font-size: .58rem; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .12rem; }
+    .fs-times { display: flex; align-items: center; gap: .45rem; justify-content: center; }
+    .fs-start { font-size: .95rem; color: rgba(255,255,255,.5); font-variant-numeric: tabular-nums; }
     .fs-arr { color: rgba(255,255,255,.3); }
-    .fs-end { font-size: 1.6rem; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
+    .fs-end { font-size: 1.5rem; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
   </style>
 </head>
 <body>
@@ -513,14 +292,11 @@
     <button class="pill-btn active" data-tab="analog">Analog</button>
     <button class="pill-btn"        data-tab="digital">Digital</button>
   </div>
-  <div class="nav-right">
-    <button id="btn-setup">Setup ▾</button>
-    <button id="btn-fs">Full Screen</button>
-  </div>
+  <button id="btn-fs">Full Screen</button>
 </nav>
 
 <div id="main">
-  <!-- Clock -->
+  <!-- ── Clock ── -->
   <div id="clock-col">
     <div id="page-analog" class="clock-page active">
       <div id="analog-wrap"><canvas id="analog-canvas"></canvas></div>
@@ -533,118 +309,126 @@
     </div>
   </div>
 
-  <!-- Results -->
+  <!-- ── Results column ── -->
   <div id="results-col">
-    <div id="cat-toggles">
-      <button class="cat-tog" data-cat="normal">Normal</button>
-      <button class="cat-tog" data-cat="et25">25% Extra Time</button>
-      <button class="cat-tog" data-cat="et50">50% Extra Time</button>
-    </div>
 
-    <div class="cat-card" id="card-normal">
-      <div class="cat-card-label">Normal Exam End Time</div>
-      <div class="cat-times">
-        <span class="ct-start" id="r-n-start">—</span>
-        <span class="ct-arrow">→</span>
-        <span class="ct-end"   id="r-n-end">—</span>
+    <!-- Setup accordion -->
+    <div id="setup-section">
+      <div id="setup-head">
+        <span>Setup</span>
+        <span id="setup-arrow">▾</span>
+      </div>
+      <div id="setup-body">
+        <div class="setup-row">
+          <div class="mode-group">
+            <button class="mode-btn active" data-mode="forward">From Start</button>
+            <button class="mode-btn"        data-mode="backward">From End</button>
+          </div>
+          <div class="sf">
+            <label id="inp-time-label">Start Time</label>
+            <input type="time" id="inp-time" value="09:00">
+          </div>
+          <div class="sf">
+            <label>Paper Length</label>
+            <div class="dur-row">
+              <input type="number" id="inp-h" min="0" max="9" value="0">
+              <span>h</span>
+              <input type="number" id="inp-m" min="0" max="59" value="75">
+              <span>min</span>
+            </div>
+          </div>
+          <button id="btn-calc">Calculate</button>
+        </div>
       </div>
     </div>
 
-    <div class="cat-card hidden" id="card-et25">
+    <!-- Category toggles -->
+    <div id="cat-toggles">
+      <button class="cat-tog"     data-cat="normal">Normal</button>
+      <button class="cat-tog"     data-cat="et25">25% Extra Time</button>
+      <button class="cat-tog off" data-cat="et50">50% Extra Time</button>
+    </div>
+
+    <!-- Category result cards -->
+    <div class="cat-card" id="card-normal">
+      <div class="cat-card-label">Normal Exam End Time</div>
+      <div class="cat-times">
+        <span class="ct-start" id="r-n-s">—</span>
+        <span class="ct-arrow">→</span>
+        <span class="ct-end"   id="r-n-e">—</span>
+      </div>
+    </div>
+
+    <div class="cat-card" id="card-et25">
       <div class="cat-card-label">25% Extra Time End</div>
       <div class="cat-times">
-        <span class="ct-start" id="r-25-start">—</span>
+        <span class="ct-start" id="r-25-s">—</span>
         <span class="ct-arrow">→</span>
-        <span class="ct-end"   id="r-25-end">—</span>
+        <span class="ct-end"   id="r-25-e">—</span>
       </div>
     </div>
 
     <div class="cat-card hidden" id="card-et50">
       <div class="cat-card-label">50% Extra Time End</div>
       <div class="cat-times">
-        <span class="ct-start" id="r-50-start">—</span>
+        <span class="ct-start" id="r-50-s">—</span>
         <span class="ct-arrow">→</span>
-        <span class="ct-end"   id="r-50-end">—</span>
+        <span class="ct-end"   id="r-50-e">—</span>
       </div>
     </div>
 
+    <!-- Students -->
     <div id="students-list"></div>
 
-    <div id="results-actions">
-      <button id="btn-add-student">+ Add Student with Rest Break</button>
+    <!-- Actions -->
+    <div id="actions-bar">
+      <button id="btn-add-student">+ Add Student</button>
+      <button id="btn-lock" title="Prevent cards resizing when breaks are added">Auto-size</button>
       <button id="btn-export">Export CSV</button>
     </div>
-  </div>
-</div>
 
-<!-- Calculator bar -->
-<div id="calc-bar">
-  <div class="calc-row">
-    <div class="mode-group">
-      <button class="mode-btn active" data-mode="forward">From Start Time</button>
-      <button class="mode-btn"        data-mode="backward">From End Time</button>
-    </div>
-    <div class="c-field">
-      <label id="inp-time-label">Start Time</label>
-      <input type="time" id="inp-time" value="09:00">
-    </div>
-    <div class="c-field">
-      <label>Paper Length</label>
-      <div class="dur-row">
-        <input type="number" id="inp-h" min="0" max="9" value="0">
-        <span>h</span>
-        <input type="number" id="inp-m" min="0" max="59" value="75">
-        <span>min</span>
-      </div>
-    </div>
-    <button id="btn-calc">Calculate</button>
-  </div>
-</div>
+  </div><!-- /results-col -->
+</div><!-- /main -->
 
 <!-- Fullscreen overlay -->
 <div id="fs-bar">
   <div class="fs-card" id="fs-normal">
     <div class="fs-type">Normal Exam End Time</div>
     <div class="fs-times">
-      <span class="fs-start" id="fs-n-s">—</span>
-      <span class="fs-arr">→</span>
-      <span class="fs-end"   id="fs-n-e">—</span>
+      <span class="fs-start" id="fs-n-s">—</span><span class="fs-arr">→</span><span class="fs-end" id="fs-n-e">—</span>
     </div>
   </div>
   <div class="fs-card" id="fs-et25">
     <div class="fs-type">25% Extra Time End</div>
     <div class="fs-times">
-      <span class="fs-start" id="fs-25-s">—</span>
-      <span class="fs-arr">→</span>
-      <span class="fs-end"   id="fs-25-e">—</span>
+      <span class="fs-start" id="fs-25-s">—</span><span class="fs-arr">→</span><span class="fs-end" id="fs-25-e">—</span>
     </div>
   </div>
   <div class="fs-card" id="fs-et50">
     <div class="fs-type">50% Extra Time End</div>
     <div class="fs-times">
-      <span class="fs-start" id="fs-50-s">—</span>
-      <span class="fs-arr">→</span>
-      <span class="fs-end"   id="fs-50-e">—</span>
+      <span class="fs-start" id="fs-50-s">—</span><span class="fs-arr">→</span><span class="fs-end" id="fs-50-e">—</span>
     </div>
   </div>
 </div>
 
 <script>
-// ── State ──────────────────────────────────────────────────────────────────
+// ── State ─────────────────────────────────────────────────────────────────
 const S = {
-  startMins:    null,
-  normalEnd:    null,
-  et25End:      null,
-  et50End:      null,
-  calcMode:     'forward',
-  cats:         { normal: false, et25: false, et50: false },
-  students:     [],
-  nextId:       1,
-  hasResults:   false,
-  isFs:         false,
+  startMins:  null,
+  normalEnd:  null,
+  et25End:    null,
+  et50End:    null,
+  calcMode:   'forward',
+  cats:       { normal: true, et25: true, et50: false },
+  students:   [],
+  nextId:     1,
+  hasResults: false,
+  isFs:       false,
+  locked:     false,
 };
 
-// ── Tabs ───────────────────────────────────────────────────────────────────
+// ── Tabs ──────────────────────────────────────────────────────────────────
 document.querySelectorAll('.pill-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
@@ -655,53 +439,44 @@ document.querySelectorAll('.pill-btn').forEach(btn => {
   });
 });
 
-// ── Setup toggle ──────────────────────────────────────────────────────────
-document.getElementById('btn-setup').addEventListener('click', () => {
-  const bar = document.getElementById('calc-bar');
-  bar.classList.toggle('hidden');
-  document.getElementById('btn-setup').textContent =
-    bar.classList.contains('hidden') ? 'Setup ▸' : 'Setup ▾';
+// ── Setup accordion ────────────────────────────────────────────────────────
+document.getElementById('setup-head').addEventListener('click', () => {
+  document.getElementById('setup-section').classList.toggle('closed');
 });
 
 // ── Fullscreen ─────────────────────────────────────────────────────────────
-const btnFs = document.getElementById('btn-fs');
-btnFs.addEventListener('click', () => {
-  if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+document.getElementById('btn-fs').addEventListener('click', () => {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
   else document.exitFullscreen();
 });
-
 document.addEventListener('fullscreenchange', () => {
   S.isFs = !!document.fullscreenElement;
   document.body.classList.toggle('dark',    S.isFs);
   document.body.classList.toggle('fs-mode', S.isFs);
-  btnFs.textContent = S.isFs ? 'Exit Full Screen' : 'Full Screen';
-  updateFsBar();
+  document.getElementById('btn-fs').textContent = S.isFs ? 'Exit Full Screen' : 'Full Screen';
+  syncFsBar();
   resizeCanvas();
 });
 
-function updateFsBar() {
-  const bar = document.getElementById('fs-bar');
-  bar.classList.toggle('show', S.isFs && S.hasResults);
-  // Sync visibility of fs cards to cat toggles
+function syncFsBar() {
+  document.getElementById('fs-bar').classList.toggle('show', S.isFs && S.hasResults);
   document.getElementById('fs-normal').style.display = S.cats.normal ? '' : 'none';
   document.getElementById('fs-et25').style.display   = S.cats.et25   ? '' : 'none';
   document.getElementById('fs-et50').style.display   = S.cats.et50   ? '' : 'none';
 }
 
-// ── Digital clock ─────────────────────────────────────────────────────────
+// ── Digital ────────────────────────────────────────────────────────────────
 const DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 function updateDigital() {
   const n = new Date(), p = v => String(v).padStart(2,'0');
-  document.getElementById('digital-time').textContent =
-    `${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
-  document.getElementById('digital-date').textContent =
-    `${DAYS[n.getDay()]}  ${n.getDate()} ${MONTHS[n.getMonth()]} ${n.getFullYear()}`;
+  document.getElementById('digital-time').textContent = `${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
+  document.getElementById('digital-date').textContent = `${DAYS[n.getDay()]}  ${n.getDate()} ${MONTHS[n.getMonth()]} ${n.getFullYear()}`;
 }
 setInterval(updateDigital, 1000);
 updateDigital();
 
-// ── Analog clock — Pyramid style ──────────────────────────────────────────
+// ── Analog clock (Pyramid style) ──────────────────────────────────────────
 const canvas = document.getElementById('analog-canvas');
 const ctx    = canvas.getContext('2d');
 
@@ -720,18 +495,16 @@ new ResizeObserver(resizeCanvas).observe(document.getElementById('analog-wrap'))
 resizeCanvas();
 
 function drawBlockHand(cx, cy, angle, len, halfW, tailLen, color) {
-  // angle: 0=right, -π/2=up (12 o'clock)
   ctx.save();
   ctx.translate(cx, cy);
   ctx.rotate(angle + Math.PI / 2);
-  // After rotation, tip of hand goes in -y direction
   ctx.beginPath();
-  ctx.moveTo(-halfW,       tailLen);      // base-left
-  ctx.lineTo(-halfW,      -len * 0.55);   // left body
-  ctx.lineTo(-halfW * 0.3,-len);          // tip-left
-  ctx.lineTo( halfW * 0.3,-len);          // tip-right
-  ctx.lineTo( halfW,      -len * 0.55);   // right body
-  ctx.lineTo( halfW,       tailLen);      // base-right
+  ctx.moveTo(-halfW,        tailLen);
+  ctx.lineTo(-halfW,       -len * 0.55);
+  ctx.lineTo(-halfW * 0.3, -len);
+  ctx.lineTo( halfW * 0.3, -len);
+  ctx.lineTo( halfW,       -len * 0.55);
+  ctx.lineTo( halfW,        tailLen);
   ctx.closePath();
   ctx.fillStyle = color;
   ctx.fill();
@@ -744,96 +517,64 @@ function drawClock() {
 
   ctx.clearRect(0, 0, sz, sz);
 
-  // White face
-  ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI);
+  ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2*Math.PI);
   ctx.fillStyle = '#ffffff'; ctx.fill();
 
-  // Thick black bezel (Pyramid style)
-  ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI);
-  ctx.strokeStyle = '#111111';
-  ctx.lineWidth = R * 0.09;
-  ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2*Math.PI);
+  ctx.strokeStyle = '#111'; ctx.lineWidth = R * 0.09; ctx.stroke();
 
-  // Subtle inner highlight on bezel edge
-  ctx.beginPath(); ctx.arc(cx, cy, R - R * 0.045, 0, 2 * Math.PI);
-  ctx.strokeStyle = 'rgba(255,255,255,0.18)';
-  ctx.lineWidth = R * 0.006;
-  ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx, cy, R - R*0.045, 0, 2*Math.PI);
+  ctx.strokeStyle = 'rgba(255,255,255,0.18)'; ctx.lineWidth = R*0.006; ctx.stroke();
 
-  // Tick marks (inside face, near rim)
-  const faceR = R - R * 0.09; // inner edge of bezel
+  const faceR = R - R * 0.09;
   for (let i = 0; i < 60; i++) {
-    const a = (i / 60) * 2 * Math.PI - Math.PI / 2;
-    const isHour = i % 5 === 0;
-    const outer = faceR - R * 0.01;
-    const inner = outer - (isHour ? R * 0.085 : R * 0.044);
+    const a = (i/60)*2*Math.PI - Math.PI/2;
+    const isH = i % 5 === 0;
     ctx.beginPath();
-    ctx.moveTo(cx + Math.cos(a) * outer, cy + Math.sin(a) * outer);
-    ctx.lineTo(cx + Math.cos(a) * inner, cy + Math.sin(a) * inner);
-    ctx.strokeStyle = '#111';
-    ctx.lineWidth = isHour ? R * 0.025 : R * 0.008;
-    ctx.lineCap = 'butt';
-    ctx.stroke();
+    ctx.moveTo(cx + Math.cos(a)*(faceR - R*0.01), cy + Math.sin(a)*(faceR - R*0.01));
+    ctx.lineTo(cx + Math.cos(a)*(faceR - R*0.01 - (isH ? R*0.085 : R*0.044)),
+               cy + Math.sin(a)*(faceR - R*0.01 - (isH ? R*0.085 : R*0.044)));
+    ctx.strokeStyle = '#111'; ctx.lineWidth = isH ? R*0.025 : R*0.008; ctx.lineCap = 'butt'; ctx.stroke();
   }
 
-  // Numbers
-  ctx.fillStyle = '#111111';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.font = `bold ${R * 0.2}px 'Segoe UI', Arial, sans-serif`;
+  ctx.fillStyle = '#111'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.font = `bold ${R*0.2}px 'Segoe UI', Arial, sans-serif`;
   const numR = faceR * 0.72;
   for (let i = 1; i <= 12; i++) {
-    const a = (i / 12) * 2 * Math.PI - Math.PI / 2;
-    ctx.fillText(i, cx + Math.cos(a) * numR, cy + Math.sin(a) * numR);
+    const a = (i/12)*2*Math.PI - Math.PI/2;
+    ctx.fillText(i, cx + Math.cos(a)*numR, cy + Math.sin(a)*numR);
   }
 
   const now = new Date();
-  const ms = now.getMilliseconds();
-  const s  = now.getSeconds() + ms / 1000;
-  const m  = now.getMinutes() + s / 60;
-  const h  = (now.getHours() % 12) + m / 60;
+  const s = now.getSeconds() + now.getMilliseconds()/1000;
+  const m = now.getMinutes() + s/60;
+  const h = (now.getHours()%12) + m/60;
 
-  // Hour hand
-  drawBlockHand(cx, cy, (h  / 12) * 2 * Math.PI - Math.PI / 2, R * 0.5,  R * 0.042, R * 0.07, '#111111');
-  // Minute hand
-  drawBlockHand(cx, cy, (m  / 60) * 2 * Math.PI - Math.PI / 2, R * 0.73, R * 0.027, R * 0.07, '#111111');
+  drawBlockHand(cx, cy, (h /12)*2*Math.PI - Math.PI/2, R*0.5,  R*0.042, R*0.07, '#111');
+  drawBlockHand(cx, cy, (m /60)*2*Math.PI - Math.PI/2, R*0.73, R*0.027, R*0.07, '#111');
 
-  // Second hand (thin red)
-  const sa = (s / 60) * 2 * Math.PI - Math.PI / 2;
+  const sa = (s/60)*2*Math.PI - Math.PI/2;
   ctx.save();
-  ctx.strokeStyle = '#cc0000';
-  ctx.lineWidth = R * 0.01;
-  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#cc0000'; ctx.lineWidth = R*0.01; ctx.lineCap = 'round';
   ctx.beginPath();
-  ctx.moveTo(cx - Math.cos(sa) * R * 0.2, cy - Math.sin(sa) * R * 0.2);
-  ctx.lineTo(cx + Math.cos(sa) * R * 0.84, cy + Math.sin(sa) * R * 0.84);
-  ctx.stroke();
-  ctx.restore();
+  ctx.moveTo(cx - Math.cos(sa)*R*0.2, cy - Math.sin(sa)*R*0.2);
+  ctx.lineTo(cx + Math.cos(sa)*R*0.84, cy + Math.sin(sa)*R*0.84);
+  ctx.stroke(); ctx.restore();
 
-  // Center bushing (gray cap)
-  ctx.beginPath(); ctx.arc(cx, cy, R * 0.032, 0, 2 * Math.PI);
-  ctx.fillStyle = '#888'; ctx.fill();
-  ctx.beginPath(); ctx.arc(cx, cy, R * 0.013, 0, 2 * Math.PI);
-  ctx.fillStyle = '#555'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx, cy, R*0.032, 0, 2*Math.PI); ctx.fillStyle = '#888'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx, cy, R*0.013, 0, 2*Math.PI); ctx.fillStyle = '#555'; ctx.fill();
 }
 
 (function loop() { drawClock(); requestAnimationFrame(loop); })();
 
 // ── Time helpers ───────────────────────────────────────────────────────────
-function toMins(str) {
-  const [h, m] = str.split(':').map(Number);
-  return h * 60 + m;
-}
-
-function fmtMins(total) {
-  const pad = n => String(n).padStart(2, '0');
-  const t   = ((total % 1440) + 1440) % 1440;
-  const h   = Math.floor(t / 60);
-  const m   = Math.floor(t % 60);
-  const sec = Math.round((total - Math.floor(total)) * 60);
-  return sec > 0
-    ? `${pad(h)}:${pad(m)}:${pad(sec)}`
-    : `${pad(h)}:${pad(m)}`;
+const pad = n => String(n).padStart(2,'0');
+function toMins(str) { const [h,m] = str.split(':').map(Number); return h*60+m; }
+function fmtMins(t) {
+  const total = ((t%1440)+1440)%1440;
+  const h = Math.floor(total/60), m = Math.floor(total%60);
+  const sec = Math.round((t - Math.floor(t))*60);
+  return sec > 0 ? `${pad(h)}:${pad(m)}:${pad(sec)}` : `${pad(h)}:${pad(m)}`;
 }
 
 // ── Category toggles ───────────────────────────────────────────────────────
@@ -843,7 +584,7 @@ document.querySelectorAll('.cat-tog').forEach(btn => {
     S.cats[cat] = !S.cats[cat];
     btn.classList.toggle('off', !S.cats[cat]);
     document.getElementById('card-' + cat).classList.toggle('hidden', !S.cats[cat]);
-    updateFsBar();
+    syncFsBar();
   });
 });
 
@@ -853,41 +594,33 @@ document.querySelectorAll('.mode-btn').forEach(btn => {
     S.calcMode = btn.dataset.mode;
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById('inp-time-label').textContent =
-      S.calcMode === 'forward' ? 'Start Time' : 'End Time';
-    document.getElementById('inp-time').value =
-      S.calcMode === 'forward' ? '09:00' : '10:15';
+    document.getElementById('inp-time-label').textContent = S.calcMode === 'forward' ? 'Start Time' : 'End Time';
+    document.getElementById('inp-time').value = S.calcMode === 'forward' ? '09:00' : '10:15';
   });
 });
 
 document.getElementById('btn-calc').addEventListener('click', () => {
-  const timeVal = document.getElementById('inp-time').value;
-  const lenH    = parseInt(document.getElementById('inp-h').value) || 0;
-  const lenM    = parseInt(document.getElementById('inp-m').value) || 0;
-  const lenMins = lenH * 60 + lenM;
-  if (!timeVal || lenMins <= 0) return;
+  const tv   = document.getElementById('inp-time').value;
+  const lenH = parseInt(document.getElementById('inp-h').value) || 0;
+  const lenM = parseInt(document.getElementById('inp-m').value) || 0;
+  const len  = lenH*60 + lenM;
+  if (!tv || len <= 0) return;
 
-  const ref = toMins(timeVal);
-  const startMins = S.calcMode === 'forward' ? ref : ref - lenMins;
-  const endMins   = startMins + lenMins;
-
-  S.startMins  = startMins;
-  S.normalEnd  = endMins;
-  S.et25End    = startMins + lenMins * 1.25;
-  S.et50End    = startMins + lenMins * 1.50;
+  const ref = toMins(tv);
+  S.startMins = S.calcMode === 'forward' ? ref : ref - len;
+  S.normalEnd = S.startMins + len;
+  S.et25End   = S.startMins + len*1.25;
+  S.et50End   = S.startMins + len*1.50;
   S.hasResults = true;
 
-  const ss = fmtMins(startMins);
+  const ss = fmtMins(S.startMins);
+  document.getElementById('r-n-s').textContent  = ss;
+  document.getElementById('r-n-e').textContent  = fmtMins(S.normalEnd);
+  document.getElementById('r-25-s').textContent = ss;
+  document.getElementById('r-25-e').textContent = fmtMins(S.et25End);
+  document.getElementById('r-50-s').textContent = ss;
+  document.getElementById('r-50-e').textContent = fmtMins(S.et50End);
 
-  // Panel
-  document.getElementById('r-n-start').textContent  = ss;
-  document.getElementById('r-n-end').textContent    = fmtMins(S.normalEnd);
-  document.getElementById('r-25-start').textContent = ss;
-  document.getElementById('r-25-end').textContent   = fmtMins(S.et25End);
-  document.getElementById('r-50-start').textContent = ss;
-  document.getElementById('r-50-end').textContent   = fmtMins(S.et50End);
-
-  // FS bar
   document.getElementById('fs-n-s').textContent  = ss;
   document.getElementById('fs-n-e').textContent  = fmtMins(S.normalEnd);
   document.getElementById('fs-25-s').textContent = ss;
@@ -895,75 +628,81 @@ document.getElementById('btn-calc').addEventListener('click', () => {
   document.getElementById('fs-50-s').textContent = ss;
   document.getElementById('fs-50-e').textContent = fmtMins(S.et50End);
 
-  // Refresh all student times
   renderAllStudentTimes();
-  updateFsBar();
+  syncFsBar();
+
+  // Auto-collapse setup
+  document.getElementById('setup-section').classList.add('closed');
+});
+
+// ── Lock toggle ────────────────────────────────────────────────────────────
+document.getElementById('btn-lock').addEventListener('click', () => {
+  S.locked = !S.locked;
+  const btn = document.getElementById('btn-lock');
+  btn.classList.toggle('locked', S.locked);
+  btn.textContent = S.locked ? 'Fixed Size' : 'Auto-size';
+  document.querySelectorAll('.student-card').forEach(c => c.classList.toggle('locked', S.locked));
 });
 
 // ── Students ───────────────────────────────────────────────────────────────
-function studentBaseEnd(cat) {
-  return { normal: S.normalEnd, et25: S.et25End, et50: S.et50End }[cat];
-}
+function baseEnd(cat) { return { normal: S.normalEnd, et25: S.et25End, et50: S.et50End }[cat]; }
 
-function studentAdjustedEnd(student) {
-  const base = studentBaseEnd(student.cat);
-  if (base === null) return null;
-  let breakTotal = 0;
-  student.breaks.forEach(b => {
-    if (b.start && b.end) {
-      const d = toMins(b.end) - toMins(b.start);
-      if (d > 0) breakTotal += d;
-    }
+function adjEnd(student) {
+  const b = baseEnd(student.cat);
+  if (b === null) return null;
+  let brk = 0;
+  student.breaks.forEach(({start,end}) => {
+    if (start && end) { const d = toMins(end)-toMins(start); if (d>0) brk += d; }
   });
-  return base + breakTotal;
+  return b + brk;
 }
 
-function buildStudentCard(student) {
-  const div = document.createElement('div');
-  div.className = 'student-card';
-  div.dataset.id = student.id;
+function totalBreakMins(student) {
+  let t = 0;
+  student.breaks.forEach(({start,end}) => {
+    if (start && end) { const d = toMins(end)-toMins(start); if (d>0) t += d; }
+  });
+  return t;
+}
 
-  const breaksHtml = student.breaks.map((b, i) => `
-    <div class="break-row">
-      <span class="break-lbl">Break ${i + 1}</span>
-      <input type="time" class="break-time-inp break-start" data-id="${student.id}" data-idx="${i}" value="${b.start}">
-      <span class="break-to">to</span>
-      <input type="time" class="break-time-inp break-end"   data-id="${student.id}" data-idx="${i}" value="${b.end}">
-      <button class="break-rem" data-id="${student.id}" data-idx="${i}" title="Remove break">×</button>
+function buildCard(st) {
+  const div = document.createElement('div');
+  div.className = 'student-card' + (S.locked ? ' locked' : '');
+  div.dataset.id = st.id;
+
+  const ae       = adjEnd(st);
+  const startStr = S.startMins !== null ? fmtMins(S.startMins) : '—';
+  const endStr   = ae !== null ? fmtMins(ae) : '—';
+  const brk      = totalBreakMins(st);
+  const brkText  = brk > 0 ? `+${brk} min break` : '';
+
+  const breaksHtml = st.breaks.map((b,i) => `
+    <div class="break-item">
+      <span class="bi-lbl">B${i+1}</span>
+      <input type="time" class="bi-time break-start" data-id="${st.id}" data-idx="${i}" value="${b.start}">
+      <span class="bi-sep">→</span>
+      <input type="time" class="bi-time break-end" data-id="${st.id}" data-idx="${i}" value="${b.end}">
+      <button class="break-rem" data-id="${st.id}" data-idx="${i}" title="Remove break">×</button>
     </div>
   `).join('');
 
-  const adjEnd   = studentAdjustedEnd(student);
-  const startStr = S.startMins !== null ? fmtMins(S.startMins) : '—';
-  const endStr   = adjEnd !== null ? fmtMins(adjEnd) : '—';
-
-  let breakSummary = '';
-  let totalBreak = 0;
-  student.breaks.forEach(b => {
-    if (b.start && b.end) { const d = toMins(b.end) - toMins(b.start); if (d > 0) totalBreak += d; }
-  });
-  if (totalBreak > 0) breakSummary = `<span class="sc-breaks-summary">(+${totalBreak} min break)</span>`;
-
   div.innerHTML = `
-    <div class="sc-header">
-      <input class="sc-name-input" type="text" placeholder="Student name…" value="${student.name}" data-id="${student.id}">
-      <select class="sc-cat-sel" data-id="${student.id}">
-        <option value="normal" ${student.cat === 'normal' ? 'selected' : ''}>Normal</option>
-        <option value="et25"   ${student.cat === 'et25'   ? 'selected' : ''}>25% ET</option>
-        <option value="et50"   ${student.cat === 'et50'   ? 'selected' : ''}>50% ET</option>
+    <div class="sc-row1">
+      <input class="sc-name-input" type="text" placeholder="Student name…" value="${st.name}" data-id="${st.id}">
+      <select class="sc-cat-sel" data-id="${st.id}">
+        <option value="normal" ${st.cat==='normal'?'selected':''}>Normal</option>
+        <option value="et25"   ${st.cat==='et25'  ?'selected':''}>25% ET</option>
+        <option value="et50"   ${st.cat==='et50'  ?'selected':''}>50% ET</option>
       </select>
-      <button class="sc-remove" data-id="${student.id}" title="Remove student">×</button>
+      <span class="sc-endtime">${endStr}</span>
+      <button class="sc-remove" data-id="${st.id}">×</button>
     </div>
-    <div class="sc-breaks">
-      ${breaksHtml}
-      <button class="sc-add-break" data-id="${student.id}">+ Add Break</button>
+    <div class="sc-row2">
+      <span class="sc-starttime">${startStr} →</span>
+      <span class="sc-break-summary">${brkText}</span>
     </div>
-    <div class="sc-result">
-      <span class="sc-start">${startStr}</span>
-      <span class="sc-arrow-d">→</span>
-      <span class="sc-end">${endStr}</span>
-      ${breakSummary}
-    </div>
+    <div class="sc-breaks-grid">${breaksHtml}</div>
+    <button class="sc-add-break" data-id="${st.id}">+ Add Break</button>
   `;
   return div;
 }
@@ -971,129 +710,98 @@ function buildStudentCard(student) {
 function renderStudents() {
   const list = document.getElementById('students-list');
   list.innerHTML = '';
-  S.students.forEach(s => list.appendChild(buildStudentCard(s)));
+  S.students.forEach(s => list.appendChild(buildCard(s)));
 }
 
-function updateStudentCard(id) {
+function refreshCard(id) {
   const card = document.querySelector(`.student-card[data-id="${id}"]`);
   if (!card) return;
-  const student = S.students.find(s => s.id === id);
-  if (!student) return;
-
-  const adjEnd   = studentAdjustedEnd(student);
+  const st = S.students.find(s => s.id === id);
+  if (!st) return;
+  const ae = adjEnd(st);
   const startStr = S.startMins !== null ? fmtMins(S.startMins) : '—';
-  const endStr   = adjEnd !== null ? fmtMins(adjEnd) : '—';
-
-  let totalBreak = 0;
-  student.breaks.forEach(b => {
-    if (b.start && b.end) { const d = toMins(b.end) - toMins(b.start); if (d > 0) totalBreak += d; }
-  });
-
-  card.querySelector('.sc-start').textContent = startStr;
-  card.querySelector('.sc-end').textContent   = endStr;
-
-  let summary = card.querySelector('.sc-breaks-summary');
-  if (totalBreak > 0) {
-    if (!summary) {
-      summary = document.createElement('span');
-      summary.className = 'sc-breaks-summary';
-      card.querySelector('.sc-result').appendChild(summary);
-    }
-    summary.textContent = `(+${totalBreak} min break)`;
-  } else if (summary) {
-    summary.remove();
-  }
+  const endStr   = ae !== null ? fmtMins(ae) : '—';
+  const brk      = totalBreakMins(st);
+  card.querySelector('.sc-endtime').textContent      = endStr;
+  card.querySelector('.sc-starttime').textContent    = startStr + ' →';
+  card.querySelector('.sc-break-summary').textContent = brk > 0 ? `+${brk} min break` : '';
 }
 
-function renderAllStudentTimes() {
-  S.students.forEach(s => updateStudentCard(s.id));
-}
+function renderAllStudentTimes() { S.students.forEach(s => refreshCard(s.id)); }
 
-// Student event delegation
 const studentList = document.getElementById('students-list');
 
 studentList.addEventListener('input', e => {
-  const id  = parseInt(e.target.dataset.id);
-  const idx = parseInt(e.target.dataset.idx);
-  const student = S.students.find(s => s.id === id);
-  if (!student) return;
+  const id  = +e.target.dataset.id;
+  const idx = +e.target.dataset.idx;
+  const st  = S.students.find(s => s.id === id);
+  if (!st) return;
 
-  if (e.target.classList.contains('sc-name-input')) {
-    student.name = e.target.value;
-  } else if (e.target.classList.contains('sc-cat-sel')) {
-    student.cat = e.target.value;
-    updateStudentCard(id);
-  } else if (e.target.classList.contains('break-start')) {
-    student.breaks[idx].start = e.target.value;
-    updateStudentCard(id);
-  } else if (e.target.classList.contains('break-end')) {
-    student.breaks[idx].end = e.target.value;
-    updateStudentCard(id);
-  }
+  if (e.target.classList.contains('sc-name-input'))  { st.name = e.target.value; }
+  else if (e.target.classList.contains('sc-cat-sel')) { st.cat = e.target.value; refreshCard(id); }
+  else if (e.target.classList.contains('break-start')){ st.breaks[idx].start = e.target.value; refreshCard(id); }
+  else if (e.target.classList.contains('break-end'))  { st.breaks[idx].end   = e.target.value; refreshCard(id); }
 });
 
 studentList.addEventListener('click', e => {
-  const id  = parseInt(e.target.dataset.id);
-  const idx = parseInt(e.target.dataset.idx);
+  const id  = +e.target.dataset.id;
+  const idx = +e.target.dataset.idx;
 
   if (e.target.classList.contains('sc-remove')) {
     S.students = S.students.filter(s => s.id !== id);
     renderStudents();
   } else if (e.target.classList.contains('sc-add-break')) {
-    const student = S.students.find(s => s.id === id);
-    if (student) { student.breaks.push({ start: '', end: '' }); renderStudents(); }
+    const st = S.students.find(s => s.id === id);
+    if (st) { st.breaks.push({start:'',end:''}); renderStudents(); }
   } else if (e.target.classList.contains('break-rem')) {
-    const student = S.students.find(s => s.id === id);
-    if (student) { student.breaks.splice(idx, 1); renderStudents(); }
+    const st = S.students.find(s => s.id === id);
+    if (st) { st.breaks.splice(idx,1); renderStudents(); }
   }
 });
 
 document.getElementById('btn-add-student').addEventListener('click', () => {
-  S.students.push({ id: S.nextId++, name: '', cat: 'normal', breaks: [{ start: '', end: '' }] });
+  S.students.push({ id: S.nextId++, name:'', cat:'normal', breaks:[{start:'',end:''}] });
   renderStudents();
-  // Scroll results col to bottom
   const col = document.getElementById('results-col');
   col.scrollTop = col.scrollHeight;
 });
 
 // ── CSV Export ─────────────────────────────────────────────────────────────
 document.getElementById('btn-export').addEventListener('click', () => {
-  const pad = n => String(n).padStart(2, '0');
   const now = new Date();
   const dateStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  const ss = S.startMins !== null ? fmtMins(S.startMins) : '';
 
   let csv = 'Type,Name,Category,Start Time,Base End Time,Total Break (mins),Adjusted End Time\n';
 
-  const ss = S.startMins !== null ? fmtMins(S.startMins) : '';
-
-  const cats = [
-    { key: 'normal', label: 'Normal Exam End Time', end: S.normalEnd },
-    { key: 'et25',   label: '25% Extra Time End',   end: S.et25End },
-    { key: 'et50',   label: '50% Extra Time End',   end: S.et50End },
-  ];
-  cats.forEach(c => {
-    const e = c.end !== null ? fmtMins(c.end) : '';
-    csv += `Category,"${c.label}","${c.key}",${ss},${e},0,${e}\n`;
+  [
+    { label:'Normal Exam End Time', cat:'normal', end: S.normalEnd },
+    { label:'25% Extra Time End',   cat:'et25',   end: S.et25End   },
+    { label:'50% Extra Time End',   cat:'et50',   end: S.et50End   },
+  ].forEach(({label,end}) => {
+    const e = end !== null ? fmtMins(end) : '';
+    csv += `Category,"${label}",,${ss},${e},0,${e}\n`;
   });
 
-  S.students.forEach(student => {
-    const catLabels = { normal: 'Normal', et25: '25% ET', et50: '50% ET' };
-    const base = studentBaseEnd(student.cat);
-    const baseStr = base !== null ? fmtMins(base) : '';
-    let totalBreak = 0;
-    student.breaks.forEach(b => {
-      if (b.start && b.end) { const d = toMins(b.end) - toMins(b.start); if (d > 0) totalBreak += d; }
-    });
-    const adj = studentAdjustedEnd(student);
-    const adjStr = adj !== null ? fmtMins(adj) : '';
-    csv += `Student,"${(student.name || 'Unnamed').replace(/"/g,'""')}","${catLabels[student.cat]}",${ss},${baseStr},${totalBreak},${adjStr}\n`;
+  S.students.forEach(st => {
+    const cats = {normal:'Normal',et25:'25% ET',et50:'50% ET'};
+    const b    = baseEnd(st.cat);
+    const brk  = totalBreakMins(st);
+    const ae   = adjEnd(st);
+    csv += `Student,"${(st.name||'Unnamed').replace(/"/g,'""')}","${cats[st.cat]}",${ss},${b!==null?fmtMins(b):''},${brk},${ae!==null?fmtMins(ae):''}\n`;
   });
 
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url; a.download = `exam-times-${dateStr}.csv`; a.click();
-  URL.revokeObjectURL(url);
+  const a  = document.createElement('a');
+  a.href   = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
+  a.download = `exam-times-${dateStr}.csv`;
+  a.click();
+});
+
+// ── Init: sync toggle state to DOM ─────────────────────────────────────────
+document.querySelectorAll('.cat-tog').forEach(btn => {
+  const cat = btn.dataset.cat;
+  if (!S.cats[cat]) btn.classList.add('off');
+  document.getElementById('card-' + cat).classList.toggle('hidden', !S.cats[cat]);
 });
 </script>
 </body>
