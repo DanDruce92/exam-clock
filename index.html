@@ -24,6 +24,8 @@
     }
     body.dark nav { background: #333; border-color: #444; }
     body.dark.fs-mode nav { display: none; }
+    body.dark.fs-mode #results-col { display: none; }
+    body.dark.fs-mode #clock-col { flex: 1; }
 
     .pill-group { display: flex; background: #ebebeb; border-radius: 7px; padding: 2px; gap: 2px; }
     body.dark .pill-group { background: #222; }
@@ -301,13 +303,15 @@
     }
     #fs-bar.show { display: flex; justify-content: space-around; }
 
-    /* Exit fullscreen button — clock column overlay */
+    /* Exit fullscreen button — top-right corner in fullscreen */
     #btn-exit-fs {
-      display: none; position: absolute; top: .7rem; right: .7rem; z-index: 40;
-      padding: .28rem .65rem; border: 1px solid rgba(255,255,255,.35);
-      background: rgba(0,0,0,.45); color: #fff; border-radius: 6px;
-      font-size: .75rem; cursor: pointer; backdrop-filter: blur(4px);
+      display: none; position: absolute; top: 1rem; right: 1rem; z-index: 40;
+      padding: .45rem 1.1rem; border: 2px solid rgba(255,255,255,.5);
+      background: rgba(0,0,0,.6); color: #fff; border-radius: 8px;
+      font-size: .9rem; font-weight: 600; cursor: pointer; backdrop-filter: blur(4px);
+      letter-spacing: .02em;
     }
+    #btn-exit-fs:hover { background: rgba(255,255,255,.15); }
     body.dark.fs-mode #btn-exit-fs { display: block; }
     .fs-card { text-align: center; }
     .fs-type { font-size: .58rem; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .1rem; }
@@ -611,7 +615,7 @@ function cpState(cpTimeMins) {
   const now = new Date();
   const nowMins = now.getHours()*60 + now.getMinutes() + now.getSeconds()/60;
   const until = cpTimeMins - nowMins;
-  if (until <= 0)  return { cls: 'cp-now',  text: '🖊 Change pen now — extra time has begun.' };
+  if (until <= 0)  return { cls: 'cp-now',  text: '🖊 Change pen now, extra time has begun.' };
   if (until <= 5)  return { cls: 'cp-soon', text: `⏳ Change pen in ${Math.ceil(until)} min (at ${fmtMins(cpTimeMins)}).` };
   return           { cls: '',        text: `Change pen at the start of extra time at ${fmtMins(cpTimeMins)}.` };
 }
