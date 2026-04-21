@@ -58,6 +58,14 @@
       letter-spacing: .04em; font-variant-numeric: tabular-nums; line-height: 1;
     }
     #digital-date { margin-top: .4rem; font-size: clamp(.85rem, 1.8vw, 1.5rem); font-weight: 300; color: #999; }
+    #digital-finished {
+      display: none; margin-top: 1rem;
+      font-size: clamp(1.8rem, 5vw, 4rem); font-weight: 800;
+      letter-spacing: .06em; color: #fff;
+    }
+    #digital-wrap.exam-finished { background: #111; border-radius: 1rem; padding: 1.5rem 2rem; }
+    #digital-wrap.exam-finished #digital-time { color: #eee; }
+    #digital-wrap.exam-finished #digital-date { color: #777; }
 
     /* ── Results column ── */
     #results-col {
@@ -348,6 +356,7 @@
       <div id="digital-wrap">
         <div id="digital-time">00:00:00</div>
         <div id="digital-date"></div>
+        <div id="digital-finished">EXAM FINISHED</div>
       </div>
     </div>
     <button id="btn-exit-fs">✕ Exit Full Screen</button>
@@ -531,6 +540,9 @@ function updateDigital() {
   const n = new Date(), p = v => String(v).padStart(2,'0');
   document.getElementById('digital-time').textContent = `${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
   document.getElementById('digital-date').textContent = `${DAYS[n.getDay()]}  ${n.getDate()} ${MONTHS[n.getMonth()]} ${n.getFullYear()}`;
+  const fin = isExamFinished();
+  document.getElementById('digital-finished').style.display = fin ? 'block' : 'none';
+  document.getElementById('digital-wrap').classList.toggle('exam-finished', fin);
 }
 setInterval(updateDigital, 1000);
 updateDigital();
@@ -560,31 +572,60 @@ function drawBlockHand(cx, cy, angle, len, halfW, tailLen, color) {
   ctx.closePath(); ctx.fillStyle = color; ctx.fill(); ctx.restore();
 }
 
+function isExamFinished() {
+  if (!S.hasResults) return false;
+  const now = new Date();
+  const nowMins = now.getHours()*60 + now.getMinutes() + now.getSeconds()/60;
+  let latest = null;
+  ['normal','et25','et50'].forEach(cat => {
+    if (S[cat].on && S[cat].end !== null)
+      latest = latest === null ? S[cat].end : Math.max(latest, S[cat].end);
+  });
+  return latest !== null && nowMins >= latest;
+}
+
 function drawClock() {
+  const done = isExamFinished();
+  const face  = done ? '#111' : '#fff';
+  const mark  = done ? '#eee' : '#111';
+  const bezel = done ? '#eee' : '#111';
+  const hand  = done ? '#eee' : '#111';
+
   const sz = canvas.width/(window.devicePixelRatio||1);
   const cx=sz/2, cy=sz/2, R=sz*.44;
   ctx.clearRect(0,0,sz,sz);
-  ctx.beginPath(); ctx.arc(cx,cy,R,0,2*Math.PI); ctx.fillStyle='#fff'; ctx.fill();
-  ctx.beginPath(); ctx.arc(cx,cy,R,0,2*Math.PI); ctx.strokeStyle='#111'; ctx.lineWidth=R*.09; ctx.stroke();
-  ctx.beginPath(); ctx.arc(cx,cy,R-R*.045,0,2*Math.PI); ctx.strokeStyle='rgba(255,255,255,.18)'; ctx.lineWidth=R*.006; ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx,cy,R,0,2*Math.PI); ctx.fillStyle=face; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx,cy,R,0,2*Math.PI); ctx.strokeStyle=bezel; ctx.lineWidth=R*.09; ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx,cy,R-R*.045,0,2*Math.PI); ctx.strokeStyle='rgba(128,128,128,.25)'; ctx.lineWidth=R*.006; ctx.stroke();
   const fR=R-R*.09;
   for(let i=0;i<60;i++){
     const a=(i/60)*2*Math.PI-Math.PI/2, isH=i%5===0;
     ctx.beginPath();
     ctx.moveTo(cx+Math.cos(a)*(fR-R*.01),cy+Math.sin(a)*(fR-R*.01));
     ctx.lineTo(cx+Math.cos(a)*(fR-R*.01-(isH?R*.085:R*.044)),cy+Math.sin(a)*(fR-R*.01-(isH?R*.085:R*.044)));
-    ctx.strokeStyle='#111'; ctx.lineWidth=isH?R*.025:R*.008; ctx.lineCap='butt'; ctx.stroke();
+    ctx.strokeStyle=mark; ctx.lineWidth=isH?R*.025:R*.008; ctx.lineCap='butt'; ctx.stroke();
   }
-  ctx.fillStyle='#111'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillStyle=mark; ctx.textAlign='center'; ctx.textBaseline='middle';
   ctx.font=`bold ${R*.2}px 'Segoe UI',Arial,sans-serif`;
   for(let i=1;i<=12;i++){
     const a=(i/12)*2*Math.PI-Math.PI/2;
     ctx.fillText(i,cx+Math.cos(a)*fR*.72,cy+Math.sin(a)*fR*.72);
   }
+
+  if (done) {
+    ctx.save();
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.font=`bold ${R*.135}px 'Segoe UI',Arial,sans-serif`;
+    ctx.fillStyle='#fff';
+    ctx.fillText('EXAM', cx, cy + R*.18);
+    ctx.fillText('FINISHED', cx, cy + R*.35);
+    ctx.restore();
+  }
+
   const now=new Date(), s=now.getSeconds()+now.getMilliseconds()/1000;
   const m=now.getMinutes()+s/60, h=(now.getHours()%12)+m/60;
-  drawBlockHand(cx,cy,(h/12)*2*Math.PI-Math.PI/2,R*.5,R*.042,R*.07,'#111');
-  drawBlockHand(cx,cy,(m/60)*2*Math.PI-Math.PI/2,R*.73,R*.027,R*.07,'#111');
+  drawBlockHand(cx,cy,(h/12)*2*Math.PI-Math.PI/2,R*.5,R*.042,R*.07,hand);
+  drawBlockHand(cx,cy,(m/60)*2*Math.PI-Math.PI/2,R*.73,R*.027,R*.07,hand);
   const sa=(s/60)*2*Math.PI-Math.PI/2;
   ctx.save(); ctx.strokeStyle='#cc0000'; ctx.lineWidth=R*.01; ctx.lineCap='round';
   ctx.beginPath();
